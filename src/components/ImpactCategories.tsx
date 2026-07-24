@@ -49,14 +49,14 @@ export default function ImpactCategories() {
             : item.initiatives || []
         })) || []
 
-        // Artificially inject Project Sindoda so it appears in the slider
-        const projectSindoda = {
+        // Project Sindoda – injected at the second position in the slider
+        const projectSindoda: Category = {
           id: 'project-sindoda',
           title: 'Project Sindoda (Plastic Mukti)',
           description: 'Transforming Sindoda into a completely plastic-free zone.',
           image_url: '/Sindoda/IMG_20191022_121001 (1).jpg',
           slug: 'project-sindoda',
-          display_order: -1, 
+          display_order: 0, // not used for sorting
           is_active: true,
           initiatives: [],
           funds_collected: 0,
@@ -65,7 +65,13 @@ export default function ImpactCategories() {
           updated_at: new Date().toISOString()
         }
 
-        const fullData = [projectSindoda, ...parsedData].sort((a, b) => a.display_order - b.display_order)
+        // Insert Project Sindoda at index 1 (second card)
+        const fullData = [
+          ...parsedData.slice(0, 1),
+          projectSindoda,
+          ...parsedData.slice(1)
+        ]
+
         setCategories(fullData)
       } catch (err) {
         console.error('Error:', err)
