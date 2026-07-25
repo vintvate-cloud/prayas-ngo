@@ -4,11 +4,28 @@ import { Users, ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
+// ─── Actual team members – matches the data in Members.tsx ───
 const teamMembers = [
-  { name: 'Dr. Anjali Sharma', role: 'Founder & Director', image: '/team1.jpg' },
-  { name: 'Rahul Verma', role: 'Program Manager - Education', image: '/team2.jpg' },
-  { name: 'Priya Patel', role: 'Health Coordinator', image: '/team3.jpg' },
-  { name: 'Amit Singh', role: 'Rural Development Lead', image: '/team4.jpg' },
+  {
+    name: 'Rekha Thakkar',
+    role: 'President',
+    image: '/images/team/rekha.jpg',
+  },
+  {
+    name: 'Pooja Dave',
+    role: 'Secretary',
+    image: '/images/team/pooja.jpg',
+  },
+  {
+    name: 'Harsh Upadhyay',
+    role: 'Executive Member',
+    image: '/images/team/harsh.jpg',
+  },
+  {
+    name: 'Anita Desai',
+    role: 'Treasurer',
+    image: '/images/team/anita.jpg',
+  },
 ]
 
 export default function TeamPreview() {
