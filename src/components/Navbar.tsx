@@ -218,13 +218,13 @@ export default function Navbar() {
                 </div>
               </>
             ) : (
-              // ─── HINDI: larger font size for प्रयास, word-spacing for समाज सेवी संस्था ───
+              // ─── HINDI: larger font size on mobile to match English width, reduced word-spacing on mobile ───
               <>
-                <div className="text-red-600 font-bold text-xl xs:text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-center leading-tight">
+                <div className="text-red-600 font-bold text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-center leading-tight">
                   {currentFirstLine}
                 </div>
                 <div className="text-red-600 font-medium text-[10px] xs:text-xs sm:text-sm md:text-base text-center"
-                     style={{ wordSpacing: '0.4em' }}>
+                     style={{ wordSpacing: '0.2em' }}>
                   {currentSecondLine}
                 </div>
               </>
@@ -544,5 +544,4 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-              }
-      
+                }
