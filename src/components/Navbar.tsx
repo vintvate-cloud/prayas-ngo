@@ -64,9 +64,10 @@ export default function Navbar() {
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const location = useLocation();
 
-  // ---------- Animated brand name – two lines ----------
+  // ---------- Animated brand name – two lines (now both red) ----------
   const [brandLangIndex, setBrandLangIndex] = useState(0);
-  const brandFirstLine = ['Prayas', 'प्रयास'];
+  // English first line now "PRAYAS" (uppercase)
+  const brandFirstLine = ['PRAYAS', 'प्रयास'];
   const brandSecondLine = ['Samaj Sevi Sanstha', 'समाज सेवी संस्था'];
 
   useEffect(() => {
@@ -149,12 +150,10 @@ export default function Navbar() {
 
   // ALWAYS use dark text on white background
   const textColor = 'text-[#263238]';
-  // ↓↓↓ RED text on hover (instead of yellow)
   const textColorHover = 'hover:text-red-600';
   const borderColor = 'border-[#263238]/30';
   const bgButton = 'bg-[#263238]/5 hover:bg-[#263238]/10';
 
-  // ALWAYS white background (not grey)
   const bgHeader = isScrolled 
     ? 'bg-white/95 backdrop-blur-md shadow-sm' 
     : 'bg-white border-b border-[#263238]/5';
@@ -177,7 +176,6 @@ export default function Navbar() {
 
   const currentLangLabel = LANGUAGES.find(l => l.code === i18n.language)?.label || 'English';
 
-  // fallback: if translation returns the key, use the key as is
   const safeT = (key: string) => {
     const translated = t(key);
     return translated === key ? key : translated;
@@ -203,22 +201,23 @@ export default function Navbar() {
             />
           </div>
 
-          {/* Animated two‑line brand name – larger font */}
+          {/* Animated two‑line brand name – now red and justified */}
           <motion.div
             key={brandLangIndex}
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -5 }}
             transition={{ duration: 0.4 }}
-            className="flex flex-col leading-tight"
+            className="flex flex-col leading-tight flex-1"
+            style={{ textAlign: 'justify' }}
           >
             <span
-              className="font-display font-bold text-2xl sm:text-4xl tracking-tight group-hover:text-red-600 transition drop-shadow-md text-[#263238]"
+              className="font-display font-bold text-2xl sm:text-4xl tracking-tight text-red-600"
             >
               {brandFirstLine[brandLangIndex]}
             </span>
             <span
-              className="font-display text-xs sm:text-base font-medium opacity-90 group-hover:text-red-600 transition text-[#263238]"
+              className="font-display text-xs sm:text-base font-medium text-red-600"
             >
               {brandSecondLine[brandLangIndex]}
             </span>
@@ -228,7 +227,6 @@ export default function Navbar() {
         {/* ---------- TOP STRIP – gradient from SmoothLoader ---------- */}
         {isStripVisible && (
           <div className="hidden sm:flex bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460] text-white py-2 px-4 pl-20 sm:pl-36 items-center justify-end w-full shadow-md gap-2">
-            {/* Removed left text – now only right-side items remain */}
             <div className="flex items-center gap-2 shrink-0">
               <Link
                 to="/donate"
@@ -236,7 +234,6 @@ export default function Navbar() {
               >
                 Yes! I Want To Help!
               </Link>
-              {/* ✅ Social icons with increased gap-3 */}
               <div className="flex items-center gap-3 text-white/70">
                 <a
                   href="https://www.facebook.com/prayassamajiksanstha"
@@ -318,13 +315,11 @@ export default function Navbar() {
                       >
                         <button
                           className={`text-xs font-medium transition-colors relative py-2 group flex items-center gap-1 whitespace-nowrap ${
-                            // active text = red; default = dark, hover = red
                             isActive ? 'text-red-600' : `${textColor} ${textColorHover}`
                           }`}
                         >
                           {safeT(link.name)}
                           <ChevronDown className={`w-3 h-3 transition-transform ${openDropdown === link.name ? 'rotate-180' : ''}`} />
-                          {/* Underline – now red */}
                           <span
                             className={`absolute -bottom-1 left-0 h-[2px] bg-red-600 transition-all ${
                               isActive ? 'w-full' : 'w-0 group-hover:w-full'
@@ -346,7 +341,7 @@ export default function Navbar() {
                                   to={sub.path}
                                   className={`block px-5 py-2.5 text-xs transition-colors ${
                                     location.pathname === sub.path
-                                      ? 'text-red-600 bg-red-600/10'   // red text + red background highlight
+                                      ? 'text-red-600 bg-red-600/10'
                                       : `text-[#263238] dark:text-white hover:bg-red-600/10 hover:text-red-600`
                                   }`}
                                 >
@@ -556,7 +551,7 @@ export default function Navbar() {
                       }}
                       className={`py-2 px-3 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
                         i18n.language === lang.code
-                          ? 'bg-red-600 text-white'   // active language – red background + white text
+                          ? 'bg-red-600 text-white'
                           : 'bg-[#263238]/5 text-[#263238] hover:bg-red-600/10 hover:text-red-600'
                       }`}
                     >
@@ -598,4 +593,4 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-}
+              }
