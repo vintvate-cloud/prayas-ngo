@@ -64,7 +64,7 @@ export default function Navbar() {
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const location = useLocation();
 
-  // ---------- Animated brand name – using CSS justify, not splitting characters ----------
+  // ---------- Animated brand name – no splitting, just CSS justify ----------
   const [brandLangIndex, setBrandLangIndex] = useState(0);
   const brandFirstLine = ['PRAYAS', 'प्रयास'];
   const brandSecondLine = ['Samaj sevi Sanstha', 'समाज सेवी संस्था'];
@@ -141,7 +141,6 @@ export default function Navbar() {
   const isAuthPage = location.pathname === '/auth';
   const showAuthLink = !isAuthPage;
 
-  // ALWAYS use dark text on white background
   const textColor = 'text-[#263238]';
   const textColorHover = 'hover:text-red-600';
   const borderColor = 'border-[#263238]/30';
@@ -180,12 +179,12 @@ export default function Navbar() {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-[9999]">
-        {/* ---------- OVERLAPPING LOGO (absolute) ---------- */}
+        {/* ---------- OVERLAPPING LOGO ---------- */}
         <Link
           to="/"
           className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-50 flex items-center gap-2 sm:gap-3 group"
         >
-          {/* Logo image */}
+          {/* Logo */}
           <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-full overflow-hidden flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform border-2 border-white/20">
             <img
               src="/Logo.svg"
@@ -194,7 +193,7 @@ export default function Navbar() {
             />
           </div>
 
-          {/* Animated brand text – using CSS justification, no character splitting */}
+          {/* Animated brand text – using CSS justify, no splitting, second line slightly larger */}
           <motion.div
             key={brandLangIndex}
             initial={{ opacity: 0, y: 5 }}
@@ -211,7 +210,7 @@ export default function Navbar() {
             <span className="text-red-600 font-bold text-2xl sm:text-4xl tracking-tight">
               {brandFirstLine[brandLangIndex]}
             </span>
-            <span className="text-red-600 font-medium text-xs sm:text-sm">
+            <span className="text-red-600 font-medium text-sm sm:text-base">
               {brandSecondLine[brandLangIndex]}
             </span>
           </motion.div>
@@ -246,7 +245,6 @@ export default function Navbar() {
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full">
             <div className="flex items-center justify-end gap-3">
-              {/* Desktop Navigation */}
               <nav className="hidden md:flex items-center gap-2 lg:gap-4 ml-auto">
                 {navLinks.map((link) => {
                   const hasSubmenu = link.submenu && link.submenu.length > 0;
@@ -323,7 +321,6 @@ export default function Navbar() {
                 })}
               </nav>
 
-              {/* Right side actions */}
               <div className="flex items-center gap-1 sm:gap-2">
                 <div className="relative z-20">
                   <button
@@ -531,4 +528,4 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-        }
+}
