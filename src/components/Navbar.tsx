@@ -64,10 +64,9 @@ export default function Navbar() {
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const location = useLocation();
 
-  // ---------- Animated brand name – two lines, both red ----------
+  // ---------- Animated brand name – perfectly aligned ----------
   const [brandLangIndex, setBrandLangIndex] = useState(0);
   const brandFirstLine = ['PRAYAS', 'प्रयास'];
-  // ✅ Second line now exactly "Samaj sevi Sanstha" (lowercase 's' in sevi)
   const brandSecondLine = ['Samaj sevi Sanstha', 'समाज सेवी संस्था'];
 
   useEffect(() => {
@@ -195,30 +194,31 @@ export default function Navbar() {
             />
           </div>
 
-          {/* Animated two‑line brand name – now red and justified */}
+          {/* Animated brand text – now using flex space-between for perfect alignment */}
           <motion.div
             key={brandLangIndex}
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -5 }}
             transition={{ duration: 0.4 }}
-            className="flex flex-col leading-tight flex-1"
-            style={{ textAlign: 'justify' }}
+            className="flex-1 flex flex-col leading-tight"
           >
-            <span
-              className="font-display font-bold text-2xl sm:text-4xl tracking-tight text-red-600"
-            >
-              {brandFirstLine[brandLangIndex]}
-            </span>
-            <span
-              className="font-display text-xs sm:text-base font-medium text-red-600"
-            >
-              {brandSecondLine[brandLangIndex]}
-            </span>
+            {/* First line – spread characters */}
+            <div className="flex justify-between text-red-600 font-bold text-2xl sm:text-4xl tracking-tight">
+              {brandFirstLine[brandLangIndex].split('').map((char, idx) => (
+                <span key={idx}>{char}</span>
+              ))}
+            </div>
+            {/* Second line – spread words */}
+            <div className="flex justify-between text-red-600 font-medium text-xs sm:text-base">
+              {brandSecondLine[brandLangIndex].split(' ').map((word, idx) => (
+                <span key={idx}>{word}</span>
+              ))}
+            </div>
           </motion.div>
         </Link>
 
-        {/* ---------- TOP STRIP – gradient from SmoothLoader ---------- */}
+        {/* ---------- TOP STRIP (unchanged) ---------- */}
         {isStripVisible && (
           <div className="hidden sm:flex bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460] text-white py-2 px-4 pl-20 sm:pl-36 items-center justify-end w-full shadow-md gap-2">
             <div className="flex items-center gap-2 shrink-0">
@@ -240,7 +240,7 @@ export default function Navbar() {
           </div>
         )}
 
-        {/* ---------- MAIN NAVBAR - ALWAYS WHITE BACKGROUND ---------- */}
+        {/* ---------- MAIN NAVBAR (unchanged) ---------- */}
         <div
           className={`transition-all duration-500 ${bgHeader} 
             min-h-[80px] sm:min-h-[100px] flex items-center py-2 sm:py-1.5 pl-20 sm:pl-36`}
@@ -326,7 +326,6 @@ export default function Navbar() {
 
               {/* Right side actions */}
               <div className="flex items-center gap-1 sm:gap-2">
-                {/* Language Switcher */}
                 <div className="relative z-20">
                   <button
                     onClick={(e) => {
@@ -365,7 +364,6 @@ export default function Navbar() {
                   </AnimatePresence>
                 </div>
 
-                {/* Donate Now button */}
                 <Link
                   to="/donate"
                   className="inline-flex items-center gap-1.5 px-2 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all shadow-lg hover:shadow-[#FFF314]/30 hover:scale-105 bg-[#FFF314] text-[#263238] shadow-[#FFF314]/40 hover:bg-[#FFF314]/90"
@@ -374,7 +372,6 @@ export default function Navbar() {
                   <span className="hidden sm:inline">{donateText}</span>
                 </Link>
 
-                {/* Volunteer button */}
                 <Link
                   to="/volunteer"
                   className="inline-flex items-center gap-1.5 px-2 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all shadow-lg hover:shadow-[#FFF314]/30 hover:scale-105 bg-[#FFF314] text-[#263238] shadow-[#FFF314]/40 hover:bg-[#FFF314]/90"
@@ -383,7 +380,6 @@ export default function Navbar() {
                   <span className="hidden sm:inline">{volunteerText}</span>
                 </Link>
 
-                {/* Profile / Sign In */}
                 {showAuthLink && !loading && (
                   <Link
                     to={isAuthenticated ? "/profile" : "/auth"}
@@ -396,7 +392,6 @@ export default function Navbar() {
                   </Link>
                 )}
 
-                {/* Hamburger menu */}
                 <button
                   className={`md:hidden p-2.5 -m-1 rounded-full transition-colors ${textColor} ${textColorHover} ${bgButton}`}
                   onClick={() => setIsMobileOpen(!isMobileOpen)}
@@ -410,7 +405,7 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* ---------- MOBILE MENU ---------- */}
+      {/* ---------- MOBILE MENU (unchanged) ---------- */}
       <AnimatePresence>
         {isMobileOpen && (
           <motion.div
@@ -486,7 +481,6 @@ export default function Navbar() {
                 );
               })}
 
-              {/* Language Switcher – Mobile */}
               <div className="border-t border-[#263238]/10 pt-3 mt-2">
                 <p className="text-xs text-[#263238]/50 uppercase tracking-wider mb-2 px-2">Language</p>
                 <div className="grid grid-cols-2 gap-1">
@@ -509,7 +503,6 @@ export default function Navbar() {
                 </div>
               </div>
 
-              {/* Donate Now – Mobile */}
               <Link
                 to="/donate"
                 className="mt-3 w-full text-center rounded-full bg-[#FFF314] px-6 py-3.5 font-semibold text-[#263238] flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-transform"
@@ -517,7 +510,6 @@ export default function Navbar() {
                 {donateText} <Heart className="w-5 h-5" />
               </Link>
 
-              {/* Volunteer – Mobile */}
               <Link
                 to="/volunteer"
                 className="mt-2 w-full text-center rounded-full bg-[#FFF314] px-6 py-3.5 font-semibold text-[#263238] flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-transform"
@@ -525,7 +517,6 @@ export default function Navbar() {
                 {volunteerText} <UserPlus className="w-5 h-5" />
               </Link>
 
-              {/* Profile / Sign In – Mobile */}
               {showAuthLink && !loading && (
                 <Link
                   to={isAuthenticated ? "/profile" : "/auth"}
