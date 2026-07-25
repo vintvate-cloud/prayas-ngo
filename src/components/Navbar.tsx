@@ -8,7 +8,7 @@ import { FaFacebook, FaTwitter, FaInstagram, FaYoutube, FaLinkedin } from 'react
 import { supabase } from '@/lib/supabase';
 import { useTranslation } from 'react-i18next';
 
-// ---------- NAV LINKS WITH UPDATED "What We Do" SUBMENU ----------
+// ---------- NAV LINKS (unchanged) ----------
 const navLinks = [
   { name: 'nav.home', path: '/' },
   {
@@ -64,11 +64,11 @@ export default function Navbar() {
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const location = useLocation();
 
-  // ---------- Animated brand name – two lines (now both red) ----------
+  // ---------- Animated brand name – two lines, both red ----------
   const [brandLangIndex, setBrandLangIndex] = useState(0);
-  // English first line now "PRAYAS" (uppercase)
   const brandFirstLine = ['PRAYAS', 'प्रयास'];
-  const brandSecondLine = ['Samaj Sevi Sanstha', 'समाज सेवी संस्था'];
+  // ✅ Second line now exactly "Samaj sevi Sanstha" (lowercase 's' in sevi)
+  const brandSecondLine = ['Samaj sevi Sanstha', 'समाज सेवी संस्था'];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -80,8 +80,6 @@ export default function Navbar() {
   // ---------- Top strip visibility ----------
   const [isStripVisible, setIsStripVisible] = useState(true);
 
-  const isHome = location.pathname === '/';
-
   // ---------- DYNAMIC NAVBAR HEIGHT ----------
   useEffect(() => {
     const updateNavbarHeight = () => {
@@ -91,13 +89,9 @@ export default function Navbar() {
         document.documentElement.style.setProperty('--navbar-height', `${height}px`);
       }
     };
-
     updateNavbarHeight();
     window.addEventListener('resize', updateNavbarHeight);
-
-    return () => {
-      window.removeEventListener('resize', updateNavbarHeight);
-    };
+    return () => window.removeEventListener('resize', updateNavbarHeight);
   }, [isStripVisible]);
 
   // ---------- Auth logic ----------
@@ -192,7 +186,7 @@ export default function Navbar() {
           to="/"
           className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-50 flex items-center gap-2 sm:gap-3 group"
         >
-          {/* Logo image – increased size */}
+          {/* Logo image */}
           <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-full overflow-hidden flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform border-2 border-white/20">
             <img
               src="/Logo.svg"
@@ -235,59 +229,13 @@ export default function Navbar() {
                 Yes! I Want To Help!
               </Link>
               <div className="flex items-center gap-3 text-white/70">
-                <a
-                  href="https://www.facebook.com/prayassamajiksanstha"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Facebook"
-                  className="hover:text-red-600 transition"
-                >
-                  <FaFacebook size={14} />
-                </a>
-                <a
-                  href="https://x.com/pryasaa?s=11"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="X (Twitter)"
-                  className="hover:text-red-600 transition"
-                >
-                  <FaTwitter size={14} />
-                </a>
-                <a
-                  href="https://www.instagram.com/prayas_samajik_sanstha"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Instagram"
-                  className="hover:text-red-600 transition"
-                >
-                  <FaInstagram size={14} />
-                </a>
-                <a
-                  href="https://www.youtube.com/channel/UC16ZbLnP1qJxrKQoKsss12w"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="YouTube"
-                  className="hover:text-red-600 transition"
-                >
-                  <FaYoutube size={14} />
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/prayas-samaj-sevi-sastha-undefined-0a468b418/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn"
-                  className="hover:text-red-600 transition"
-                >
-                  <FaLinkedin size={14} />
-                </a>
+                <a href="https://www.facebook.com/prayassamajiksanstha" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:text-red-600 transition"><FaFacebook size={14} /></a>
+                <a href="https://x.com/pryasaa?s=11" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" className="hover:text-red-600 transition"><FaTwitter size={14} /></a>
+                <a href="https://www.instagram.com/prayas_samajik_sanstha" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-red-600 transition"><FaInstagram size={14} /></a>
+                <a href="https://www.youtube.com/channel/UC16ZbLnP1qJxrKQoKsss12w" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="hover:text-red-600 transition"><FaYoutube size={14} /></a>
+                <a href="https://www.linkedin.com/in/prayas-samaj-sevi-sastha-undefined-0a468b418/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:text-red-600 transition"><FaLinkedin size={14} /></a>
               </div>
-              <button
-                onClick={() => setIsStripVisible(false)}
-                className="text-white/50 hover:text-white transition p-0.5"
-                aria-label="Close announcement"
-              >
-                <X size={16} />
-              </button>
+              <button onClick={() => setIsStripVisible(false)} className="text-white/50 hover:text-white transition p-0.5" aria-label="Close announcement"><X size={16} /></button>
             </div>
           </div>
         )}
@@ -376,7 +324,7 @@ export default function Navbar() {
                 })}
               </nav>
 
-              {/* Right side actions (unchanged) */}
+              {/* Right side actions */}
               <div className="flex items-center gap-1 sm:gap-2">
                 {/* Language Switcher */}
                 <div className="relative z-20">
@@ -417,7 +365,7 @@ export default function Navbar() {
                   </AnimatePresence>
                 </div>
 
-                {/* Donate Now button – background stays YELLOW */}
+                {/* Donate Now button */}
                 <Link
                   to="/donate"
                   className="inline-flex items-center gap-1.5 px-2 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all shadow-lg hover:shadow-[#FFF314]/30 hover:scale-105 bg-[#FFF314] text-[#263238] shadow-[#FFF314]/40 hover:bg-[#FFF314]/90"
@@ -426,7 +374,7 @@ export default function Navbar() {
                   <span className="hidden sm:inline">{donateText}</span>
                 </Link>
 
-                {/* Volunteer button – background stays YELLOW */}
+                {/* Volunteer button */}
                 <Link
                   to="/volunteer"
                   className="inline-flex items-center gap-1.5 px-2 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all shadow-lg hover:shadow-[#FFF314]/30 hover:scale-105 bg-[#FFF314] text-[#263238] shadow-[#FFF314]/40 hover:bg-[#FFF314]/90"
@@ -462,7 +410,7 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* ---------- MOBILE MENU (outside header, fixed position) ---------- */}
+      {/* ---------- MOBILE MENU ---------- */}
       <AnimatePresence>
         {isMobileOpen && (
           <motion.div
@@ -561,7 +509,7 @@ export default function Navbar() {
                 </div>
               </div>
 
-              {/* Donate Now – Mobile (background stays YELLOW) */}
+              {/* Donate Now – Mobile */}
               <Link
                 to="/donate"
                 className="mt-3 w-full text-center rounded-full bg-[#FFF314] px-6 py-3.5 font-semibold text-[#263238] flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-transform"
@@ -569,7 +517,7 @@ export default function Navbar() {
                 {donateText} <Heart className="w-5 h-5" />
               </Link>
 
-              {/* Volunteer – Mobile (background stays YELLOW) */}
+              {/* Volunteer – Mobile */}
               <Link
                 to="/volunteer"
                 className="mt-2 w-full text-center rounded-full bg-[#FFF314] px-6 py-3.5 font-semibold text-[#263238] flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-transform"
@@ -593,4 +541,4 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-              }
+                  }
