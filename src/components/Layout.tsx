@@ -5,7 +5,7 @@ import Navbar from './Navbar'
 import Footer from './Footer'
 import SmoothLoader from './SmoothLoader'
 import FloatingDonateButton from './FloatingDonateButton'
-import FloatingVolunteerButton from './FloatingVolunteerButton'
+// FloatingVolunteerButton import removed
 import FloatingSocialIcons from './FloatingSocialIcons'
 import ScrollToTopButton from './ScrollToTopButton'
 
@@ -50,10 +50,10 @@ export default function Layout() {
       </motion.main>
       <Footer />
       
-      {/* Floating elements */}
+      {/* Floating elements – Volunteer button removed */}
       <FloatingSocialIcons />
       <FloatingDonateButton />
-      <FloatingVolunteerButton />
+      {/* <FloatingVolunteerButton /> removed */}
       <ScrollToTopButton />
     </div>
   )
