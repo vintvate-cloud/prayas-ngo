@@ -2,11 +2,19 @@
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import HeroSection from '../components/HeroSection'
-import ImpactCounter from '../components/ImpactCounter'
 import ScrollStory from '../components/ScrollStory'
 import ImpactCategories from '../components/ImpactCategories'
+import ImpactCounter from '../components/ImpactCounter'
+import TrustFlow from '../components/TrustFlow'
 import ImageCarousel from '../components/ImageCarousel'
-import TrustFlow from '../components/TrustFlow'  // ← import the new component
+
+// ─── New components ───
+import VisionMission from '../components/VisionMission'
+import FocusAreas from '../components/FocusAreas'
+import FeaturedProjects from '../components/FeaturedProjects'
+import TeamPreview from '../components/TeamPreview'
+import GalleryPreview from '../components/GalleryPreview'
+import CTASections from '../components/CTASections'
 
 export default function Home() {
   const { t } = useTranslation()
@@ -14,13 +22,38 @@ export default function Home() {
   return (
     <div className="w-full">
       <HeroSection />
+
+      {/* About Section – ScrollStory (white background) */}
       <ScrollStory />
+
+      {/* Vision & Mission */}
+      <VisionMission />
+
+      {/* Focus Areas – 5 segments (preview of "What We Do") */}
+      <FocusAreas />
+
+      {/* Impact Categories – donation carousel */}
       <ImpactCategories />
+
+      {/* Impact Numbers */}
       <ImpactCounter />
-      
-      {/* Trust Flow section – shows the approach with GSAP animations */}
+
+      {/* Trust Flow – approach with GSAP animations */}
       <TrustFlow />
 
+      {/* Featured Projects & Events */}
+      <FeaturedProjects />
+
+      {/* Team Preview */}
+      <TeamPreview />
+
+      {/* Gallery Preview */}
+      <GalleryPreview />
+
+      {/* Donate / Volunteer / Contact combined section */}
+      <CTASections />
+
+      {/* Image Carousel – Accreditations */}
       <ImageCarousel />
     </div>
   )
