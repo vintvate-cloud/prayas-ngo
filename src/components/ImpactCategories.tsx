@@ -56,7 +56,7 @@ export default function ImpactCategories() {
           description: 'Transforming Sindoda into a completely plastic-free zone.',
           image_url: '/Sindoda/IMG_20191022_121001 (1).jpg',
           slug: 'project-sindoda',
-          display_order: 0, // not used for sorting
+          display_order: 0,
           is_active: true,
           initiatives: [],
           funds_collected: 0,
@@ -65,7 +65,6 @@ export default function ImpactCategories() {
           updated_at: new Date().toISOString()
         }
 
-        // Insert Project Sindoda at index 1 (second card)
         const fullData = [
           ...parsedData.slice(0, 1),
           projectSindoda,
@@ -129,16 +128,16 @@ export default function ImpactCategories() {
         }
       `}</style>
 
-      {/* HEADER */}
+      {/* HEADER – updated to be generic */}
       <div className="flex-shrink-0 bg-white px-4 sm:px-8 pb-8 text-center max-w-4xl mx-auto">
         <p className="text-[#263238]/70 text-sm sm:text-base leading-relaxed mb-4">
-          {t('categories.donationAppeal', 'Your smallest contribution makes a big difference to children’s lives. We count on the generosity of people like you to be able to create real change for India’s children!')}
+          {t('categories.subtitle', 'Your support helps us drive change across diverse communities. Every contribution strengthens our mission.')}
         </p>
         <h2
           className="text-3xl sm:text-4xl md:text-5xl text-[#263238] font-bold mt-2"
           style={{ fontFamily: 'var(--font-heading)' }}
         >
-          Donate For Happier Childhoods!
+          {t('categories.heading', 'Our Impact Areas')}
         </h2>
       </div>
 
@@ -190,7 +189,6 @@ export default function ImpactCategories() {
                         'https://placehold.co/800x600/263238/FFF314?text=Prayas'
                     }}
                   />
-                  {/* Subtle overlay */}
                   <div className="absolute inset-0 bg-black/10 group-hover/card:bg-transparent transition-colors duration-300" />
                 </div>
 
