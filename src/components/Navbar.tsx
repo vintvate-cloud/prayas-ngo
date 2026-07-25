@@ -8,7 +8,7 @@ import { FaFacebook, FaTwitter, FaInstagram, FaYoutube, FaLinkedin } from 'react
 import { supabase } from '@/lib/supabase';
 import { useTranslation } from 'react-i18next';
 
-// ---------- NAV LINKS (unchanged) ----------
+// ---------- NAV LINKS ----------
 const navLinks = [
   { name: 'nav.home', path: '/' },
   {
@@ -176,7 +176,6 @@ export default function Navbar() {
   const donateText = t('nav.donateNow', 'Donate Now');
   const volunteerText = safeT('nav.volunteer');
 
-  // Determine if current language is English (index 0) or Hindi (index 1)
   const isEnglish = brandLangIndex === 0;
   const currentFirstLine = brandFirstLine[brandLangIndex];
   const currentSecondLine = brandSecondLine[brandLangIndex];
@@ -190,7 +189,7 @@ export default function Navbar() {
           className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-50 flex items-center gap-2 sm:gap-3 group"
         >
           {/* Logo */}
-          <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-full overflow-hidden flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform border-2 border-white/20">
+          <div className="w-12 h-12 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full overflow-hidden flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform border-2 border-white/20">
             <img
               src="/Logo.svg"
               alt="Prayas Logo"
@@ -198,7 +197,7 @@ export default function Navbar() {
             />
           </div>
 
-          {/* Animated brand text – conditional rendering for English vs Hindi */}
+          {/* Animated brand text – responsive sizes */}
           <motion.div
             key={brandLangIndex}
             initial={{ opacity: 0, y: 5 }}
@@ -208,26 +207,26 @@ export default function Navbar() {
             className="flex-1 flex flex-col leading-tight"
           >
             {isEnglish ? (
-              // --- ENGLISH: split characters for first line, split words for second line ---
+              // ─── ENGLISH: split characters for first line ───
               <>
-                <div className="flex justify-between text-red-600 font-bold text-3xl sm:text-5xl tracking-tight">
+                <div className="flex text-red-600 font-bold text-lg xs:text-xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tight">
                   {currentFirstLine.split('').map((char, idx) => (
                     <span key={idx}>{char}</span>
                   ))}
                 </div>
-                <div className="flex justify-between text-red-600 font-medium text-xs sm:text-sm">
+                <div className="flex text-red-600 font-medium text-[10px] xs:text-xs sm:text-sm md:text-base">
                   {currentSecondLine.split(' ').map((word, idx) => (
                     <span key={idx}>{word}</span>
                   ))}
                 </div>
               </>
             ) : (
-              // --- HINDI: keep as single strings, use sizes that already work ---
+              // ─── HINDI ───
               <>
-                <span className="text-red-600 font-bold text-3xl sm:text-5xl tracking-tight">
+                <span className="text-red-600 font-bold text-lg xs:text-xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tight">
                   {currentFirstLine}
                 </span>
-                <span className="text-red-600 font-medium text-xs sm:text-base">
+                <span className="text-red-600 font-medium text-[10px] xs:text-xs sm:text-sm md:text-base">
                   {currentSecondLine}
                 </span>
               </>
@@ -235,7 +234,7 @@ export default function Navbar() {
           </motion.div>
         </Link>
 
-        {/* ---------- TOP STRIP (unchanged) ---------- */}
+        {/* ---------- TOP STRIP ---------- */}
         {isStripVisible && (
           <div className="hidden sm:flex bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460] text-white py-2 px-4 pl-20 sm:pl-36 items-center justify-end w-full shadow-md gap-2">
             <div className="flex items-center gap-2 shrink-0">
@@ -257,10 +256,10 @@ export default function Navbar() {
           </div>
         )}
 
-        {/* ---------- MAIN NAVBAR (unchanged) ---------- */}
+        {/* ---------- MAIN NAVBAR ---------- */}
         <div
           className={`transition-all duration-500 ${bgHeader} 
-            min-h-[80px] sm:min-h-[100px] flex items-center py-2 sm:py-1.5 pl-20 sm:pl-36`}
+            min-h-[70px] sm:min-h-[90px] md:min-h-[100px] flex items-center py-2 sm:py-1.5 pl-16 sm:pl-20 md:pl-36`}
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full">
             <div className="flex items-center justify-end gap-3">
@@ -420,7 +419,7 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* ---------- MOBILE MENU (unchanged) ---------- */}
+      {/* ---------- MOBILE MENU ---------- */}
       <AnimatePresence>
         {isMobileOpen && (
           <motion.div
@@ -547,4 +546,4 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-                                  }
+}
