@@ -1,5 +1,5 @@
 // src/components/ScrollStory.tsx
-import { useTranslation } from 'react-i18next'
+
 
 export default function ScrollStory() {
   const { t } = useTranslation();
