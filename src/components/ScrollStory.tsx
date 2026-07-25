@@ -1,9 +1,10 @@
+// src/components/ScrollStory.tsx
 import { useTranslation } from 'react-i18next'
 
 export default function ScrollStory() {
   const { t } = useTranslation();
   return (
-    <section className="bg-[#263238]/5 border-y border-[#263238]/10 w-full">
+    <section className="bg-white border-y border-[#263238]/10 w-full">
       <div className="max-w-4xl mx-auto px-4 py-16 md:py-24">
         <h2
           className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#263238] mb-10 text-center"
