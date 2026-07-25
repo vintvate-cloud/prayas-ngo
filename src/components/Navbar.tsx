@@ -194,7 +194,7 @@ export default function Navbar() {
             />
           </div>
 
-          {/* Animated brand text – now using flex space-between for perfect alignment */}
+          {/* Animated brand text – second line now smaller */}
           <motion.div
             key={brandLangIndex}
             initial={{ opacity: 0, y: 5 }}
@@ -203,14 +203,14 @@ export default function Navbar() {
             transition={{ duration: 0.4 }}
             className="flex-1 flex flex-col leading-tight"
           >
-            {/* First line – spread characters */}
+            {/* First line – larger, red, uppercase */}
             <div className="flex justify-between text-red-600 font-bold text-2xl sm:text-4xl tracking-tight">
               {brandFirstLine[brandLangIndex].split('').map((char, idx) => (
                 <span key={idx}>{char}</span>
               ))}
             </div>
-            {/* Second line – spread words */}
-            <div className="flex justify-between text-red-600 font-medium text-xs sm:text-base">
+            {/* Second line – smaller font size, red */}
+            <div className="flex justify-between text-red-600 font-medium text-xs sm:text-sm">
               {brandSecondLine[brandLangIndex].split(' ').map((word, idx) => (
                 <span key={idx}>{word}</span>
               ))}
@@ -532,4 +532,4 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-                  }
+}
