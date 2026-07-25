@@ -8,12 +8,12 @@ export default function ScrollStory() {
       className="bg-white border-y border-[#263238]/10 w-full flex items-center"
       style={{ minHeight: 'calc(100vh - var(--navbar-height, 80px))' }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-6 md:py-10">
-        <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-stretch">
-          {/* LEFT COLUMN: Heading + Video */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-4 md:py-6">
+        <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-stretch">
+          {/* LEFT COLUMN: Heading + Video (full size) */}
           <div className="flex-1 flex flex-col justify-center">
             <h2
-              className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#263238] mb-6 text-center md:text-left"
+              className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#263238] mb-3 text-center md:text-left"
               style={{ fontFamily: 'var(--font-heading)' }}
             >
               {t('story.heading', 'About Us')}
@@ -30,10 +30,10 @@ export default function ScrollStory() {
             </div>
           </div>
 
-          {/* RIGHT COLUMN: Description paragraphs */}
+          {/* RIGHT COLUMN: Description paragraphs - reduced text size only */}
           <div className="flex-1 flex flex-col justify-center">
-            <div className="space-y-6 text-[#263238]/80 text-base sm:text-lg md:text-xl leading-relaxed overflow-y-auto max-h-[70vh] md:max-h-none pr-2">
-              <p className="first-letter:text-6xl first-letter:font-bold first-letter:text-[#FFF314] first-letter:mr-2 first-letter:float-left first-letter:drop-shadow-sm font-medium text-[#263238]">
+            <div className="space-y-3 text-[#263238]/80 text-xs sm:text-sm md:text-sm leading-relaxed">
+              <p className="first-letter:text-4xl first-letter:font-bold first-letter:text-[#FFF314] first-letter:mr-2 first-letter:float-left first-letter:drop-shadow-sm font-medium text-[#263238]">
                 {t(
                   'story.paragraphs.p1',
                   'Prayas is a non-profit organization dedicated to creating meaningful and sustainable change in society. Established in 2001, we have been working towards empowering communities and improving lives through education, healthcare, social awareness, and community development initiatives.'
