@@ -188,7 +188,7 @@ export default function Navbar() {
           to="/"
           className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-50 flex items-center gap-2 sm:gap-3 group"
         >
-          {/* Logo */}
+          {/* Logo - responsive sizes */}
           <div className="w-12 h-12 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full overflow-hidden flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform border-2 border-white/20">
             <img
               src="/Logo.svg"
@@ -197,47 +197,40 @@ export default function Navbar() {
             />
           </div>
 
-          {/* Animated brand text – both lines justified/spread equally */}
+          {/* Animated brand text – responsive with original alignment */}
           <motion.div
             key={brandLangIndex}
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -5 }}
             transition={{ duration: 0.4 }}
-            className="flex-1 flex flex-col leading-tight min-w-[80px] sm:min-w-[120px] md:min-w-[180px]"
+            className="flex-1 flex flex-col leading-tight min-w-[80px] sm:min-w-[140px] md:min-w-[180px]"
           >
-            {/* First line - spread across full width */}
-            <div className="flex w-full justify-between text-red-600 font-bold text-lg xs:text-xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tight">
-              {isEnglish ? (
-                // ─── ENGLISH: PRAYAS split into letters ───
-                <>
-                  <span>P</span>
-                  <span>R</span>
-                  <span>A</span>
-                  <span>Y</span>
-                  <span>A</span>
-                  <span>S</span>
-                </>
-              ) : (
-                // ─── HINDI: प्रयास as a single string ───
-                <span className="w-full text-center tracking-widest">{currentFirstLine}</span>
-              )}
-            </div>
-
-            {/* Second line - spread across full width */}
-            <div className="flex w-full justify-between text-red-600 font-medium text-[10px] xs:text-xs sm:text-sm md:text-base">
-              {isEnglish ? (
-                // ─── ENGLISH: split into words ───
-                <>
-                  <span>Samaj</span>
-                  <span>sevi</span>
-                  <span>Sanstha</span>
-                </>
-              ) : (
-                // ─── HINDI: समाज सेवी संस्था as single string ───
-                <span className="w-full text-center tracking-wider">{currentSecondLine}</span>
-              )}
-            </div>
+            {isEnglish ? (
+              // ─── ENGLISH: spread letters and words ───
+              <>
+                <div className="flex justify-between text-red-600 font-bold text-lg xs:text-xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tight">
+                  {currentFirstLine.split('').map((char, idx) => (
+                    <span key={idx}>{char}</span>
+                  ))}
+                </div>
+                <div className="flex justify-between text-red-600 font-medium text-[10px] xs:text-xs sm:text-sm md:text-base">
+                  {currentSecondLine.split(' ').map((word, idx) => (
+                    <span key={idx}>{word}</span>
+                  ))}
+                </div>
+              </>
+            ) : (
+              // ─── HINDI: centered but spread ───
+              <>
+                <span className="text-red-600 font-bold text-lg xs:text-xl sm:text-3xl md:text-4xl lg:text-5xl tracking-wider text-center">
+                  {currentFirstLine}
+                </span>
+                <span className="text-red-600 font-medium text-[10px] xs:text-xs sm:text-sm md:text-base tracking-wider text-center">
+                  {currentSecondLine}
+                </span>
+              </>
+            )}
           </motion.div>
         </Link>
 
@@ -427,6 +420,7 @@ export default function Navbar() {
       </header>
 
       {/* ---------- MOBILE MENU ---------- */}
+
       <AnimatePresence>
         {isMobileOpen && (
           <motion.div
@@ -554,3 +548,4 @@ export default function Navbar() {
     </>
   );
 }
+      
