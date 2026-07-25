@@ -1,10 +1,10 @@
 // src/components/TeamPreview.tsx
 import { motion } from 'framer-motion'
-import { Users, ArrowRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
-// ─── Actual team members – matches the data in Members.tsx ───
+// ─── Only the three actual team members ───
 const teamMembers = [
   {
     name: 'Rekha Thakkar',
@@ -20,11 +20,6 @@ const teamMembers = [
     name: 'Harsh Upadhyay',
     role: 'Executive Member',
     image: '/images/team/harsh.jpg',
-  },
-  {
-    name: 'Anita Desai',
-    role: 'Treasurer',
-    image: '/images/team/anita.jpg',
   },
 ]
 
@@ -56,7 +51,8 @@ export default function TeamPreview() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+        {/* ─── Centered row of 3 members ─── */}
+        <div className="flex flex-wrap justify-center gap-6 md:gap-8">
           {teamMembers.map((member, idx) => (
             <motion.div
               key={idx}
@@ -64,7 +60,7 @@ export default function TeamPreview() {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4, delay: idx * 0.1 }}
               viewport={{ once: true }}
-              className="text-center"
+              className="text-center w-32 sm:w-40"
             >
               <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto rounded-full overflow-hidden border-4 border-[#FFF314] shadow-lg mb-3">
                 <img
