@@ -197,40 +197,47 @@ export default function Navbar() {
             />
           </div>
 
-          {/* Animated brand text – responsive sizes */}
+          {/* Animated brand text – both lines justified/spread equally */}
           <motion.div
             key={brandLangIndex}
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -5 }}
             transition={{ duration: 0.4 }}
-            className="flex-1 flex flex-col leading-tight"
+            className="flex-1 flex flex-col leading-tight min-w-[80px] sm:min-w-[120px] md:min-w-[180px]"
           >
-            {isEnglish ? (
-              // ─── ENGLISH: split characters for first line ───
-              <>
-                <div className="flex text-red-600 font-bold text-lg xs:text-xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tight">
-                  {currentFirstLine.split('').map((char, idx) => (
-                    <span key={idx}>{char}</span>
-                  ))}
-                </div>
-                <div className="flex text-red-600 font-medium text-[10px] xs:text-xs sm:text-sm md:text-base">
-                  {currentSecondLine.split(' ').map((word, idx) => (
-                    <span key={idx}>{word}</span>
-                  ))}
-                </div>
-              </>
-            ) : (
-              // ─── HINDI ───
-              <>
-                <span className="text-red-600 font-bold text-lg xs:text-xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tight">
-                  {currentFirstLine}
-                </span>
-                <span className="text-red-600 font-medium text-[10px] xs:text-xs sm:text-sm md:text-base">
-                  {currentSecondLine}
-                </span>
-              </>
-            )}
+            {/* First line - spread across full width */}
+            <div className="flex w-full justify-between text-red-600 font-bold text-lg xs:text-xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tight">
+              {isEnglish ? (
+                // ─── ENGLISH: PRAYAS split into letters ───
+                <>
+                  <span>P</span>
+                  <span>R</span>
+                  <span>A</span>
+                  <span>Y</span>
+                  <span>A</span>
+                  <span>S</span>
+                </>
+              ) : (
+                // ─── HINDI: प्रयास as a single string ───
+                <span className="w-full text-center tracking-widest">{currentFirstLine}</span>
+              )}
+            </div>
+
+            {/* Second line - spread across full width */}
+            <div className="flex w-full justify-between text-red-600 font-medium text-[10px] xs:text-xs sm:text-sm md:text-base">
+              {isEnglish ? (
+                // ─── ENGLISH: split into words ───
+                <>
+                  <span>Samaj</span>
+                  <span>sevi</span>
+                  <span>Sanstha</span>
+                </>
+              ) : (
+                // ─── HINDI: समाज सेवी संस्था as single string ───
+                <span className="w-full text-center tracking-wider">{currentSecondLine}</span>
+              )}
+            </div>
           </motion.div>
         </Link>
 
