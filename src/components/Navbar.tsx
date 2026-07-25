@@ -64,7 +64,7 @@ export default function Navbar() {
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const location = useLocation();
 
-  // ---------- Animated brand name – no splitting, just CSS justify ----------
+  // ---------- Animated brand name – no splitting, just size adjustment ----------
   const [brandLangIndex, setBrandLangIndex] = useState(0);
   const brandFirstLine = ['PRAYAS', 'प्रयास'];
   const brandSecondLine = ['Samaj sevi Sanstha', 'समाज सेवी संस्था'];
@@ -193,7 +193,7 @@ export default function Navbar() {
             />
           </div>
 
-          {/* Animated brand text – using CSS justify, no splitting, second line slightly larger */}
+          {/* Animated brand text – no justification, just size adjustment */}
           <motion.div
             key={brandLangIndex}
             initial={{ opacity: 0, y: 5 }}
@@ -201,16 +201,13 @@ export default function Navbar() {
             exit={{ opacity: 0, y: -5 }}
             transition={{ duration: 0.4 }}
             className="flex-1 flex flex-col leading-tight"
-            style={{
-              textAlign: 'justify',
-              textJustify: 'distribute',
-              textAlignLast: 'justify',
-            }}
           >
+            {/* First line – large, bold */}
             <span className="text-red-600 font-bold text-2xl sm:text-4xl tracking-tight">
               {brandFirstLine[brandLangIndex]}
             </span>
-            <span className="text-red-600 font-medium text-sm sm:text-base">
+            {/* Second line – increased size so its natural width matches first line */}
+            <span className="text-red-600 font-medium text-sm sm:text-lg">
               {brandSecondLine[brandLangIndex]}
             </span>
           </motion.div>
@@ -528,4 +525,4 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-}
+              }
