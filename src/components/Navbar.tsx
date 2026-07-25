@@ -64,7 +64,7 @@ export default function Navbar() {
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const location = useLocation();
 
-  // ---------- Animated brand name – sizes adjusted for equal width ----------
+  // ---------- Animated brand name ----------
   const [brandLangIndex, setBrandLangIndex] = useState(0);
   const brandFirstLine = ['PRAYAS', 'प्रयास'];
   const brandSecondLine = ['Samaj sevi Sanstha', 'समाज सेवी संस्था'];
@@ -176,6 +176,14 @@ export default function Navbar() {
   const donateText = t('nav.donateNow', 'Donate Now');
   const volunteerText = safeT('nav.volunteer');
 
+  // ---------- Determine if we are in English or Hindi (or other) ----------
+  const isEnglish = i18n.language === 'en';
+
+  // For English: we split first line into characters and second line into words
+  // For Hindi (and others): we keep the whole string and use CSS justification
+  const firstLineText = brandFirstLine[brandLangIndex];
+  const secondLineText = brandSecondLine[brandLangIndex];
+
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-[9999]">
@@ -193,7 +201,7 @@ export default function Navbar() {
             />
           </div>
 
-          {/* Animated brand text – sizes adjusted to match width */}
+          {/* Animated brand text – conditional rendering per language */}
           <motion.div
             key={brandLangIndex}
             initial={{ opacity: 0, y: 5 }}
@@ -202,14 +210,38 @@ export default function Navbar() {
             transition={{ duration: 0.4 }}
             className="flex-1 flex flex-col leading-tight"
           >
-            {/* First line – larger to match width of second line */}
-            <span className="text-red-600 font-bold text-3xl sm:text-5xl tracking-tight">
-              {brandFirstLine[brandLangIndex]}
-            </span>
-            {/* Second line – smaller to match width of first line */}
-            <span className="text-red-600 font-medium text-xs sm:text-base">
-              {brandSecondLine[brandLangIndex]}
-            </span>
+            {isEnglish ? (
+              // ---------- ENGLISH: flex + space-between ----------
+              <>
+                <div className="flex justify-between text-red-600 font-bold text-3xl sm:text-5xl tracking-tight">
+                  {firstLineText.split('').map((char, idx) => (
+                    <span key={idx}>{char}</span>
+                  ))}
+                </div>
+                <div className="flex justify-between text-red-600 font-medium text-xs sm:text-base">
+                  {secondLineText.split(' ').map((word, idx) => (
+                    <span key={idx}>{word}</span>
+                  ))}
+                </div>
+              </>
+            ) : (
+              // ---------- HINDI (and others): whole string + CSS justify ----------
+              <div
+                className="flex flex-col"
+                style={{
+                  textAlign: 'justify',
+                  textJustify: 'distribute',
+                  textAlignLast: 'justify',
+                }}
+              >
+                <span className="text-red-600 font-bold text-3xl sm:text-5xl tracking-tight">
+                  {firstLineText}
+                </span>
+                <span className="text-red-600 font-medium text-xs sm:text-base">
+                  {secondLineText}
+                </span>
+              </div>
+            )}
           </motion.div>
         </Link>
 
@@ -399,6 +431,7 @@ export default function Navbar() {
       </header>
 
       {/* ---------- MOBILE MENU (unchanged) ---------- */}
+      
       <AnimatePresence>
         {isMobileOpen && (
           <motion.div
@@ -525,4 +558,4 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-            }
+              }
