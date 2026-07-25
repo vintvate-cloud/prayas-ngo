@@ -197,7 +197,7 @@ export default function Navbar() {
             />
           </div>
 
-          {/* Animated brand text – responsive with original alignment */}
+          {/* Animated brand text – different approach for English and Hindi */}
           <motion.div
             key={brandLangIndex}
             initial={{ opacity: 0, y: 5 }}
@@ -207,28 +207,26 @@ export default function Navbar() {
             className="flex-1 flex flex-col leading-tight min-w-[80px] sm:min-w-[140px] md:min-w-[180px]"
           >
             {isEnglish ? (
-              // ─── ENGLISH: spread letters and words ───
+              // ─── ENGLISH: letter-spacing for PRAYAS, word-spacing for Samaj sevi Sanstha ───
               <>
-                <div className="flex justify-between text-red-600 font-bold text-lg xs:text-xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tight">
-                  {currentFirstLine.split('').map((char, idx) => (
-                    <span key={idx}>{char}</span>
-                  ))}
+                <div className="text-red-600 font-bold text-lg xs:text-xl sm:text-3xl md:text-4xl lg:text-5xl tracking-[0.15em] sm:tracking-[0.2em] md:tracking-[0.25em] lg:tracking-[0.3em] text-center">
+                  {currentFirstLine}
                 </div>
-                <div className="flex justify-between text-red-600 font-medium text-[10px] xs:text-xs sm:text-sm md:text-base">
-                  {currentSecondLine.split(' ').map((word, idx) => (
-                    <span key={idx}>{word}</span>
-                  ))}
+                <div className="text-red-600 font-medium text-[10px] xs:text-xs sm:text-sm md:text-base text-center" 
+                     style={{ wordSpacing: '0.3em' }}>
+                  {currentSecondLine}
                 </div>
               </>
             ) : (
-              // ─── HINDI: centered but spread ───
+              // ─── HINDI: larger font size for प्रयास, word-spacing for समाज सेवी संस्था ───
               <>
-                <span className="text-red-600 font-bold text-lg xs:text-xl sm:text-3xl md:text-4xl lg:text-5xl tracking-wider text-center">
+                <div className="text-red-600 font-bold text-xl xs:text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-center leading-tight">
                   {currentFirstLine}
-                </span>
-                <span className="text-red-600 font-medium text-[10px] xs:text-xs sm:text-sm md:text-base tracking-wider text-center">
+                </div>
+                <div className="text-red-600 font-medium text-[10px] xs:text-xs sm:text-sm md:text-base text-center"
+                     style={{ wordSpacing: '0.4em' }}>
                   {currentSecondLine}
-                </span>
+                </div>
               </>
             )}
           </motion.div>
@@ -420,7 +418,6 @@ export default function Navbar() {
       </header>
 
       {/* ---------- MOBILE MENU ---------- */}
-
       <AnimatePresence>
         {isMobileOpen && (
           <motion.div
@@ -547,5 +544,5 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-}
+              }
       
