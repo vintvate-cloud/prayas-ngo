@@ -1,3 +1,4 @@
+// src/components/Navbar.tsx
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -7,6 +8,7 @@ import {
 import { FaFacebook, FaTwitter, FaInstagram, FaYoutube, FaLinkedin } from 'react-icons/fa';
 import { supabase } from '@/lib/supabase';
 import { useTranslation } from 'react-i18next';
+import BrandLogo from './BrandLogo'; // 👈 new import
 
 // ---------- NAV LINKS ----------
 const navLinks = [
@@ -63,18 +65,6 @@ export default function Navbar() {
   const [mobileSubmenuOpen, setMobileSubmenuOpen] = useState<string | null>(null);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const location = useLocation();
-
-  // ---------- Animated brand name ----------
-  const [brandLangIndex, setBrandLangIndex] = useState(0);
-  const brandFirstLine = ['PRAYAS', 'प्रयास'];
-  const brandSecondLine = ['Samaj sevi Sanstha', 'समाज सेवी संस्था'];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setBrandLangIndex(prev => (prev === 0 ? 1 : 0));
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
 
   // ---------- Top strip visibility ----------
   const [isStripVisible, setIsStripVisible] = useState(true);
@@ -176,61 +166,13 @@ export default function Navbar() {
   const donateText = t('nav.donateNow', 'Donate Now');
   const volunteerText = safeT('nav.volunteer');
 
-  const isEnglish = brandLangIndex === 0;
-  const currentFirstLine = brandFirstLine[brandLangIndex];
-  const currentSecondLine = brandSecondLine[brandLangIndex];
-
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-[9999]">
-        {/* ---------- OVERLAPPING LOGO ---------- */}
-        <Link
-          to="/"
-          className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-50 flex items-center gap-2 sm:gap-3 group"
-        >
-          {/* Logo - responsive sizes */}
-          <div className="w-12 h-12 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full overflow-hidden flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform border-2 border-white/20">
-            <img
-              src="/Logo.svg"
-              alt="Prayas Logo"
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          {/* Animated brand text – different approach for English and Hindi */}
-          <motion.div
-            key={brandLangIndex}
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -5 }}
-            transition={{ duration: 0.4 }}
-            className="flex-1 flex flex-col leading-tight min-w-[80px] sm:min-w-[140px] md:min-w-[180px]"
-          >
-            {isEnglish ? (
-              // ─── ENGLISH: letter-spacing for PRAYAS, word-spacing for Samaj sevi Sanstha ───
-              <>
-                <div className="text-red-600 font-bold text-lg xs:text-xl sm:text-3xl md:text-4xl lg:text-5xl tracking-[0.15em] sm:tracking-[0.2em] md:tracking-[0.25em] lg:tracking-[0.3em] text-center">
-                  {currentFirstLine}
-                </div>
-                <div className="text-red-600 font-medium text-[10px] xs:text-xs sm:text-sm md:text-base text-center" 
-                     style={{ wordSpacing: '0.3em' }}>
-                  {currentSecondLine}
-                </div>
-              </>
-            ) : (
-              // ─── HINDI: larger font size on mobile to match English width, reduced word-spacing on mobile ───
-              <>
-                <div className="text-red-600 font-bold text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-center leading-tight">
-                  {currentFirstLine}
-                </div>
-                <div className="text-red-600 font-medium text-[10px] xs:text-xs sm:text-sm md:text-base text-center"
-                     style={{ wordSpacing: '0.2em' }}>
-                  {currentSecondLine}
-                </div>
-              </>
-            )}
-          </motion.div>
-        </Link>
+        {/* ---------- OVERLAPPING LOGO (using BrandLogo) ---------- */}
+        <div className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-50">
+          <BrandLogo to="/" variant="navbar" />
+        </div>
 
         {/* ---------- TOP STRIP ---------- */}
         {isStripVisible && (
@@ -261,6 +203,7 @@ export default function Navbar() {
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full">
             <div className="flex items-center justify-end gap-3">
+              {/* Desktop Navigation */}
               <nav className="hidden md:flex items-center gap-2 lg:gap-4 ml-auto">
                 {navLinks.map((link) => {
                   const hasSubmenu = link.submenu && link.submenu.length > 0;
@@ -337,6 +280,7 @@ export default function Navbar() {
                 })}
               </nav>
 
+              {/* Right side actions */}
               <div className="flex items-center gap-1 sm:gap-2">
                 <div className="relative z-20">
                   <button
@@ -544,4 +488,4 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-                }
+}
