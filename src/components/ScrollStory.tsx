@@ -43,13 +43,6 @@ export default function ScrollStory() {
             Prayas is a non-profit organization dedicated to creating meaningful and sustainable change in society. Established in 2001, we have been working towards empowering communities and improving lives through education, healthcare, social awareness, and community development initiatives.
           </p>
           
-          <p>
-            For over two decades, Prayas has been committed to supporting underprivileged families, children, women, and communities by providing opportunities, resources, and guidance for a better future. Our efforts focus on building a society where every individual gets the chance to learn, grow, and live with dignity.
-          </p>
-          
-          <p>
-            With the support of volunteers, donors, and well-wishers, Prayas has made a positive impact on the lives of millions of people across different communities.
-          </p>
           
         </div>
 
