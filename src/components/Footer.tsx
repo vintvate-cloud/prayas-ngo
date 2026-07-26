@@ -83,7 +83,7 @@ export default function Footer() {
                 <div className="flex items-start gap-3 text-white/60 text-sm">
                   <MapPin className="w-4 h-4 mt-0.5 shrink-0" />
                   <span>
-                   611 NRK Biz PARK behind C21 Mall,PU 4, Vijay Nagar, Indore, Madhya Pradesh 452010<br />
+                   Vijay Nagar, Indore, 452010<br />
                     Madhya Pradesh 
                   </span>
                 </div>
