@@ -5,10 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Menu, X, Heart, User, ChevronDown, Globe, UserPlus
 } from 'lucide-react';
-import { FaFacebook, FaTwitter, FaInstagram, FaYoutube, FaLinkedin } from 'react-icons/fa';
 import { supabase } from '@/lib/supabase';
 import { useTranslation } from 'react-i18next';
-import BrandLogo from './BrandLogo'; // 👈 new import
+import BrandLogo from './BrandLogo';
 
 // ---------- NAV LINKS ----------
 const navLinks = [
@@ -66,9 +65,6 @@ export default function Navbar() {
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const location = useLocation();
 
-  // ---------- Top strip visibility ----------
-  const [isStripVisible, setIsStripVisible] = useState(true);
-
   // ---------- DYNAMIC NAVBAR HEIGHT ----------
   useEffect(() => {
     const updateNavbarHeight = () => {
@@ -81,7 +77,7 @@ export default function Navbar() {
     updateNavbarHeight();
     window.addEventListener('resize', updateNavbarHeight);
     return () => window.removeEventListener('resize', updateNavbarHeight);
-  }, [isStripVisible]);
+  }, []); // removed dependency on isStripVisible
 
   // ---------- Auth logic ----------
   useEffect(() => {
@@ -169,34 +165,12 @@ export default function Navbar() {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-[9999]">
-        {/* ---------- OVERLAPPING LOGO (using BrandLogo) ---------- */}
+        {/* ---------- OVERLAPPING LOGO ---------- */}
         <div className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-50">
           <BrandLogo to="/" variant="navbar" />
         </div>
 
-        {/* ---------- TOP STRIP ---------- */}
-        {isStripVisible && (
-          <div className="hidden sm:flex bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460] text-white py-2 px-4 pl-20 sm:pl-36 items-center justify-end w-full shadow-md gap-2">
-            <div className="flex items-center gap-2 shrink-0">
-              <Link
-                to="/donate"
-                className="bg-[#FFF314] text-[#263238] px-3 sm:px-4 py-1 rounded-full text-[10px] sm:text-xs font-semibold hover:bg-[#FFF314]/90 transition shadow-md whitespace-nowrap"
-              >
-                Yes! I Want To Help!
-              </Link>
-              <div className="flex items-center gap-3 text-white/70">
-                <a href="https://www.facebook.com/prayassamajiksanstha" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:text-red-600 transition"><FaFacebook size={14} /></a>
-                <a href="https://x.com/pryasaa?s=11" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" className="hover:text-red-600 transition"><FaTwitter size={14} /></a>
-                <a href="https://www.instagram.com/prayas_samajik_sanstha" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-red-600 transition"><FaInstagram size={14} /></a>
-                <a href="https://www.youtube.com/channel/UC16ZbLnP1qJxrKQoKsss12w" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="hover:text-red-600 transition"><FaYoutube size={14} /></a>
-                <a href="https://www.linkedin.com/in/prayas-samaj-sevi-sastha-undefined-0a468b418/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:text-red-600 transition"><FaLinkedin size={14} /></a>
-              </div>
-              <button onClick={() => setIsStripVisible(false)} className="text-white/50 hover:text-white transition p-0.5" aria-label="Close announcement"><X size={16} /></button>
-            </div>
-          </div>
-        )}
-
-        {/* ---------- MAIN NAVBAR ---------- */}
+        {/* ---------- MAIN NAVBAR (strip removed) ---------- */}
         <div
           className={`transition-all duration-500 ${bgHeader} 
             min-h-[70px] sm:min-h-[90px] md:min-h-[100px] flex items-center py-2 sm:py-1.5 pl-16 sm:pl-20 md:pl-36`}
@@ -362,7 +336,7 @@ export default function Navbar() {
       </header>
 
       {/* ---------- MOBILE MENU ---------- */}
-      <AnimatePresence>
+         <AnimatePresence>
         {isMobileOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
@@ -488,4 +462,4 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-}
+      }             
