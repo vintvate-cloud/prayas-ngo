@@ -3,6 +3,7 @@ import { Heart, Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { FaFacebook, FaTwitter, FaInstagram, FaYoutube, FaLinkedin } from 'react-icons/fa';
 
+
 export default function Footer() {
   const { t } = useTranslation();
   const scrollToTop = () => {
