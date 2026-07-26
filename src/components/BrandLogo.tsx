@@ -1,6 +1,6 @@
 // src/components/BrandLogo.tsx
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
@@ -31,36 +31,57 @@ export default function BrandLogo({
   const isEnglish = brandLangIndex === 0;
 
   // ─── Width-sync refs ───
-  // Instead of relying on CSS (w-max + w-full + justify-between) to make the
-  // top line "guess" the bottom line's width, we measure the bottom line's
-  // real rendered pixel width and apply it directly to the top line.
-  // This removes any dependency on font-rendering/kerning differences
-  // between mobile and desktop browsers, so both lines always line up
-  // exactly, on every device.
+  // Instead of relying on CSS tricks (w-max + w-full + justify-between for
+  // English, or fixed Tailwind breakpoint font sizes for Hindi) to make the
+  // top line "guess" the bottom line's width, we directly MEASURE the
+  // bottom line's real rendered pixel width and use that measurement to
+  // fix the top line — either as an explicit width (English, since it can
+  // stretch via justify-between) or as an explicit, precisely-scaled
+  // font-size (Hindi, since प्रयास is a single word that can't be
+  // justify-spread). This removes any dependency on font-rendering/kerning
+  // differences between mobile and desktop browsers, so both lines line up
+  // exactly on every device.
   const bottomRowRef = useRef<HTMLDivElement>(null);
+  const hindiTopRef = useRef<HTMLDivElement>(null);
   const [topRowWidth, setTopRowWidth] = useState<number | undefined>(undefined);
+  const [hindiFontSize, setHindiFontSize] = useState<number | undefined>(undefined);
 
-  useEffect(() => {
-    const syncWidth = () => {
-      if (bottomRowRef.current) {
-        setTopRowWidth(bottomRowRef.current.getBoundingClientRect().width);
+  useLayoutEffect(() => {
+    const syncWidths = () => {
+      if (!bottomRowRef.current) return;
+      const targetWidth = bottomRowRef.current.getBoundingClientRect().width;
+
+      if (isEnglish) {
+        setTopRowWidth(targetWidth);
+      } else if (hindiTopRef.current) {
+        const topEl = hindiTopRef.current;
+        const currentWidth = topEl.getBoundingClientRect().width;
+        const currentFontSize = parseFloat(getComputedStyle(topEl).fontSize);
+        if (currentWidth > 0 && currentFontSize > 0) {
+          // Scale font-size by the exact ratio needed to make प्रयास's
+          // rendered width match समाज सेवी संस्था's rendered width.
+          // Width scales linearly with font-size for a given string, so
+          // one measured correction is enough — no distortion, no
+          // guessed breakpoint values.
+          setHindiFontSize(currentFontSize * (targetWidth / currentWidth));
+        }
       }
     };
 
     // Measure once fonts are ready (avoids a flash of mismatched width
     // before web fonts finish loading), then again on resize.
     if (document.fonts?.ready) {
-      document.fonts.ready.then(syncWidth);
+      document.fonts.ready.then(syncWidths);
     }
     // Run on next frame too, in case fonts were already cached.
-    const raf = requestAnimationFrame(syncWidth);
+    const raf = requestAnimationFrame(syncWidths);
 
-    window.addEventListener('resize', syncWidth);
+    window.addEventListener('resize', syncWidths);
     return () => {
       cancelAnimationFrame(raf);
-      window.removeEventListener('resize', syncWidth);
+      window.removeEventListener('resize', syncWidths);
     };
-  }, [brandLangIndex, variant]);
+  }, [brandLangIndex, variant, isEnglish]);
 
   // ─── Size classes per variant ───
   let logoSizeClasses = 'w-12 h-12 sm:w-20 sm:h-20 md:w-24 md:h-24';
@@ -145,10 +166,19 @@ export default function BrandLogo({
         ) : (
           // ─── Hindi ───
           <div className="flex flex-col items-center w-max">
-            {/* Top line (single word) scaled up by font-size; kept centered
-                so any residual sub-pixel gap is symmetric rather than
-                pulling to one side. */}
-            <div className={`text-red-600 font-bold ${hindiFirstLineClasses} leading-none mb-[-4px] sm:mb-0`}>
+            {/* Top line (single word). The Tailwind classes below set a
+                reasonable starting size; the inline `fontSize` (once
+                measured) overrides it with the exact value that makes this
+                word's rendered width equal समाज सेवी संस्था's rendered
+                width — precise on every device, not just at the
+                breakpoints the classes happen to hit. Centered so any
+                residual sub-pixel gap is symmetric rather than pulling to
+                one side. */}
+            <div
+              ref={hindiTopRef}
+              className={`text-red-600 font-bold ${hindiFirstLineClasses} leading-none mb-[-4px] sm:mb-0`}
+              style={hindiFontSize ? { fontSize: `${hindiFontSize}px` } : undefined}
+            >
               प्रयास
             </div>
             {/* Bottom line dictates the container width */}
