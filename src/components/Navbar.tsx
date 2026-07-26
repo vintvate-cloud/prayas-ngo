@@ -115,7 +115,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768) {
+      if (window.innerWidth >= 1280) {
         setIsMobileOpen(false);
         setMobileSubmenuOpen(null);
       }
@@ -123,6 +123,18 @@ export default function Navbar() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Lock background scrolling when mobile menu is open
+  useEffect(() => {
+    if (isMobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileOpen]);
 
   const isAuthPage = location.pathname === '/auth';
   const showAuthLink = !isAuthPage;
@@ -165,171 +177,169 @@ export default function Navbar() {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-[9999]">
-        {/* ---------- OVERLAPPING LOGO ---------- */}
-        <div className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-50">
-          <BrandLogo to="/" variant="navbar" />
-        </div>
-
-        {/* ---------- MAIN NAVBAR (strip removed) ---------- */}
+        {/* ---------- MAIN NAVBAR ---------- */}
         <div
           className={`transition-all duration-500 ${bgHeader} 
-            min-h-[70px] sm:min-h-[90px] md:min-h-[100px] flex items-center py-2 sm:py-1.5 pl-16 sm:pl-20 md:pl-36`}
+            min-h-[70px] sm:min-h-[85px] lg:min-h-[95px] flex items-center py-2 px-3 sm:px-6 lg:px-8`}
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full">
-            <div className="flex items-center justify-end gap-3">
-              {/* Desktop Navigation */}
-              <nav className="hidden md:flex items-center gap-2 lg:gap-4 ml-auto">
-                {navLinks.map((link) => {
-                  const hasSubmenu = link.submenu && link.submenu.length > 0;
-                  const isActive = location.pathname === link.path || (hasSubmenu && isSubmenuActive(link.submenu!));
-                  
-                  if (hasSubmenu) {
-                    return (
-                      <div
-                        key={link.name}
-                        className="relative group"
-                        onMouseEnter={() => handleMouseEnter(link.name)}
-                        onMouseLeave={handleMouseLeave}
+          <div className="max-w-7xl mx-auto w-full flex items-center justify-between gap-3">
+            {/* Logo on Left */}
+            <div className="flex-shrink-0 z-50">
+              <BrandLogo to="/" variant="navbar" />
+            </div>
+
+            {/* Desktop Navigation Links */}
+            <nav className="hidden xl:flex items-center gap-3 lg:gap-5 mx-auto">
+              {navLinks.map((link) => {
+                const hasSubmenu = link.submenu && link.submenu.length > 0;
+                const isActive = location.pathname === link.path || (hasSubmenu && isSubmenuActive(link.submenu!));
+                
+                if (hasSubmenu) {
+                  return (
+                    <div
+                      key={link.name}
+                      className="relative group"
+                      onMouseEnter={() => handleMouseEnter(link.name)}
+                      onMouseLeave={handleMouseLeave}
+                    >
+                      <button
+                        className={`text-xs font-medium transition-colors relative py-2 group flex items-center gap-1 whitespace-nowrap ${
+                          isActive ? 'text-red-600' : `${textColor} ${textColorHover}`
+                        }`}
                       >
+                        {safeT(link.name)}
+                        <ChevronDown className={`w-3 h-3 transition-transform ${openDropdown === link.name ? 'rotate-180' : ''}`} />
+                        <span
+                          className={`absolute -bottom-1 left-0 h-[2px] bg-red-600 transition-all ${
+                            isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                          }`}
+                        />
+                      </button>
+                      <AnimatePresence>
+                        {openDropdown === link.name && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 10 }}
+                            transition={{ duration: 0.15 }}
+                            className="absolute left-0 top-full mt-1 bg-white dark:bg-[#1a1a2e] rounded-xl shadow-xl border border-[#263238]/10 dark:border-white/10 min-w-[200px] py-2 z-50"
+                          >
+                            {link.submenu!.map((sub) => (
+                              <Link
+                                key={sub.path}
+                                to={sub.path}
+                                className={`block px-5 py-2.5 text-xs transition-colors ${
+                                  location.pathname === sub.path
+                                    ? 'text-red-600 bg-red-600/10'
+                                    : `text-[#263238] dark:text-white hover:bg-red-600/10 hover:text-red-600`
+                                }`}
+                              >
+                                {safeT(sub.name)}
+                              </Link>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                }
+
+                return (
+                  <Link
+                    key={link.name}
+                    to={link.path}
+                    className={`text-xs font-medium transition-colors relative py-2 group whitespace-nowrap ${
+                      location.pathname === link.path
+                        ? 'text-red-600'
+                        : `${textColor} ${textColorHover}`
+                    }`}
+                  >
+                    {safeT(link.name)}
+                    <span
+                      className={`absolute -bottom-1 left-0 h-[2px] bg-red-600 transition-all ${
+                        location.pathname === link.path ? 'w-full' : 'w-0 group-hover:w-full'
+                      }`}
+                    />
+                  </Link>
+                );
+              })}
+            </nav>
+
+            {/* Right side actions */}
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0 ml-auto xl:ml-0">
+              <div className="relative z-20">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setLangDropdownOpen(!langDropdownOpen);
+                  }}
+                  className={`flex items-center gap-1 px-2 sm:px-3 py-2 text-xs font-medium rounded-full border transition-all hover:scale-105 cursor-pointer ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
+                >
+                  <Globe className="w-4 h-4" />
+                  <span className="hidden sm:inline">{currentLangLabel}</span>
+                </button>
+                <AnimatePresence>
+                  {langDropdownOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute right-0 top-full mt-1 bg-white dark:bg-[#1a1a2e] rounded-xl shadow-xl border border-[#263238]/10 dark:border-white/10 min-w-[150px] py-2 z-50 pointer-events-auto"
+                    >
+                      {LANGUAGES.map((lang) => (
                         <button
-                          className={`text-xs font-medium transition-colors relative py-2 group flex items-center gap-1 whitespace-nowrap ${
-                            isActive ? 'text-red-600' : `${textColor} ${textColorHover}`
+                          key={lang.code}
+                          onClick={() => changeLanguage(lang.code)}
+                          className={`block w-full text-left px-5 py-2.5 text-sm transition-colors cursor-pointer ${
+                            i18n.language === lang.code
+                              ? 'text-red-600 bg-red-600/10'
+                              : 'text-[#263238] dark:text-white hover:bg-red-600/10 hover:text-red-600'
                           }`}
                         >
-                          {safeT(link.name)}
-                          <ChevronDown className={`w-3 h-3 transition-transform ${openDropdown === link.name ? 'rotate-180' : ''}`} />
-                          <span
-                            className={`absolute -bottom-1 left-0 h-[2px] bg-red-600 transition-all ${
-                              isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                            }`}
-                          />
+                          {lang.label}
                         </button>
-                        <AnimatePresence>
-                          {openDropdown === link.name && (
-                            <motion.div
-                              initial={{ opacity: 0, y: 10 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              exit={{ opacity: 0, y: 10 }}
-                              transition={{ duration: 0.15 }}
-                              className="absolute left-0 top-full mt-1 bg-white dark:bg-[#1a1a2e] rounded-xl shadow-xl border border-[#263238]/10 dark:border-white/10 min-w-[200px] py-2 z-50"
-                            >
-                              {link.submenu!.map((sub) => (
-                                <Link
-                                  key={sub.path}
-                                  to={sub.path}
-                                  className={`block px-5 py-2.5 text-xs transition-colors ${
-                                    location.pathname === sub.path
-                                      ? 'text-red-600 bg-red-600/10'
-                                      : `text-[#263238] dark:text-white hover:bg-red-600/10 hover:text-red-600`
-                                  }`}
-                                >
-                                  {safeT(sub.name)}
-                                </Link>
-                              ))}
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
-                    );
-                  }
-
-                  return (
-                    <Link
-                      key={link.name}
-                      to={link.path}
-                      className={`text-xs font-medium transition-colors relative py-2 group whitespace-nowrap ${
-                        location.pathname === link.path
-                          ? 'text-red-600'
-                          : `${textColor} ${textColorHover}`
-                      }`}
-                    >
-                      {safeT(link.name)}
-                      <span
-                        className={`absolute -bottom-1 left-0 h-[2px] bg-red-600 transition-all ${
-                          location.pathname === link.path ? 'w-full' : 'w-0 group-hover:w-full'
-                        }`}
-                      />
-                    </Link>
-                  );
-                })}
-              </nav>
-
-              {/* Right side actions */}
-              <div className="flex items-center gap-1 sm:gap-2">
-                <div className="relative z-20">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setLangDropdownOpen(!langDropdownOpen);
-                    }}
-                    className={`flex items-center gap-1 px-2 sm:px-3 py-2 text-xs font-medium rounded-full border transition-all hover:scale-105 cursor-pointer ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
-                  >
-                    <Globe className="w-4 h-4" />
-                    <span className="hidden sm:inline">{currentLangLabel}</span>
-                  </button>
-                  <AnimatePresence>
-                    {langDropdownOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        transition={{ duration: 0.15 }}
-                        className="absolute right-0 top-full mt-1 bg-white dark:bg-[#1a1a2e] rounded-xl shadow-xl border border-[#263238]/10 dark:border-white/10 min-w-[150px] py-2 z-50 pointer-events-auto"
-                      >
-                        {LANGUAGES.map((lang) => (
-                          <button
-                            key={lang.code}
-                            onClick={() => changeLanguage(lang.code)}
-                            className={`block w-full text-left px-5 py-2.5 text-sm transition-colors cursor-pointer ${
-                              i18n.language === lang.code
-                                ? 'text-red-600 bg-red-600/10'
-                                : 'text-[#263238] dark:text-white hover:bg-red-600/10 hover:text-red-600'
-                            }`}
-                          >
-                            {lang.label}
-                          </button>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                <Link
-                  to="/donate"
-                  className="inline-flex items-center gap-1.5 px-2 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all shadow-lg hover:shadow-[#FFF314]/30 hover:scale-105 bg-[#FFF314] text-[#263238] shadow-[#FFF314]/40 hover:bg-[#FFF314]/90"
-                >
-                  <Heart className="w-4 h-4" />
-                  <span className="hidden sm:inline">{donateText}</span>
-                </Link>
-
-                <Link
-                  to="/volunteer"
-                  className="inline-flex items-center gap-1.5 px-2 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all shadow-lg hover:shadow-[#FFF314]/30 hover:scale-105 bg-[#FFF314] text-[#263238] shadow-[#FFF314]/40 hover:bg-[#FFF314]/90"
-                >
-                  <UserPlus className="w-4 h-4" />
-                  <span className="hidden sm:inline">{volunteerText}</span>
-                </Link>
-
-                {showAuthLink && !loading && (
-                  <Link
-                    to={isAuthenticated ? "/profile" : "/auth"}
-                    className={`inline-flex items-center gap-1.5 px-2 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-full border transition-all hover:scale-105 ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
-                  >
-                    <User className="w-4 h-4" />
-                    <span className="hidden sm:inline">
-                      {isAuthenticated ? safeT('nav.profile') : safeT('nav.signin')}
-                    </span>
-                  </Link>
-                )}
-
-                <button
-                  className={`md:hidden p-2.5 -m-1 rounded-full transition-colors ${textColor} ${textColorHover} ${bgButton}`}
-                  onClick={() => setIsMobileOpen(!isMobileOpen)}
-                  aria-label={isMobileOpen ? 'Close menu' : 'Open menu'}
-                >
-                  {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
-                </button>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
+
+              <Link
+                to="/donate"
+                className="inline-flex items-center gap-1.5 px-2.5 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all shadow-lg hover:shadow-[#FFF314]/30 hover:scale-105 bg-[#FFF314] text-[#263238] shadow-[#FFF314]/40 hover:bg-[#FFF314]/90"
+              >
+                <Heart className="w-4 h-4" />
+                <span className="hidden sm:inline">{donateText}</span>
+              </Link>
+
+              <Link
+                to="/volunteer"
+                className="inline-flex items-center gap-1.5 px-2.5 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all shadow-lg hover:shadow-[#FFF314]/30 hover:scale-105 bg-[#FFF314] text-[#263238] shadow-[#FFF314]/40 hover:bg-[#FFF314]/90"
+              >
+                <UserPlus className="w-4 h-4" />
+                <span className="hidden sm:inline">{volunteerText}</span>
+              </Link>
+
+              {showAuthLink && !loading && (
+                <Link
+                  to={isAuthenticated ? "/profile" : "/auth"}
+                  className={`inline-flex items-center gap-1.5 px-2 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-full border transition-all hover:scale-105 ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
+                >
+                  <User className="w-4 h-4" />
+                  <span className="hidden sm:inline">
+                    {isAuthenticated ? safeT('nav.profile') : safeT('nav.signin')}
+                  </span>
+                </Link>
+              )}
+
+              <button
+                className={`xl:hidden p-2.5 -m-1 rounded-full transition-colors ${textColor} ${textColorHover} ${bgButton}`}
+                onClick={() => setIsMobileOpen(!isMobileOpen)}
+                aria-label={isMobileOpen ? 'Close menu' : 'Open menu'}
+              >
+                {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
             </div>
           </div>
         </div>
@@ -343,7 +353,7 @@ export default function Navbar() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed left-0 right-0 top-[80px] bottom-0 z-[9998] bg-white shadow-xl border-t border-[#263238]/10 overflow-y-auto"
+            className="fixed left-0 right-0 top-[var(--navbar-height,70px)] bottom-0 z-[9998] bg-white shadow-xl border-t border-[#263238]/10 overflow-y-auto"
           >
             <nav className="flex flex-col px-4 py-3 sm:py-4 gap-1">
               {navLinks.map((link) => {

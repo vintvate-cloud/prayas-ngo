@@ -184,7 +184,7 @@ export default function CubeGallery() {
       </div>
 
       {/* Credit Element */}
-      <div id="credit" className="fixed bottom-6 left-6 z-50">
+      <div id="credit" className="absolute bottom-6 left-6 z-30 hidden sm:block">
         <a 
           href="https://www.linkedin.com/posts/luis-martinez-lr_ai-creativity-reversecreativity-activity-7366853269517651970-zeUD?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFq1dzgByK1x_NMrcq582OMbK-_3q0DthYY" 
           target="_blank" 

@@ -13,6 +13,17 @@ type GalleryImage = {
   display_order: number;
 };
 
+const DEFAULT_GALLERY: GalleryImage[] = [
+  { id: '1', image_url: '/P1039322.JPG', title: 'Community Empowerment', description: '', category: 'Empowerment', display_order: 1 },
+  { id: '2', image_url: '/P1039409.JPG', title: 'Education & Sanskarshala', description: '', category: 'Education', display_order: 2 },
+  { id: '3', image_url: '/healthcaret.jpg', title: 'Health Camp', description: '', category: 'Healthcare', display_order: 3 },
+  { id: '4', image_url: '/TREEGROW.jpg', title: 'Tree Plantation', description: '', category: 'Environment', display_order: 4 },
+  { id: '5', image_url: '/CHILDRENGROUP.jpg', title: 'Child Support', description: '', category: 'Welfare', display_order: 5 },
+  { id: '6', image_url: '/WOMEN.jpeg', title: 'Women Tailoring Centre', description: '', category: 'Empowerment', display_order: 6 },
+  { id: '7', image_url: '/Sindoda/IMG_20191022_121001 (1).jpg', title: 'Project Sindoda', description: '', category: 'Environment', display_order: 7 },
+  { id: '8', image_url: '/CSR.jpeg', title: 'Community Welfare', description: '', category: 'Community', display_order: 8 },
+];
+
 export default function Gallery() {
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [loading, setLoading] = useState(true);
@@ -37,15 +48,16 @@ export default function Gallery() {
         .order('display_order', { ascending: true })
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
-      if (data && data.length > 0) {
+      if (error || !data || data.length === 0) {
+        setImages(DEFAULT_GALLERY);
+        setActiveIndex(Math.floor(DEFAULT_GALLERY.length / 2));
+      } else {
         setImages(data);
         setActiveIndex(Math.floor(data.length / 2));
-      } else {
-        setImages([]);
       }
     } catch (err: any) {
-      setError(err.message);
+      setImages(DEFAULT_GALLERY);
+      setActiveIndex(Math.floor(DEFAULT_GALLERY.length / 2));
     } finally {
       setLoading(false);
     }
@@ -152,6 +164,10 @@ export default function Gallery() {
                   draggable={false}
                   className="w-full h-full object-cover rounded-2xl shadow-lg hover:shadow-xl transition-shadow"
                   onClick={() => toSlide(i)}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src =
+                      'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"%3E%3Crect width="400" height="400" fill="%23263238"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="24" fill="%23FFF314"%3EPrayas%3C/text%3E%3C/svg%3E'
+                  }}
                 />
               </motion.div>
             );

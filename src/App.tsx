@@ -1,32 +1,40 @@
 // src/App.tsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
 import Layout from './components/Layout';
-import Home from './pages/Home';
-import About from './pages/About';
-import OurWork from './pages/OurWork';
-import Programs from './pages/Programs';
-import Gallery from './pages/Gallery';
-import Stories from './pages/Stories';
-import Children from './pages/Children';
-import Donate from './pages/Donate';
-import Contact from './pages/Contact';
-import Auth from './pages/Auth';
-import Profile from './pages/Profile';
-import Volunteer from './pages/Volunteer';
-import AdminDashboard from './pages/AdminDashboard';
-import ImpactPage from './pages/ImpactPage';
-import Members from './pages/Members';
-import Certifications from './pages/Certifications';
-import Education from './pages/impact/Education';
-import WomenEmpowerment from './pages/impact/WomenEmpowerment';
-import RuralDevelopment from './pages/impact/RuralDevelopment';
-import Healthcare from './pages/impact/Healthcare';
-import Environment from './pages/impact/Environment';
-import ProjectSindoda from './pages/impact/ProjectSindoda';
+
+// Dynamic lazy loading of page components for optimal bundle splitting
+const Home = lazy(() => import('./pages/Home'));
+const About = lazy(() => import('./pages/About'));
+const OurWork = lazy(() => import('./pages/OurWork'));
+const Programs = lazy(() => import('./pages/Programs'));
+const Gallery = lazy(() => import('./pages/Gallery'));
+const Stories = lazy(() => import('./pages/Stories'));
+const Children = lazy(() => import('./pages/Children'));
+const Donate = lazy(() => import('./pages/Donate'));
+const Contact = lazy(() => import('./pages/Contact'));
+const Auth = lazy(() => import('./pages/Auth'));
+const Profile = lazy(() => import('./pages/Profile'));
+const Volunteer = lazy(() => import('./pages/Volunteer'));
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+const ImpactPage = lazy(() => import('./pages/ImpactPage'));
+const Members = lazy(() => import('./pages/Members'));
+const Certifications = lazy(() => import('./pages/Certifications'));
+const Education = lazy(() => import('./pages/impact/Education'));
+const WomenEmpowerment = lazy(() => import('./pages/impact/WomenEmpowerment'));
+const RuralDevelopment = lazy(() => import('./pages/impact/RuralDevelopment'));
+const Healthcare = lazy(() => import('./pages/impact/Healthcare'));
+const Environment = lazy(() => import('./pages/impact/Environment'));
+const ProjectSindoda = lazy(() => import('./pages/impact/ProjectSindoda'));
 import VolunteerPopup from './components/VolunteerPopup';
+
+const RouteFallback = () => (
+  <div className="flex items-center justify-center min-h-[60vh]">
+    <div className="w-10 h-10 border-4 border-[#FFF314] border-t-transparent rounded-full animate-spin" />
+  </div>
+);
 
 export default function App() {
   const [isVolunteerPopupOpen, setIsVolunteerPopupOpen] = useState(false);
@@ -39,34 +47,36 @@ export default function App() {
   return (
     <>
       <AnimatePresence mode="wait">
-        <Routes>
-          <Route path="/auth" element={<Auth />} />
-          <Route element={<Layout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/about/members" element={<Members />} />
-            <Route path="/about/certifications" element={<Certifications />} />
-            <Route path="/our-work" element={<OurWork />} />
-            <Route path="/programs" element={<Programs />} />
-            <Route path="/gallery" element={<Gallery />} />
-            <Route path="/stories" element={<Stories />} />
-            <Route path="/children" element={<Children />} />
-            <Route path="/donate" element={<Donate />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/volunteer" element={<Volunteer />} />
-            <Route path="/admin/*" element={<AdminDashboard />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/impact/:slug" element={<ImpactPage />} />
-            
-            {/* Dedicated category pages */}
-            <Route path="/rural-development" element={<RuralDevelopment />} />
-            <Route path="/education" element={<Education />} />
-            <Route path="/women-empowerment" element={<WomenEmpowerment />} />
-            <Route path="/healthcare" element={<Healthcare />} />
-            <Route path="/environment" element={<Environment />} />
-            <Route path="/project-sindoda" element={<ProjectSindoda />} />
-          </Route>
-        </Routes>
+        <Suspense fallback={<RouteFallback />}>
+          <Routes>
+            <Route path="/auth" element={<Auth />} />
+            <Route element={<Layout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/about/members" element={<Members />} />
+              <Route path="/about/certifications" element={<Certifications />} />
+              <Route path="/our-work" element={<OurWork />} />
+              <Route path="/programs" element={<Programs />} />
+              <Route path="/gallery" element={<Gallery />} />
+              <Route path="/stories" element={<Stories />} />
+              <Route path="/children" element={<Children />} />
+              <Route path="/donate" element={<Donate />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/volunteer" element={<Volunteer />} />
+              <Route path="/admin/*" element={<AdminDashboard />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/impact/:slug" element={<ImpactPage />} />
+              
+              {/* Dedicated category pages */}
+              <Route path="/rural-development" element={<RuralDevelopment />} />
+              <Route path="/education" element={<Education />} />
+              <Route path="/women-empowerment" element={<WomenEmpowerment />} />
+              <Route path="/healthcare" element={<Healthcare />} />
+              <Route path="/environment" element={<Environment />} />
+              <Route path="/project-sindoda" element={<ProjectSindoda />} />
+            </Route>
+          </Routes>
+        </Suspense>
       </AnimatePresence>
 
       <VolunteerPopup
@@ -76,3 +86,4 @@ export default function App() {
     </>
   );
 }
+

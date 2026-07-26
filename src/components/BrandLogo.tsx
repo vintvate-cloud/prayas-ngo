@@ -29,9 +29,9 @@ export default function BrandLogo({
   const imageSrc = isEnglish ? '/Prayas english.jpg' : '/Prayashindi.jpg';
 
   // ─── Size classes per variant ───
-  let logoSizeClasses = 'w-12 h-12 sm:w-20 sm:h-20 md:w-24 md:h-24';
-  let brandImageMaxHeight = 'h-10 sm:h-16 md:h-20 lg:h-24';
-  let containerClasses = 'min-w-[80px] sm:min-w-[140px] md:min-w-[180px]';
+  let logoSizeClasses = 'w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16';
+  let brandImageMaxHeight = 'h-8 sm:h-10 lg:h-14';
+  let containerClasses = 'min-w-[70px] sm:min-w-[120px] lg:min-w-[160px]';
   let gapClasses = 'gap-2 sm:gap-3';
 
   if (variant === 'footer') {

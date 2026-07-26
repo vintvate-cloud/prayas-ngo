@@ -186,7 +186,7 @@ export default function ImpactCategories() {
                     className="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-700"
                     onError={(e) => {
                       (e.target as HTMLImageElement).src =
-                        'https://placehold.co/800x600/263238/FFF314?text=Prayas'
+                        'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600"%3E%3Crect width="800" height="600" fill="%23263238"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="32" fill="%23FFF314" font-weight="bold"%3EPrayas Foundation%3C/text%3E%3C/svg%3E'
                     }}
                   />
                   <div className="absolute inset-0 bg-black/10 group-hover/card:bg-transparent transition-colors duration-300" />

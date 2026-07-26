@@ -62,12 +62,16 @@ export default function TeamPreview() {
               viewport={{ once: true }}
               className="text-center w-32 sm:w-40"
             >
-              <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto rounded-full overflow-hidden border-4 border-[#FFF314] shadow-lg mb-3">
+              <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto rounded-full overflow-hidden border-4 border-[#FFF314] shadow-lg mb-3 bg-[#263238]/10 flex items-center justify-center">
                 <img
-                  src={member.image || '/placeholder-avatar.jpg'}
+                  src={member.image || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"%3E%3Crect width="128" height="128" fill="%23263238"/%3E%3Ccircle cx="64" cy="48" r="24" fill="%23FFF314"/%3E%3Cpath d="M24 112c0-24 16-36 40-36s40 12 40 36" fill="%23FFF314"/%3E%3C/svg%3E'}
                   alt={member.name}
                   className="w-full h-full object-cover"
                   loading="lazy"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src =
+                      'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"%3E%3Crect width="128" height="128" fill="%23263238"/%3E%3Ccircle cx="64" cy="48" r="24" fill="%23FFF314"/%3E%3Cpath d="M24 112c0-24 16-36 40-36s40 12 40 36" fill="%23FFF314"/%3E%3C/svg%3E'
+                  }}
                 />
               </div>
               <h4 className="font-bold text-[#263238] text-sm sm:text-base">{member.name}</h4>

@@ -18,42 +18,42 @@ const CAUSE_MAP: Record<string, { title: string; description: string; image: str
   food: { 
     title: 'Food Security', 
     description: 'Provide meals to families in need',
-    image: '/images/food-security.jpg'
+    image: '/P1039322.JPG'
   },
   education: { 
     title: 'Education', 
     description: 'Support quality education for children',
-    image: '/images/education.jpg'
+    image: '/P1039409.JPG'
   },
   health: { 
     title: 'Healthcare', 
     description: 'Fund medical care and health camps',
-    image: '/images/healthcare.jpg'
+    image: '/healthcaret.jpg'
   },
   environment: { 
     title: 'Environment', 
     description: 'Help protect our planet',
-    image: '/images/environment.jpg'
+    image: '/TREEGROW.jpg'
   },
   shelter: { 
     title: 'Shelter & Housing', 
     description: 'Provide safe homes for the homeless',
-    image: '/images/shelter.jpg'
+    image: '/InShot_20260721_094914841.png'
   },
   water: { 
     title: 'Clean Water', 
     description: 'Ensure access to safe drinking water',
-    image: '/images/water.jpg'
+    image: '/education1.jpeg'
   },
   animals: { 
     title: 'Animal Welfare', 
     description: 'Care for stray and abandoned animals',
-    image: '/images/animals.jpg'
+    image: '/CHILDRENGROUP.jpg'
   },
   community: { 
     title: 'Community Support', 
     description: 'Empower local communities',
-    image: '/images/community.jpg'
+    image: '/CSR.jpeg'
   },
 }
 
@@ -98,10 +98,12 @@ export default function Donate() {
   }
 
   const copyQRToClipboard = () => {
-    navigator.clipboard.writeText('public/BANKQR.jpeg')
+    navigator.clipboard.writeText('8818882178.1@hdfc')
     setQrCopied(true)
     setTimeout(() => setQrCopied(false), 2000)
   }
+
+  const svgFallback = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"%3E%3Crect width="400" height="300" fill="%23263238"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="20" fill="%23FFF314" font-weight="bold"%3EPrayas NGO Cause%3C/text%3E%3C/svg%3E';
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8" style={{ position: 'relative', zIndex: 1 }}>
@@ -122,7 +124,7 @@ export default function Donate() {
                   src={cause.image} 
                   alt={cause.title} 
                   className="w-full h-48 object-cover"
-                  onError={(e) => (e.currentTarget.src = '/images/placeholder.jpg')}
+                  onError={(e) => (e.currentTarget.src = svgFallback)}
                 />
               </div>
             </>

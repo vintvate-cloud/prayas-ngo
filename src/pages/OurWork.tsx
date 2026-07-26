@@ -390,18 +390,25 @@ export default function OurWork() {
                 >
                   {/* FRONT – 1px border on top, left, right only */}
                   <div
-                    className="absolute inset-0 [backface-visibility:hidden] overflow-hidden shadow-lg border-0 border-t border-l border-r flex flex-col items-center justify-center p-4"
+                    className="absolute inset-0 [backface-visibility:hidden] overflow-hidden shadow-lg border-0 border-t border-l border-r flex flex-col items-center justify-center p-4 group"
                     style={{
                       backgroundColor: category.color,
                       borderColor: category.color,
                     }}
                   >
-                    <div className="w-full flex-1 overflow-hidden">
+                    <div className="w-full flex-1 overflow-hidden relative rounded-md">
                       <img
                         src={category.image}
                         alt={category.title}
                         className="w-full h-full object-cover"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src =
+                            'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500"%3E%3Crect width="800" height="500" fill="%23263238"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="28" fill="%23FFF314" font-weight="bold"%3EPrayas Foundation%3C/text%3E%3C/svg%3E'
+                        }}
                       />
+                      <span className="absolute bottom-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-xs">
+                        Tap for info
+                      </span>
                     </div>
                     <h3 className="text-white text-lg font-bold mt-2 text-center">
                       {category.title}

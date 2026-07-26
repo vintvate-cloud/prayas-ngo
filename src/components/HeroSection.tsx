@@ -72,6 +72,8 @@ export default function HeroBanner() {
     [t]
   );
 
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+
   useEffect(() => {
     if (!isAutoPlaying) return;
     const interval = setInterval(() => {
@@ -80,8 +82,23 @@ export default function HeroBanner() {
     return () => clearInterval(interval);
   }, [isAutoPlaying, SLIDES.length]);
 
-  const handleTouchStart = () => {
+  const handleTouchStart = (e: React.TouchEvent) => {
     setIsAutoPlaying(false);
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diffX = touchStartX - touchEndX;
+    if (Math.abs(diffX) > 40) {
+      if (diffX > 0) {
+        handleSlide('next');
+      } else {
+        handleSlide('prev');
+      }
+    }
+    setTouchStartX(null);
   };
 
   const handleSlide = (direction: 'next' | 'prev') => {
@@ -112,8 +129,9 @@ export default function HeroBanner() {
         marginTop: 'var(--navbar-height, 0px)',
       }}
       onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
-      <div className="aspect-video md:aspect-auto md:min-h-[calc(100vh-var(--navbar-height,0px))] max-h-[300px] md:max-h-none relative">
+      <div className="min-h-[420px] sm:min-h-[480px] md:min-h-[calc(100vh-var(--navbar-height,0px))] relative flex flex-col justify-end">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide}
@@ -131,16 +149,16 @@ export default function HeroBanner() {
               }}
             />
 
-            <div className="absolute inset-0 bg-black/30 md:bg-black/20" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20 md:bg-black/30" />
 
             {/* ——— Text container – bottom‑left ——— */}
-            <div className="absolute bottom-0 left-0 p-6 md:p-10 w-full md:w-2/3 lg:w-1/2 text-left">
+            <div className="absolute bottom-0 left-0 p-5 sm:p-8 md:p-10 w-full md:w-2/3 lg:w-1/2 text-left z-10">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.5 }}
               >
-                <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 leading-tight">
+                <h1 className="text-xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-2 leading-tight">
                   {SLIDES[currentSlide].title}
                 </h1>
               </motion.div>
@@ -150,17 +168,17 @@ export default function HeroBanner() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.5 }}
               >
-                <p className="text-sm sm:text-base md:text-lg text-white/80 leading-relaxed mb-4 md:mb-6 max-w-2xl">
+                <p className="text-xs sm:text-base md:text-lg text-white/90 leading-relaxed mb-3 sm:mb-4 md:mb-6 max-w-2xl">
                   {SLIDES[currentSlide].description}
                 </p>
 
                 {/* Read More - ComicSans font style */}
                 <button
                   onClick={handleReadMore}
-                  className="inline-flex items-center gap-2 text-[#FFF314] text-base sm:text-lg md:text-xl font-heading transition-all duration-300 hover:underline underline-offset-4"
+                  className="inline-flex items-center gap-2 text-[#FFF314] text-sm sm:text-lg md:text-xl font-heading transition-all duration-300 hover:underline underline-offset-4 cursor-pointer"
                 >
                   Read More
-                  <ArrowRight className="w-5 h-5 md:w-6 md:h-6 transition-transform duration-300 group-hover:translate-x-1" />
+                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 transition-transform duration-300 group-hover:translate-x-1" />
                 </button>
               </motion.div>
             </div>
@@ -169,17 +187,17 @@ export default function HeroBanner() {
 
         <button
           onClick={() => handleSlide('prev')}
-          className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20 p-1 md:p-2 rounded-full bg-black/30 hover:bg-black/50 text-white transition-all"
+          className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20 p-1.5 md:p-2 rounded-full bg-black/40 hover:bg-black/60 text-white transition-all backdrop-blur-xs"
           aria-label="Previous slide"
         >
-          <ChevronLeft size={24} className="md:w-8 md:h-8" />
+          <ChevronLeft size={20} className="md:w-8 md:h-8" />
         </button>
         <button
           onClick={() => handleSlide('next')}
-          className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20 p-1 md:p-2 rounded-full bg-black/30 hover:bg-black/50 text-white transition-all"
+          className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20 p-1.5 md:p-2 rounded-full bg-black/40 hover:bg-black/60 text-white transition-all backdrop-blur-xs"
           aria-label="Next slide"
         >
-          <ChevronRight size={24} className="md:w-8 md:h-8" />
+          <ChevronRight size={20} className="md:w-8 md:h-8" />
         </button>
       </div>
     </section>

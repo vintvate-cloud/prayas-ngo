@@ -60,7 +60,10 @@ export default function Members() {
                   src={member.photo}
                   alt={member.name}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                  onError={(e) => (e.currentTarget.src = '/images/placeholder-team.jpg')}
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).src =
+                      'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"%3E%3Crect width="200" height="200" fill="%23263238"/%3E%3Ccircle cx="100" cy="75" r="36" fill="%23FFF314"/%3E%3Cpath d="M36 175c0-36 24-55 64-55s64 19 64 55" fill="%23FFF314"/%3E%3C/svg%3E';
+                  }}
                 />
               </div>
               {/* Name & Role */}
