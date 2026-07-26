@@ -44,7 +44,7 @@ export default function BrandLogo({
   const bottomRowRef = useRef<HTMLDivElement>(null);
   const hindiTopRef = useRef<HTMLDivElement>(null);
   const [topRowWidth, setTopRowWidth] = useState<number | undefined>(undefined);
-  const [hindiFontSize, setHindiFontSize] = useState<number | undefined>(undefined);
+  const [hindiScale, setHindiScale] = useState<number | undefined>(undefined);
 
   useLayoutEffect(() => {
     const syncWidths = () => {
@@ -55,15 +55,18 @@ export default function BrandLogo({
         setTopRowWidth(targetWidth);
       } else if (hindiTopRef.current) {
         const topEl = hindiTopRef.current;
-        const currentWidth = topEl.getBoundingClientRect().width;
-        const currentFontSize = parseFloat(getComputedStyle(topEl).fontSize);
-        if (currentWidth > 0 && currentFontSize > 0) {
-          // Scale font-size by the exact ratio needed to make प्रयास's
-          // rendered width match समाज सेवी संस्था's rendered width.
-          // Width scales linearly with font-size for a given string, so
-          // one measured correction is enough — no distortion, no
-          // guessed breakpoint values.
-          setHindiFontSize(currentFontSize * (targetWidth / currentWidth));
+        // Reset any previous transform before measuring the NATURAL
+        // (unscaled) width — otherwise we'd be measuring an
+        // already-transformed box and compounding the scale.
+        topEl.style.transform = 'none';
+        const naturalWidth = topEl.getBoundingClientRect().width;
+        if (naturalWidth > 0 && targetWidth > 0) {
+          // transform: scale() multiplies the rendered box by an exact
+          // factor — this is pure geometry, not a font-metric assumption,
+          // so प्रयास's visual width will match समाज सेवी संस्था's
+          // width exactly, regardless of how the font shapes glyphs at
+          // different sizes.
+          setHindiScale(targetWidth / naturalWidth);
         }
       }
     };
@@ -166,25 +169,28 @@ export default function BrandLogo({
         ) : (
           // ─── Hindi ───
           <div className="flex flex-col items-center w-max">
-            {/* Top line (single word). The Tailwind classes below set a
-                reasonable starting size; the inline `fontSize` (once
-                measured) overrides it with the exact value that makes this
-                word's rendered width equal समाज सेवी संस्था's rendered
-                width — precise on every device, not just at the
-                breakpoints the classes happen to hit. Centered so any
-                residual sub-pixel gap is symmetric rather than pulling to
-                one side. */}
+            {/* Top line (single word). transform:scale() applies an exact
+                geometric multiplier to the rendered box once measured —
+                guaranteed to match समाज सेवी संस्था's width, unlike
+                scaling font-size (which assumes text width grows exactly
+                linearly with font-size — not always true for conjuncts).
+                transformOrigin center keeps it symmetric so it stays
+                centered under items-center. */}
             <div
               ref={hindiTopRef}
               className={`text-red-600 font-bold ${hindiFirstLineClasses} leading-none mb-[-4px] sm:mb-0`}
-              style={hindiFontSize ? { fontSize: `${hindiFontSize}px` } : undefined}
+              style={hindiScale ? { transform: `scale(${hindiScale})`, transformOrigin: 'center' } : undefined}
             >
               प्रयास
             </div>
-            {/* Bottom line dictates the container width */}
+            {/* Bottom line: intrinsic (natural) width only — no w-full here.
+                items-center on the parent already centers it; w-full would
+                stretch it to the container's fit-content width, which
+                itself depends on the top word's width, creating a circular
+                reference that made width measurement meaningless. */}
             <div
               ref={bottomRowRef}
-              className={`text-red-600 font-medium ${secondLineClasses} whitespace-nowrap w-full text-center`}
+              className={`text-red-600 font-medium ${secondLineClasses} whitespace-nowrap`}
               style={{ wordSpacing: '0.2em' }}
             >
               समाज सेवी संस्था
