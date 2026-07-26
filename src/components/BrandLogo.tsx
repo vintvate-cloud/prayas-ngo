@@ -1,5 +1,6 @@
 // src/components/BrandLogo.tsx
-import { useState, useEffect } from 'react';
+
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
@@ -12,10 +13,10 @@ interface BrandLogoProps {
   className?: string;
 }
 
-export default function BrandLogo({ 
-  variant = 'navbar', 
-  to, 
-  className = '' 
+export default function BrandLogo({
+  variant = 'navbar',
+  to,
+  className = ''
 }: BrandLogoProps) {
   // ─── Animation state (switches every 3s) ───
   const [brandLangIndex, setBrandLangIndex] = useState(0);
@@ -29,15 +30,47 @@ export default function BrandLogo({
 
   const isEnglish = brandLangIndex === 0;
 
+  // ─── Width-sync refs ───
+  // Instead of relying on CSS (w-max + w-full + justify-between) to make the
+  // top line "guess" the bottom line's width, we measure the bottom line's
+  // real rendered pixel width and apply it directly to the top line.
+  // This removes any dependency on font-rendering/kerning differences
+  // between mobile and desktop browsers, so both lines always line up
+  // exactly, on every device.
+  const bottomRowRef = useRef<HTMLDivElement>(null);
+  const [topRowWidth, setTopRowWidth] = useState<number | undefined>(undefined);
+
+  useEffect(() => {
+    const syncWidth = () => {
+      if (bottomRowRef.current) {
+        setTopRowWidth(bottomRowRef.current.getBoundingClientRect().width);
+      }
+    };
+
+    // Measure once fonts are ready (avoids a flash of mismatched width
+    // before web fonts finish loading), then again on resize.
+    if (document.fonts?.ready) {
+      document.fonts.ready.then(syncWidth);
+    }
+    // Run on next frame too, in case fonts were already cached.
+    const raf = requestAnimationFrame(syncWidth);
+
+    window.addEventListener('resize', syncWidth);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', syncWidth);
+    };
+  }, [brandLangIndex, variant]);
+
   // ─── Size classes per variant ───
   let logoSizeClasses = 'w-12 h-12 sm:w-20 sm:h-20 md:w-24 md:h-24';
-  
+
   // English first line sizing
   let firstLineClasses = 'text-lg xs:text-xl sm:text-3xl md:text-4xl lg:text-5xl';
-  
+
   // Hindi first line needs to be significantly larger to equal the width of the bottom line
-  let hindiFirstLineClasses = 'text-3xl xs:text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem]'; 
-  
+  let hindiFirstLineClasses = 'text-3xl xs:text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem]';
+
   let secondLineClasses = 'text-[10px] xs:text-xs sm:text-sm md:text-base';
   let containerClasses = 'min-w-[80px] sm:min-w-[140px] md:min-w-[180px]';
   let gapClasses = 'gap-2 sm:gap-3';
@@ -89,26 +122,41 @@ export default function BrandLogo({
         {isEnglish ? (
           // ─── English ───
           <div className="flex flex-col w-max">
-            {/* Top Line stretches exactly to match the width of the bottom line */}
-            <div className={`flex justify-between w-full text-red-600 font-bold ${firstLineClasses} leading-none mb-[2px] sm:mb-1`}>
+            {/* Top line: width is explicitly set (in px) to match the
+                measured width of the bottom line, so it always lines up
+                exactly regardless of device/browser font rendering. */}
+            <div
+              className={`flex justify-between text-red-600 font-bold ${firstLineClasses} leading-none mb-[2px] sm:mb-1`}
+              style={topRowWidth ? { width: `${topRowWidth}px` } : undefined}
+            >
               {['P', 'R', 'A', 'Y', 'A', 'S'].map((char, i) => (
                 <span key={i}>{char}</span>
               ))}
             </div>
-            {/* Bottom Line dictates the container width */}
-            <div className={`text-red-600 font-medium ${secondLineClasses} whitespace-nowrap`} style={{ wordSpacing: '0.3em' }}>
+            {/* Bottom line dictates the width — this is what we measure */}
+            <div
+              ref={bottomRowRef}
+              className={`text-red-600 font-medium ${secondLineClasses} whitespace-nowrap`}
+              style={{ wordSpacing: '0.3em' }}
+            >
               Samaj sevi Sanstha
             </div>
           </div>
         ) : (
           // ─── Hindi ───
           <div className="flex flex-col items-center w-max">
-            {/* Top Line is kept as a single word and scaled up with font size to match bottom width */}
+            {/* Top line (single word) scaled up by font-size; kept centered
+                so any residual sub-pixel gap is symmetric rather than
+                pulling to one side. */}
             <div className={`text-red-600 font-bold ${hindiFirstLineClasses} leading-none mb-[-4px] sm:mb-0`}>
               प्रयास
             </div>
-            {/* Bottom Line dictates the container width */}
-            <div className={`text-red-600 font-medium ${secondLineClasses} whitespace-nowrap w-full text-center`} style={{ wordSpacing: '0.2em' }}>
+            {/* Bottom line dictates the container width */}
+            <div
+              ref={bottomRowRef}
+              className={`text-red-600 font-medium ${secondLineClasses} whitespace-nowrap w-full text-center`}
+              style={{ wordSpacing: '0.2em' }}
+            >
               समाज सेवी संस्था
             </div>
           </div>
