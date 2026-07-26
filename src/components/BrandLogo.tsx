@@ -30,7 +30,7 @@ export default function BrandLogo({
 
   // ─── Size classes per variant ───
   let logoSizeClasses = 'w-12 h-12 sm:w-20 sm:h-20 md:w-24 md:h-24';
-  let brandImageMaxHeight = 'h-10 sm:h-16 md:h-20 lg:h-24'; // adjust as needed
+  let brandImageMaxHeight = 'h-10 sm:h-16 md:h-20 lg:h-24';
   let containerClasses = 'min-w-[80px] sm:min-w-[140px] md:min-w-[180px]';
   let gapClasses = 'gap-2 sm:gap-3';
 
@@ -63,7 +63,7 @@ export default function BrandLogo({
         />
       </div>
 
-      {/* Animated brand name as image */}
+      {/* Animated brand name as image – slightly lowered with mt-1 */}
       <motion.div
         key={brandLangIndex}
         initial={{ opacity: 0, y: 5 }}
@@ -75,7 +75,7 @@ export default function BrandLogo({
         <img
           src={imageSrc}
           alt={isEnglish ? 'Prayas Samaj Sevi Sanstha' : 'प्रयास समाज सेवी संस्था'}
-          className={`w-full object-contain ${brandImageMaxHeight}`}
+          className={`w-full object-contain ${brandImageMaxHeight} mt-1`}
           style={{ maxWidth: '100%' }}
         />
       </motion.div>
