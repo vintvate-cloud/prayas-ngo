@@ -13,7 +13,7 @@ const areas = [
     description: 'Transforming villages with infrastructure, clean water, sanitation, and holistic community empowerment.',
     slug: 'rural-development',
     color: '#849989',
-    image: 'https://i.ibb.co/fWWWk9S/Whats-App-Image-2026-07-12-at-2-50-03-PM-1.jpg',
+    image: '/ruraldevelopment.jpeg',
   },
   {
     icon: Users,

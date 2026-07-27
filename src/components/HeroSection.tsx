@@ -1,5 +1,5 @@
-import { motion, AnimatePresence, type Variants } from 'framer-motion';
-import { ChevronLeft, ChevronRight, ArrowRight, Heart, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -15,89 +15,74 @@ export default function HeroSection() {
     () => [
       {
         id: 1,
-        chapter: '01',
-        category: t('hero.slides.rural.category', 'Rural Development'),
-        kicker: 'GRASSROOTS INFRASTRUCTURE',
-        title: t('hero.slides.rural.title', 'Restoring Dignity & Hope to Rural India'),
+        mainPrefix: "Let's ensure",
+        highlight: "happy childhoods",
+        mainSuffix: "for India's children",
         description: t(
-          'hero.slides.rural.desc',
-          'Building self-reliant rural communities through village adoption, clean water systems, sanitation, and sustainable local growth.'
+          'hero.slides.education.desc',
+          'Providing quality education, Sanskarshala centers, and nutrition to underprivileged children so every child gets to learn and thrive with dignity.'
         ),
-        image: '/EDUCATION.JPG',
-        route: '/rural-development',
-        statValue: '50+',
-        statLabel: t('hero.slides.rural.stat', 'Villages Adopted'),
-        accentColor: '#E5A93C',
+        image: '/P1039409.JPG',
+        ctaText: '♥ Yes! I Want To Help!',
+        route: '/education',
       },
       {
         id: 2,
-        chapter: '02',
-        category: t('hero.slides.women.category', 'Women Empowerment'),
-        kicker: 'ECONOMIC INDEPENDENCE',
-        title: t('hero.slides.women.title', 'Fostering Female Leadership & Livelihood'),
+        mainPrefix: 'Empowering',
+        highlight: 'strong women',
+        mainSuffix: 'for a resilient nation',
         description: t(
           'hero.slides.women.desc',
-          'Empowering women with micro-entrepreneurship, Sabji Wali Didi project, vocational sewing centers, and self-help group financial self-reliance.'
+          'Fostering female leadership through vocational sewing centers, Sabji Wali Didi micro-entrepreneurship, and self-help group financial freedom.'
         ),
         image: '/P1039322.JPG',
+        ctaText: '♥ Empower A Woman!',
         route: '/women-empowerment',
-        statValue: '2,500+',
-        statLabel: t('hero.slides.women.stat', 'Women Empowered'),
-        accentColor: '#E5A93C',
       },
       {
         id: 3,
-        chapter: '03',
-        category: t('hero.slides.education.category', 'Child & Youth Education'),
-        kicker: 'YOUTH MENTORSHIP',
-        title: t('hero.slides.education.title', 'Igniting Dreams Through Education & Skills'),
+        mainPrefix: 'Bringing',
+        highlight: 'lifesaving care',
+        mainSuffix: 'to remote villages',
         description: t(
-          'hero.slides.education.desc',
-          'Nurturing young minds through value-based learning at Sanskarshala, digital literacy camps, career guidance, and leadership development.'
+          'hero.slides.health.desc',
+          'Organizing free health camps, organ donation drives, disability support, and elderly care to ensure no one is left behind.'
         ),
-        image: '/P1039409.JPG',
-        route: '/education',
-        statValue: '5,000+',
-        statLabel: t('hero.slides.education.stat', 'Children Mentored'),
-        accentColor: '#E5A93C',
+        image: '/PRAYASHEALTHCAMP.jpeg',
+        ctaText: '♥ Support Health Camps!',
+        route: '/healthcare',
       },
       {
         id: 4,
-        chapter: '04',
-        category: t('hero.slides.health.category', 'Health & Social Welfare'),
-        kicker: 'COMMUNITY WELLNESS',
-        title: t('hero.slides.health.title', 'Lifesaving Medical Care & Compassion'),
+        mainPrefix: 'Building',
+        highlight: 'thriving villages',
+        mainSuffix: 'with clean water & hope',
         description: t(
-          'hero.slides.health.desc',
-          'Organizing free health camps, organ donation drives, support for persons with disabilities, elderly care, and community wellness.'
+          'hero.slides.rural.desc',
+          'Holistic village adoption programs installing clean drinking water facilities, sanitation infrastructure, and self-reliant grassroots growth.'
         ),
-        image: '/healthhj.jpeg',
-        route: '/healthcare',
-        statValue: '15,000+',
-        statLabel: t('hero.slides.health.stat', 'Patients Served'),
-        accentColor: '#E5A93C',
+        image: '/EDUCATION.JPG',
+        ctaText: '♥ Adopt A Village!',
+        route: '/rural-development',
       },
       {
         id: 5,
-        chapter: '05',
-        category: t('hero.slides.environment.category', 'Environment & Sustainability'),
-        kicker: 'ECOLOGICAL STEWARDSHIP',
-        title: t('hero.slides.environment.title', 'Planting Tomorrow\'s Forests Today'),
+        mainPrefix: 'Planting',
+        highlight: 'green forests',
+        mainSuffix: 'for a sustainable future',
         description: t(
           'hero.slides.environment.desc',
-          'Pioneering tree plantation drives, Kargil Vatika memorial forests, rainwater harvesting, and eco-friendly climate action.'
+          'Dedicated to tree plantation drives, Kargil Vatika memorial forests, and rainwater harvesting to restore ecological balance.'
         ),
         image: '/TREEGROW.jpg',
+        ctaText: '♥ Plant A Tree Today!',
         route: '/environment',
-        statValue: '100,000+',
-        statLabel: t('hero.slides.environment.stat', 'Trees Planted'),
-        accentColor: '#E5A93C',
       },
     ],
     [t]
   );
 
-  const slideDuration = 6000;
+  const slideDuration = 5500; // ms
 
   const handleNextSlide = useCallback(() => {
     setDirection(1);
@@ -142,21 +127,22 @@ export default function HeroSection() {
 
   const activeSlide = SLIDES[currentSlide];
 
-  const contentVariants: Variants = {
+  // Motion variants for synced left text transition
+  const textVariants = {
     enter: (dir: number) => ({
-      y: dir > 0 ? 20 : -20,
+      y: dir > 0 ? 25 : -25,
       opacity: 0,
     }),
     center: {
       y: 0,
       opacity: 1,
       transition: {
-        y: { type: 'spring' as const, stiffness: 260, damping: 28 },
+        y: { type: 'spring', stiffness: 300, damping: 28 },
         opacity: { duration: 0.4 },
       },
     },
     exit: (dir: number) => ({
-      y: dir < 0 ? 20 : -20,
+      y: dir < 0 ? 25 : -25,
       opacity: 0,
       transition: { duration: 0.3 },
     }),
@@ -164,177 +150,152 @@ export default function HeroSection() {
 
   return (
     <section
-      className="relative w-full min-h-[82vh] lg:min-h-[88vh] bg-gray-950 text-white select-none overflow-hidden flex flex-col justify-between"
+      className="relative w-full min-h-[580px] md:min-h-[85vh] lg:min-h-[90vh] bg-white text-[#263238] overflow-hidden select-none flex flex-col justify-between"
       style={{ marginTop: 'var(--navbar-height, 0px)' }}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {/* ─── Unobscured Full-Bleed Background Image ─── */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <AnimatePresence mode="wait" custom={direction}>
-          <motion.div
-            key={activeSlide.id}
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{
-              opacity: { duration: 0.8, ease: 'easeInOut' },
-              scale: { duration: 7, ease: 'easeOut' },
-            }}
-            className="absolute inset-0"
-          >
-            <img
-              src={activeSlide.image}
-              alt={activeSlide.title}
-              className="w-full h-full object-cover object-center"
-            />
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Subtle Premium Gradient Scrim for Text Legibility */}
-        <div className="absolute inset-0 bg-gradient-to-r from-gray-950/80 via-gray-950/40 to-transparent w-full md:w-2/3 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-950/70 via-transparent to-transparent pointer-events-none" />
-      </div>
-
-      {/* ─── Hero Content Overlay ─── */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-10 w-full flex-1 flex flex-col justify-between">
+      {/* ─── Main Hero Split Layout Grid ─── */}
+      <div className="w-full flex-1 grid grid-cols-1 lg:grid-cols-12 items-center relative z-10 py-6 sm:py-10">
         
-        {/* Top Minimal Bar */}
-        <div className="flex items-center justify-between pb-3 border-b border-white/10">
-          <div className="flex items-center gap-2.5">
-            <span className="w-2 h-2 rounded-full bg-[#E5A93C] animate-pulse" />
-            <span className="text-xs font-mono tracking-widest text-gray-300 uppercase">
-              PRAYAS SOCIAL WELFARE SOCIETY
-            </span>
-          </div>
-
-          <div className="flex items-center gap-3">
-            {/* Sleek Floating Compact Impact Badge */}
-            <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gray-950/80 backdrop-blur-md border border-[#E5A93C]/30 text-xs shadow-md">
-              <Sparkles size={13} className="text-[#E5A93C]" />
-              <span className="font-mono text-[#E5A93C] font-extrabold">{activeSlide.statValue}</span>
-              <span className="text-gray-200 font-medium">{activeSlide.statLabel}</span>
-            </div>
-
-            <div className="text-xs font-mono tracking-widest text-[#E5A93C]">
-              {activeSlide.chapter} <span className="text-gray-500">/</span> 0{SLIDES.length}
-            </div>
-          </div>
-        </div>
-
-        {/* Middle Section: Unobtrusive Left Typography */}
-        <div className="my-auto py-6 max-w-2xl">
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={activeSlide.id}
-              custom={direction}
-              variants={contentVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              className="space-y-4"
-            >
-              {/* Highlighted Impact Stat Badge */}
-              <div className="inline-flex items-center gap-2.5 px-3.5 py-1 rounded-full bg-gray-950/85 backdrop-blur-md border border-[#E5A93C]/40 shadow-lg shadow-[#E5A93C]/10">
-                <span className="text-sm font-extrabold font-mono text-[#E5A93C]">
-                  {activeSlide.statValue}
-                </span>
-                <span className="text-xs text-gray-200 font-sans border-l border-white/20 pl-2">
-                  {activeSlide.statLabel}
-                </span>
-              </div>
-
-              {/* Clean Headline */}
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.12] drop-shadow-md">
-                {activeSlide.title}
-              </h1>
-
-              {/* Subtitle / Paragraph */}
-              <p className="text-sm sm:text-base md:text-lg text-gray-200/90 leading-relaxed font-sans max-w-xl drop-shadow">
-                {activeSlide.description}
-              </p>
-
-              {/* Compact CTA Buttons */}
-              <div className="pt-2 flex flex-wrap items-center gap-3">
-                <button
-                  onClick={() => navigate(activeSlide.route)}
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold bg-[#E5A93C] hover:bg-[#F2B64A] text-gray-950 transition-all duration-300 shadow-lg cursor-pointer tracking-wide"
-                >
-                  <span>Explore Impact</span>
-                  <ArrowRight size={16} />
-                </button>
-
-                <button
-                  onClick={() => navigate('/donate')}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-lg text-sm font-semibold bg-black/40 hover:bg-black/60 text-white border border-white/20 backdrop-blur-md transition-all duration-300 cursor-pointer"
-                >
-                  <Heart size={15} className="text-[#E5A93C]" />
-                  <span>Support Cause</span>
-                </button>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Bottom Minimal Navigation Bar */}
-        <div className="pt-3 border-t border-white/10 flex flex-col gap-3">
+        {/* ─── LEFT COLUMN: Clean White Side with Synced Text & Hand-Drawn Highlights ─── */}
+        <div className="lg:col-span-5 px-6 sm:px-10 lg:px-14 py-6 md:py-10 flex flex-col justify-center relative z-30">
           
-          {/* Minimal Slide Selector Tabs */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div className="grid grid-cols-5 gap-1.5 w-full sm:w-auto">
-              {SLIDES.map((slide, idx) => {
-                const isActive = idx === currentSlide;
-                return (
+          <div className="my-auto py-2 space-y-6 sm:space-y-8 max-w-xl">
+            <AnimatePresence mode="wait" custom={direction}>
+              <motion.div
+                key={activeSlide.id}
+                custom={direction}
+                variants={textVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                className="space-y-6"
+              >
+                {/* Hand-lettered Headline with Yellow Sparkle Highlight */}
+                <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#263238] leading-[1.15] tracking-tight font-sans">
+                  {activeSlide.mainPrefix}{' '}
+                  <span className="relative inline-block text-[#F5B800] dark:text-[#F5B800] font-heading font-normal underline decoration-[#FFF314] decoration-4 underline-offset-4">
+                    {activeSlide.highlight}
+                    {/* Crown / Sparkle rays decoration over highlighted text */}
+                    <svg
+                      className="absolute -top-4 -right-5 w-7 h-7 text-[#FFF314]"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                    >
+                      <path d="M12 2v4M5 5l2.5 2.5M19 5l-2.5 2.5M2 12h4M18 12h4" />
+                    </svg>
+                  </span>{' '}
+                  <br className="hidden sm:inline" />
+                  {activeSlide.mainSuffix}
+                </h1>
+
+                {/* Description Subtext */}
+                <p className="text-base sm:text-lg text-gray-600 leading-relaxed font-sans max-w-lg">
+                  {activeSlide.description}
+                </p>
+
+                {/* Pill Yellow CTA Button with Heart Icon */}
+                <div className="pt-2">
                   <button
-                    key={slide.id}
-                    onClick={() => goToSlide(idx)}
-                    className={`relative px-2.5 py-1.5 rounded-lg text-left transition-all duration-300 cursor-pointer ${
-                      isActive
-                        ? 'bg-black/60 border border-white/30 text-white font-medium shadow-md'
-                        : 'bg-black/20 border border-transparent text-gray-400 hover:text-white hover:bg-black/40'
-                    }`}
+                    onClick={() => navigate(activeSlide.route)}
+                    className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full text-sm sm:text-base font-bold bg-[#FFF314] hover:bg-[#FBE000] text-[#263238] shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all cursor-pointer border border-[#E6DB00]"
                   >
-                    <div className="flex items-center justify-between gap-1.5">
-                      <span
-                        className={`text-xs font-mono font-bold ${
-                          isActive ? 'text-[#E5A93C]' : 'text-gray-400'
-                        }`}
-                      >
-                        {slide.chapter}
-                      </span>
-                      <span className="hidden lg:inline text-[11px] font-sans truncate">
-                        {slide.category}
-                      </span>
-                    </div>
-
-                    {isActive && (
-                      <motion.div
-                        layoutId="minimalActiveTab"
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#E5A93C] rounded-full"
-                        transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                      />
-                    )}
+                    <span>{activeSlide.ctaText}</span>
                   </button>
-                );
-              })}
-            </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
 
-            {/* Slide Arrows */}
-            <div className="flex items-center gap-1.5 self-end sm:self-center">
-              <button
-                onClick={handlePrevSlide}
-                className="p-2 rounded-lg bg-black/40 hover:bg-black/70 text-white border border-white/15 backdrop-blur-md transition-all active:scale-95 cursor-pointer"
-                aria-label="Previous story"
-              >
-                <ChevronLeft size={17} />
-              </button>
-              <button
-                onClick={handleNextSlide}
-                className="p-2 rounded-lg bg-black/40 hover:bg-black/70 text-white border border-white/15 backdrop-blur-md transition-all active:scale-95 cursor-pointer"
-                aria-label="Next story"
-              >
-                <ChevronRight size={17} />
-              </button>
+        {/* ─── RIGHT COLUMN: Premium Enlarged Spray-Paint Masked Photo Frame ─── */}
+        <div className="lg:col-span-7 px-2 sm:px-6 lg:px-8 relative flex items-center justify-center py-4">
+          
+          {/* Organic Asymmetric Yellow Spray Paint Canvas Container (Enlarged) */}
+          <div className="relative w-full h-[420px] sm:h-[520px] lg:h-[580px] p-2 sm:p-3.5 rounded-[2.5rem] bg-[#FFF314] shadow-2xl transition-transform duration-500 hover:scale-[1.01] rotate-[-1deg]">
+            
+            {/* ─── Spray Paint Texture & Edge Splatter SVG Overlay ─── */}
+            
+            {/* Spray Paint Splatters - Top Left Corner */}
+            <svg className="absolute -top-8 -left-8 w-24 h-24 text-[#FFF314] pointer-events-none z-20" viewBox="0 0 100 100">
+              <path d="M50,50 Q20,10 0,30 Q30,70 10,90 Q60,70 50,50 Z" fill="currentColor" opacity="0.9" />
+              <circle cx="20" cy="15" r="4" fill="currentColor" />
+              <circle cx="8" cy="40" r="6" fill="currentColor" />
+              <circle cx="35" cy="10" r="3" fill="currentColor" />
+              <circle cx="70" cy="18" r="5" fill="currentColor" />
+            </svg>
+
+            {/* Spray Paint Splatters - Bottom Right Corner */}
+            <svg className="absolute -bottom-8 -right-8 w-28 h-28 text-[#FFF314] pointer-events-none z-20" viewBox="0 0 100 100">
+              <path d="M50,50 Q80,90 100,70 Q70,30 90,10 Q40,30 50,50 Z" fill="currentColor" opacity="0.9" />
+              <circle cx="85" cy="85" r="5" fill="currentColor" />
+              <circle cx="95" cy="60" r="4" fill="currentColor" />
+              <circle cx="65" cy="90" r="6" fill="currentColor" />
+              <circle cx="45" cy="80" r="3" fill="currentColor" />
+            </svg>
+
+            {/* Spray Paint Fine Mist Particles along borders */}
+            <div className="absolute inset-0 border-4 border-dashed border-[#F5B800]/40 rounded-[2.5rem] pointer-events-none" />
+
+            {/* Inner Photo Container - 100% Unobscured & Perfectly Visible */}
+            <div className="relative w-full h-full rounded-[2rem] overflow-hidden bg-gray-950 shadow-inner group">
+              
+              {/* Animated Photo Transition */}
+              <AnimatePresence mode="wait" custom={direction}>
+                <motion.img
+                  key={activeSlide.id}
+                  src={activeSlide.image}
+                  alt={activeSlide.highlight}
+                  initial={{ opacity: 0, scale: 1.06 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{
+                    opacity: { duration: 0.6, ease: 'easeInOut' },
+                    scale: { duration: 5, ease: 'easeOut' },
+                  }}
+                  className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105 filter brightness-[102%] contrast-[103%]"
+                />
+              </AnimatePresence>
+
+              {/* Subtle Gradient Scrim at Bottom for Control Readability */}
+              <div className="absolute inset-0 bg-gradient-to-t from-gray-950/70 via-transparent to-transparent opacity-60 pointer-events-none" />
+
+              {/* Slide Navigation Arrows */}
+              <div className="absolute bottom-5 right-5 z-30 flex items-center gap-2">
+                <button
+                  onClick={handlePrevSlide}
+                  className="p-3 rounded-full bg-white/90 hover:bg-white text-[#263238] shadow-xl backdrop-blur-md hover:scale-110 active:scale-95 transition-all cursor-pointer border border-gray-200"
+                  aria-label="Previous slide"
+                >
+                  <ChevronLeft size={20} />
+                </button>
+                <button
+                  onClick={handleNextSlide}
+                  className="p-3 rounded-full bg-white/90 hover:bg-white text-[#263238] shadow-xl backdrop-blur-md hover:scale-110 active:scale-95 transition-all cursor-pointer border border-gray-200"
+                  aria-label="Next slide"
+                >
+                  <ChevronRight size={20} />
+                </button>
+              </div>
+
+              {/* Slide Category Indicator Dots */}
+              <div className="absolute top-5 right-5 z-30 flex items-center gap-1.5 bg-gray-950/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20">
+                {SLIDES.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => goToSlide(idx)}
+                    className={`w-2.5 h-2.5 rounded-full transition-all cursor-pointer ${
+                      idx === currentSlide ? 'bg-[#FFF314] w-6' : 'bg-white/60 hover:bg-white'
+                    }`}
+                    aria-label={`Go to slide ${idx + 1}`}
+                  />
+                ))}
+              </div>
+
             </div>
 
           </div>
