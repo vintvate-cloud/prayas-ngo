@@ -307,7 +307,7 @@ export default function Navbar() {
 
               <Link
                 to="/donate"
-                className="inline-flex items-center gap-1.5 px-2.5 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all shadow-lg hover:scale-105 bg-red-600 hover:bg-red-700 text-white shadow-red-600/30 cursor-pointer"
+                className={`inline-flex items-center gap-1.5 px-2 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-full border transition-all hover:scale-105 cursor-pointer ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
               >
                 <Heart className="w-4 h-4" />
                 <span className="hidden sm:inline">{donateText}</span>
@@ -315,7 +315,7 @@ export default function Navbar() {
 
               <Link
                 to="/volunteer"
-                className="inline-flex items-center gap-1.5 px-2.5 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all shadow-lg hover:scale-105 bg-red-600 hover:bg-red-700 text-white shadow-red-600/30 cursor-pointer"
+                className={`inline-flex items-center gap-1.5 px-2 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-full border transition-all hover:scale-105 cursor-pointer ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
               >
                 <UserPlus className="w-4 h-4" />
                 <span className="hidden sm:inline">{volunteerText}</span>
@@ -445,14 +445,14 @@ export default function Navbar() {
 
               <Link
                 to="/donate"
-                className="mt-3 w-full text-center rounded-full bg-red-600 hover:bg-red-700 px-6 py-3.5 font-semibold text-white flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-transform"
+                className="mt-3 w-full text-center rounded-full border border-[#263238]/30 px-6 py-3.5 font-semibold text-[#263238] hover:text-red-600 hover:border-red-600 flex items-center justify-center gap-2 active:scale-[0.98] transition-transform"
               >
                 {donateText} <Heart className="w-5 h-5" />
               </Link>
 
               <Link
                 to="/volunteer"
-                className="mt-2 w-full text-center rounded-full bg-red-600 hover:bg-red-700 px-6 py-3.5 font-semibold text-white flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-transform"
+                className="mt-2 w-full text-center rounded-full border border-[#263238]/30 px-6 py-3.5 font-semibold text-[#263238] hover:text-red-600 hover:border-red-600 flex items-center justify-center gap-2 active:scale-[0.98] transition-transform"
               >
                 {volunteerText} <UserPlus className="w-5 h-5" />
               </Link>
