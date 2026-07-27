@@ -181,7 +181,7 @@ export default function Navbar() {
         {/* ---------- MAIN NAVBAR ---------- */}
         <div
           className={`transition-all duration-500 ${bgHeader} 
-            min-h-[70px] sm:min-h-[85px] lg:min-h-[95px] flex items-center py-2 px-3 sm:px-6 lg:px-8`}
+            min-h-[58px] sm:min-h-[64px] lg:min-h-[68px] flex items-center py-1 px-3 sm:px-6 lg:px-8`}
         >
           <div className="max-w-7xl mx-auto w-full flex items-center justify-between gap-3">
             {/* Logo on Left */}
@@ -269,7 +269,7 @@ export default function Navbar() {
                     e.stopPropagation();
                     setLangDropdownOpen(!langDropdownOpen);
                   }}
-                  className={`flex items-center gap-1 px-2 sm:px-3 py-2 text-xs font-medium rounded-full border transition-all hover:scale-105 cursor-pointer ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
+                  className={`flex items-center gap-1 px-2.5 sm:px-3 py-1.5 text-xs font-medium rounded-full border transition-all hover:scale-105 cursor-pointer ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
                 >
                   <Globe className="w-4 h-4" />
                   <span className="hidden sm:inline">{currentLangLabel}</span>
@@ -302,7 +302,7 @@ export default function Navbar() {
 
               <Link
                 to="/donate"
-                className={`inline-flex items-center gap-1.5 px-2 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-full border transition-all hover:scale-105 cursor-pointer ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
+                className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 text-xs sm:text-sm font-medium rounded-full border transition-all hover:scale-105 cursor-pointer ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
               >
                 <Heart className="w-4 h-4" />
                 <span className="hidden sm:inline">{donateText}</span>
@@ -310,7 +310,7 @@ export default function Navbar() {
 
               <Link
                 to="/volunteer"
-                className={`inline-flex items-center gap-1.5 px-2 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-full border transition-all hover:scale-105 cursor-pointer ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
+                className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 text-xs sm:text-sm font-medium rounded-full border transition-all hover:scale-105 cursor-pointer ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
               >
                 <UserPlus className="w-4 h-4" />
                 <span className="hidden sm:inline">{volunteerText}</span>
@@ -319,7 +319,7 @@ export default function Navbar() {
               {showAuthLink && !loading && (
                 <Link
                   to={isAuthenticated ? "/profile" : "/auth"}
-                  className={`inline-flex items-center gap-1.5 px-2 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-full border transition-all hover:scale-105 ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
+                  className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 text-xs sm:text-sm font-medium rounded-full border transition-all hover:scale-105 ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
                 >
                   <User className="w-4 h-4" />
                   <span className="hidden sm:inline">

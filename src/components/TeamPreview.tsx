@@ -36,9 +36,6 @@ export default function TeamPreview() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <span className="inline-block text-red-600 font-mono text-xs uppercase tracking-widest font-bold bg-red-600/10 border border-red-600/20 px-4 py-1.5 rounded-full">
-            {t('team.label', 'Meet the Team')}
-          </span>
           <h2
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#263238] mt-4"
             style={{ fontFamily: 'var(--font-heading)' }}

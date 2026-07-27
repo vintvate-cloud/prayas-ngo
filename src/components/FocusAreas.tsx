@@ -81,10 +81,6 @@ export default function FocusAreas() {
           viewport={{ once: true }}
           className="text-center mb-6 md:mb-12"
         >
-          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 mb-3 text-xs font-semibold uppercase tracking-wider text-[#263238] bg-amber-100/90 rounded-full border border-amber-200 shadow-xs">
-            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-            {t('focus.label', 'What We Do')}
-          </span>
           <h2
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#263238] mt-2"
             style={{ fontFamily: 'var(--font-heading)' }}

@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Sparkles, ShieldCheck, HeartHandshake, Award, Users, Target, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
+import { Sparkles, ShieldCheck, HeartHandshake, Users, Target, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const TRUST_STEPS = [
@@ -133,11 +133,6 @@ export default function TrustFlow() {
 
         {/* ─── 2. SECTION HEADER ─── */}
         <div className="relative z-10 pt-4 sm:pt-6 pb-2 px-4 sm:px-6 lg:px-8 text-center max-w-4xl mx-auto shrink-0">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-amber-300 text-[#263238] text-xs font-mono font-bold uppercase tracking-wider shadow-sm mb-2">
-            <Award className="w-4 h-4 text-amber-600" />
-            <span>OUR SYSTEMIC APPROACH</span>
-          </div>
-
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#263238] tracking-tight leading-tight font-sans">
             Our Systemic Approach
           </h2>

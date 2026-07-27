@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Calendar, Sparkles, FolderHeart } from 'lucide-react';
+import { ArrowRight, Calendar, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const projects = [
@@ -159,11 +159,6 @@ export default function FeaturedProjects() {
         
         {/* ─── Section Header ─── */}
         <div className="text-center space-y-4 max-w-3xl mx-auto mb-16 sm:mb-20">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-600/10 border border-red-600/20 text-red-600 text-xs font-mono font-bold uppercase tracking-wider">
-            <FolderHeart className="w-4 h-4" />
-            <span>{t('featured.label', 'Our Work in Action')}</span>
-          </div>
-
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#263238] tracking-tight leading-tight">
             {t('featured.title', 'Featured Projects & Events')}
           </h2>
