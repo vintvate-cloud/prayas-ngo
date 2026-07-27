@@ -26,7 +26,7 @@ export default function GalleryPreview() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <span className="inline-block text-[#263238] font-mono text-xs uppercase tracking-widest font-semibold bg-[#FFF314]/20 px-4 py-2 rounded-full">
+          <span className="inline-block text-red-600 font-mono text-xs uppercase tracking-widest font-bold bg-red-600/10 border border-red-600/20 px-4 py-1.5 rounded-full">
             {t('gallery.label', 'Our Moments')}
           </span>
           <h2
@@ -35,7 +35,7 @@ export default function GalleryPreview() {
           >
             {t('gallery.title', 'Gallery')}
           </h2>
-          <div className="w-20 h-1 bg-[#FFF314] mx-auto mt-4 rounded-full" />
+          <div className="w-20 h-1 bg-gradient-to-r from-red-600 to-red-400 mx-auto mt-4 rounded-full shadow-xs" />
         </motion.div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">

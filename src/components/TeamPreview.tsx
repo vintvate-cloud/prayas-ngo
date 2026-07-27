@@ -36,7 +36,7 @@ export default function TeamPreview() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <span className="inline-block text-[#263238] font-mono text-xs uppercase tracking-widest font-semibold bg-[#FFF314]/20 px-4 py-2 rounded-full">
+          <span className="inline-block text-red-600 font-mono text-xs uppercase tracking-widest font-bold bg-red-600/10 border border-red-600/20 px-4 py-1.5 rounded-full">
             {t('team.label', 'Meet the Team')}
           </span>
           <h2
@@ -45,8 +45,7 @@ export default function TeamPreview() {
           >
             {t('team.title', 'Our Leadership')}
           </h2>
-          <div className="w-20 h-1 bg-[#FFF314] mx-auto mt-4 rounded-full" />
-          <p className="text-[#263238]/60 mt-4 max-w-2xl mx-auto">
+          <p className="text-[#263238]/60 mt-3 max-w-2xl mx-auto">
             {t('team.desc', 'Passionate individuals driving change at the grassroots.')}
           </p>
         </motion.div>
@@ -60,22 +59,22 @@ export default function TeamPreview() {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4, delay: idx * 0.1 }}
               viewport={{ once: true }}
-              className="text-center w-32 sm:w-40"
+              className="text-center w-36 sm:w-44"
             >
-              <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto rounded-full overflow-hidden border-4 border-[#FFF314] shadow-lg mb-3 bg-[#263238]/10 flex items-center justify-center">
+              <div className="w-28 h-28 sm:w-36 sm:h-36 mx-auto rounded-full overflow-hidden border-4 border-red-600/20 shadow-lg mb-3 bg-[#263238]/10 flex items-center justify-center">
                 <img
-                  src={member.image || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"%3E%3Crect width="128" height="128" fill="%23263238"/%3E%3Ccircle cx="64" cy="48" r="24" fill="%23FFF314"/%3E%3Cpath d="M24 112c0-24 16-36 40-36s40 12 40 36" fill="%23FFF314"/%3E%3C/svg%3E'}
+                  src={member.image || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"%3E%3Crect width="128" height="128" fill="%23263238"/%3E%3Ccircle cx="64" cy="48" r="24" fill="%23DC2626"/%3E%3Cpath d="M24 112c0-24 16-36 40-36s40 12 40 36" fill="%23DC2626"/%3E%3C/svg%3E'}
                   alt={member.name}
                   className="w-full h-full object-cover"
                   loading="lazy"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src =
-                      'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"%3E%3Crect width="128" height="128" fill="%23263238"/%3E%3Ccircle cx="64" cy="48" r="24" fill="%23FFF314"/%3E%3Cpath d="M24 112c0-24 16-36 40-36s40 12 40 36" fill="%23FFF314"/%3E%3C/svg%3E'
+                      'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"%3E%3Crect width="128" height="128" fill="%23263238"/%3E%3Ccircle cx="64" cy="48" r="24" fill="%23DC2626"/%3E%3Cpath d="M24 112c0-24 16-36 40-36s40 12 40 36" fill="%23DC2626"/%3E%3C/svg%3E'
                   }}
                 />
               </div>
-              <h4 className="font-bold text-[#263238] text-sm sm:text-base">{member.name}</h4>
-              <p className="text-[#263238]/60 text-xs sm:text-sm">{member.role}</p>
+              <h4 className="font-extrabold text-[#263238] text-base sm:text-lg">{member.name}</h4>
+              <p className="text-red-600 font-semibold text-xs sm:text-sm font-mono mt-0.5">{member.role}</p>
             </motion.div>
           ))}
         </div>
@@ -83,9 +82,9 @@ export default function TeamPreview() {
         <div className="text-center mt-10">
           <Link
             to="/about/members"
-            className="inline-flex items-center gap-2 text-[#263238] font-semibold hover:text-[#FFF314] transition-colors"
+            className="inline-flex items-center gap-2 text-[#263238] font-bold hover:text-red-600 transition-colors"
           >
-            View Full Team <ArrowRight className="w-4 h-4" />
+            View Full Leadership Team <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </div>

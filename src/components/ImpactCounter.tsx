@@ -192,6 +192,7 @@ export default function ImpactCounter() {
           <h2 className="text-3xl sm:text-5xl font-extrabold text-[#263238] tracking-tight leading-tight font-sans">
             {t('impact.header.title', 'Making a Difference Together')}
           </h2>
+          <div className="w-20 h-1 bg-gradient-to-r from-red-600 to-red-400 mx-auto rounded-full shadow-xs" />
 
           <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto font-sans leading-relaxed">
             {t(

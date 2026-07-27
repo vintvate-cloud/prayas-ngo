@@ -91,7 +91,7 @@ export default function FocusAreas() {
           >
             {t('focus.title', 'Our Focus Areas')}
           </h2>
-          <div className="w-20 h-1 bg-[#FFF314] mx-auto mt-3 rounded-full" />
+          <div className="w-20 h-1 bg-gradient-to-r from-red-600 to-red-400 mx-auto mt-3 rounded-full shadow-xs" />
           <p className="text-[#263238]/70 mt-3 max-w-2xl mx-auto text-sm md:text-base font-light">
             {t('focus.desc', 'We work across five key areas to create lasting impact in communities.')}
           </p>

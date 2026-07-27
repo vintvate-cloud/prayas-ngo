@@ -1,10 +1,5 @@
-import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Sparkles, ShieldCheck, HeartHandshake, Award, Users, Target, CheckCircle2 } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
+import { Sparkles, ShieldCheck, HeartHandshake, Award, Users, Target } from 'lucide-react';
 
 const TRUST_STEPS = [
   {
@@ -60,58 +55,8 @@ const TRUST_STEPS = [
 ];
 
 export default function TrustFlow() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const lineRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    const ctx = gsap.context(() => {
-      // 1. GSAP ScrollTrigger Line Growth Animation
-      if (lineRef.current) {
-        gsap.fromTo(
-          lineRef.current,
-          { scaleY: 0 },
-          {
-            scaleY: 1,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: 'top 70%',
-              end: 'bottom 80%',
-              scrub: 0.8,
-            },
-          }
-        );
-      }
-
-      // 2. GSAP Staggered Entrance for Timeline Cards
-      gsap.fromTo(
-        '.gsap-timeline-card',
-        { opacity: 0, y: 60, scale: 0.94 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.9,
-          stagger: 0.25,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top 75%',
-          },
-        }
-      );
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section
-      ref={containerRef}
-      className="w-full py-16 sm:py-24 bg-gradient-to-b from-gray-50 via-white to-gray-50 text-[#263238] relative overflow-hidden select-none"
-    >
+    <section className="w-full py-16 sm:py-24 bg-gradient-to-b from-gray-50 via-white to-gray-50 text-[#263238] relative overflow-hidden select-none">
       {/* ─── Ambient Glow Accents ─── */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-amber-500/5 rounded-full blur-[160px] pointer-events-none -z-10" />
 
@@ -119,14 +64,15 @@ export default function TrustFlow() {
         
         {/* ─── Header ─── */}
         <div className="text-center mb-16 sm:mb-20 space-y-4 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-[#D4AF37] text-xs font-mono font-bold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-600/10 border border-red-600/20 text-red-600 text-xs font-mono font-bold uppercase tracking-wider">
             <Award className="w-4 h-4" />
             <span>OUR SYSTEMIC APPROACH</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-[#263238] tracking-tight leading-tight">
-            Modeled Around <span className="text-[#D4AF37]">Lasting Change</span>
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-[#263238] tracking-tight leading-tight font-sans">
+            Modeled Around Lasting Change
           </h2>
+          <div className="w-20 h-1 bg-gradient-to-r from-red-600 to-red-400 mx-auto rounded-full shadow-xs" />
 
           <p className="text-base sm:text-lg text-gray-600 leading-relaxed font-sans">
             We focus on changing behaviors and practices at the grassroots level and building self-reliant communities across every stage of development.
@@ -137,12 +83,15 @@ export default function TrustFlow() {
         <div className="relative">
           
           {/* Background Static Line */}
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-gray-200 -translate-x-1/2 rounded-full" />
+          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-1 bg-gray-200 -translate-x-1/2 rounded-full" />
           
-          {/* Active GSAP Animated Progress Line */}
-          <div
-            ref={lineRef}
-            className="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-[#D4AF37] via-[#DC2626] to-[#059669] -translate-x-1/2 rounded-full origin-top z-10 shadow-lg"
+          {/* Active Animated Progress Line */}
+          <motion.div
+            initial={{ scaleY: 0 }}
+            whileInView={{ scaleY: 1 }}
+            viewport={{ once: false, amount: 0.1 }}
+            transition={{ duration: 1.2, ease: 'easeOut' }}
+            className="absolute left-6 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-[#D4AF37] via-[#DC2626] to-[#059669] -translate-x-1/2 rounded-full origin-top z-10 shadow-lg"
           />
 
           {/* Timeline Nodes & Cards */}
@@ -152,14 +101,18 @@ export default function TrustFlow() {
               const isEven = index % 2 === 0;
 
               return (
-                <div
+                <motion.div
                   key={index}
-                  className={`gsap-timeline-card flex flex-col md:flex-row items-center gap-6 md:gap-12 ${
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.6, delay: index * 0.12 }}
+                  className={`relative flex flex-col md:flex-row items-center gap-6 md:gap-12 ${
                     isEven ? 'md:flex-row' : 'md:flex-row-reverse'
                   }`}
                 >
                   {/* Left / Right Card Content */}
-                  <div className="w-full md:w-1/2 pl-12 md:pl-0">
+                  <div className="w-full md:w-1/2 pl-14 sm:pl-16 md:pl-0">
                     <motion.div
                       whileHover={{ y: -6, scale: 1.02 }}
                       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
@@ -174,6 +127,7 @@ export default function TrustFlow() {
                           src={item.image}
                           alt={item.title}
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                         
@@ -185,7 +139,7 @@ export default function TrustFlow() {
                         {/* Impact Metric Overlay */}
                         <div className="absolute bottom-3 left-3 right-3 text-white flex items-center justify-between">
                           <span className="text-xs font-bold text-gray-200">{item.badge}</span>
-                          <span className="text-xs font-mono font-extrabold text-[#D4AF37] bg-black/50 backdrop-blur-md px-2.5 py-1 rounded-md">
+                          <span className="text-xs font-mono font-extrabold text-white bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/20">
                             {item.impact}
                           </span>
                         </div>
@@ -193,7 +147,7 @@ export default function TrustFlow() {
 
                       {/* Text Content */}
                       <div className="space-y-2">
-                        <h3 className="text-xl sm:text-2xl font-extrabold text-[#263238] group-hover:text-[#D4AF37] transition-colors">
+                        <h3 className="text-xl sm:text-2xl font-extrabold text-[#263238] group-hover:text-red-600 transition-colors">
                           {item.title}
                         </h3>
                         <p className="text-gray-600 text-sm sm:text-base leading-relaxed font-sans">
@@ -207,14 +161,14 @@ export default function TrustFlow() {
                   <motion.div
                     whileHover={{ scale: 1.2, rotate: 10 }}
                     transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                    className="absolute left-4 md:left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-white border-4 border-[#D4AF37] shadow-xl flex items-center justify-center z-30 cursor-pointer text-[#D4AF37]"
+                    className="absolute left-6 md:left-1/2 -translate-x-1/2 top-8 md:top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white border-4 border-red-600 shadow-xl flex items-center justify-center z-30 cursor-pointer text-red-600 hover:scale-110 transition-transform"
                   >
                     <Icon className="w-5 h-5" />
                   </motion.div>
 
                   {/* Empty Spacer Column for Desktop Alternate Grid */}
                   <div className="hidden md:block w-1/2" />
-                </div>
+                </motion.div>
               );
             })}
           </div>

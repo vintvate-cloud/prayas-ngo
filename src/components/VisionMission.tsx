@@ -24,6 +24,7 @@ export default function VisionMission() {
           >
             Vision & Mission
           </motion.h2>
+          <div className="w-20 h-1 bg-gradient-to-r from-red-600 to-red-400 mx-auto rounded-full shadow-xs" />
 
           <motion.p
             initial={{ opacity: 0, y: 15 }}

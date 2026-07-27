@@ -63,11 +63,7 @@ export default function ScrollStory() {
                 />
               </div>
 
-              {/* Floating Stat Pill overlay on video */}
-              <div className="absolute -bottom-4 right-6 bg-[#263238] text-white px-4 py-2 rounded-xl shadow-xl border border-white/20 flex items-center gap-2.5 text-xs font-semibold">
-                <ShieldCheck size={16} className="text-teal-400" />
-                <span>Registered Non-Profit Society</span>
-              </div>
+
             </div>
           </motion.div>
 
