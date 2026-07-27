@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, type Variants } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import {
   Trees,
@@ -319,7 +319,7 @@ export default function OurWork() {
   const activeRoute = activeCategory ? getCategoryRoute(activeCategory.id) : null
 
   // ===== ANIMATION VARIANTS =====
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -329,12 +329,12 @@ export default function OurWork() {
     },
   }
 
-  const cardVariants = {
+  const cardVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: 'easeOut' },
+      transition: { duration: 0.5 },
     },
   }
 
@@ -427,9 +427,6 @@ export default function OurWork() {
                       >
                         <category.icon className="w-6 h-6" />
                       </span>
-                      <span className="bg-black/50 backdrop-blur-md text-white text-[11px] font-medium px-3 py-1 rounded-full border border-white/20 tracking-wide shadow-sm">
-                        Hover to Focus
-                      </span>
                     </div>
 
                     <div>
@@ -510,9 +507,6 @@ export default function OurWork() {
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-amber-300">
                     Focus Area Spotlight
-                  </span>
-                  <span className="bg-white/20 backdrop-blur-md text-white text-[10px] font-semibold px-2.5 py-1 rounded-full border border-white/30">
-                    Center View
                   </span>
                 </div>
                 <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
