@@ -161,10 +161,10 @@ export default function HeroSection() {
       onTouchEnd={handleTouchEnd}
     >
       {/* ─── Main Hero Split Layout Grid ─── */}
-      <div className="w-full flex-1 grid grid-cols-1 lg:grid-cols-12 items-center relative z-10 pt-0 pb-6 sm:pb-10">
+      <div className="w-full flex-1 grid grid-cols-1 lg:grid-cols-12 items-start relative z-10 pt-0 pb-6 sm:pb-10">
 
         {/* ─── LEFT COLUMN: Clean White Side with Synced Text & Hand-Drawn Highlights (Order 2 on Mobile, Order 1 on Desktop) ─── */}
-        <div className="lg:col-span-5 px-6 sm:px-10 lg:px-14 py-4 md:py-8 flex flex-col justify-center relative z-30 order-2 lg:order-1">
+        <div className="lg:col-span-5 px-6 sm:px-10 lg:px-14 py-4 md:py-8 flex flex-col justify-center relative z-30 order-2 lg:order-1 self-center">
 
           <div className="my-auto py-2 space-y-6 sm:space-y-8 max-w-xl">
             <AnimatePresence mode="wait" custom={direction}>
@@ -221,7 +221,7 @@ export default function HeroSection() {
         <div className="lg:col-span-7 pr-0 sm:pr-0 lg:pr-0 pl-0 sm:pl-6 relative flex items-start justify-end pt-0 pb-1 mt-0 z-20 order-1 lg:order-2">
 
           {/* Yellow Canvas Container with Lunar Arc / Moon Curve on Bottom-Left Corner */}
-          <div className="relative w-full h-[320px] sm:h-[500px] lg:h-[640px] p-2.5 sm:p-4 rounded-tr-3xl rounded-tl-3xl rounded-br-3xl rounded-bl-[100px] sm:rounded-bl-[200px] lg:rounded-bl-[300px] bg-[#FFF314] shadow-2xl transition-transform duration-500 hover:scale-[1.01] -mt-0.5">
+          <div className="relative w-full h-[340px] sm:h-[520px] lg:h-[650px] p-2.5 sm:p-4 rounded-tr-none rounded-tl-none sm:rounded-tl-3xl rounded-br-none sm:rounded-br-none rounded-bl-[100px] sm:rounded-bl-[200px] lg:rounded-bl-[300px] bg-[#FFF314] shadow-2xl transition-transform duration-500 hover:scale-[1.01] mt-0">
 
             {/* Spray Paint Splatters - Moon Curve Bottom Left Accent */}
             <svg className="absolute -bottom-6 -left-6 w-28 h-28 text-[#FFF314] pointer-events-none z-20" viewBox="0 0 100 100">
@@ -239,9 +239,6 @@ export default function HeroSection() {
               <circle cx="95" cy="40" r="4" fill="currentColor" />
               <circle cx="65" cy="10" r="6" fill="currentColor" />
             </svg>
-
-            {/* Fine Border Accents along Moon Curve */}
-            <div className="absolute inset-0 border-4 border-dashed border-[#F5B800]/40 rounded-tr-3xl rounded-tl-3xl rounded-br-3xl rounded-bl-[140px] sm:rounded-bl-[220px] lg:rounded-bl-[300px] pointer-events-none" />
 
             {/* Inner Photo Container - Conforming to the Moon Arc Shape */}
             <div className="relative w-full h-full rounded-tr-2xl rounded-tl-2xl rounded-br-2xl rounded-bl-[130px] sm:rounded-bl-[208px] lg:rounded-bl-[285px] overflow-hidden bg-gray-950 shadow-inner group">
