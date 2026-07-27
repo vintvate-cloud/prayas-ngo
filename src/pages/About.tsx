@@ -420,8 +420,8 @@ export default function About() {
           {/* Organic Tree Vine Container */}
           <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
 
-            {/* Continuous S-Shaped Organic Tree Vine in Center for Desktop */}
-            <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-16 -translate-x-1/2 pointer-events-none z-10 overflow-visible">
+            {/* Continuous S-Shaped Organic Tree Vine in Center for Both Mobile & Desktop */}
+            <div className="absolute left-1/2 top-0 bottom-0 w-12 sm:w-16 -translate-x-1/2 pointer-events-none z-0 overflow-visible">
               <svg className="w-full h-full text-[#9C7A58]" viewBox="0 0 100 1200" preserveAspectRatio="none">
                 <defs>
                   <linearGradient id="organic-vine-gradient" x1="0" y1="0" x2="0" y2="1">
@@ -440,7 +440,7 @@ export default function About() {
               </svg>
             </div>
 
-            {/* Timeline Items Grid: Alternating Left/Right Image & Text */}
+            {/* Timeline Items Grid: Alternating Left/Right Image & Text on Desktop, Centered on Mobile */}
             <div className="space-y-16 sm:space-y-24">
               {treeMilestones.map((m, idx) => {
                 const isEven = idx % 2 === 0;
@@ -448,15 +448,15 @@ export default function About() {
                 return (
                   <div
                     key={idx}
-                    className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center"
+                    className="relative grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-14 items-center"
                   >
                     {/* Photo Column */}
                     <motion.div
-                      initial={{ opacity: 0, x: isEven ? -40 : 40, scale: 0.96 }}
-                      whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                      initial={{ opacity: 0, y: 30, scale: 0.96 }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1 }}
                       viewport={{ once: true, margin: '-60px' }}
                       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                      className={`lg:col-span-5 relative ${isEven ? 'lg:order-1' : 'lg:order-3'}`}
+                      className={`lg:col-span-5 relative z-10 ${isEven ? 'lg:order-1' : 'lg:order-3'}`}
                     >
                       {/* Soft Mint Outer Framing Box */}
                       <div className="absolute -inset-3 bg-[#E6F4EA] rounded-[2.2rem] transform -rotate-1 pointer-events-none" />
@@ -469,32 +469,32 @@ export default function About() {
                           loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60" />
-                        <div className="absolute bottom-4 left-4 text-white text-xs font-mono font-bold bg-black/60 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/20">
+                        <div className="absolute bottom-4 left-4 right-4 text-white text-xs font-mono font-bold bg-black/60 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/20 text-center lg:text-left">
                           {m.title}
                         </div>
                       </div>
                     </motion.div>
 
                     {/* Center Column: Single Unified Dual-Leaf Cluster Element Centered Directly on the Vine */}
-                    <div className="hidden lg:flex lg:col-span-2 justify-center items-center relative z-20 lg:order-2">
+                    <div className="flex lg:col-span-2 justify-center items-center relative z-20 my-2 lg:my-0 lg:order-2">
                       <motion.div
                         initial={{ scale: 0 }}
                         whileInView={{ scale: 1 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6, type: 'spring', stiffness: 300 }}
                         className={`relative flex items-center justify-center pointer-events-none ${idx === 0
-                            ? 'translate-x-2 sm:translate-x-3'
+                            ? 'lg:translate-x-2'
                             : idx === 1
-                              ? '-translate-x-1.5 sm:-translate-x-2'
+                              ? 'lg:-translate-x-1.5'
                               : idx === 2
-                                ? 'translate-x-3'
+                                ? 'lg:translate-x-3'
                                 : idx === 3
-                                  ? '-translate-x-1'
-                                  : 'translate-x-2'
+                                  ? 'lg:-translate-x-1'
+                                  : 'lg:translate-x-2'
                           }`}
                       >
                         {/* Single Unified SVG Leaf Pair Element */}
-                        <svg className="w-24 h-14 text-[#00A859] fill-current drop-shadow-md overflow-visible" viewBox="0 0 160 80">
+                        <svg className="w-20 h-12 sm:w-24 sm:h-14 text-[#00A859] fill-current drop-shadow-md overflow-visible" viewBox="0 0 160 80">
                           {/* Left Leaf Sprouting Up & Left */}
                           <path d="M 80 50 Q 30 10, 5 30 Q 40 70, 80 50 Z" stroke="#007A3E" strokeWidth="3" />
                           <path d="M 80 50 Q 45 35, 15 32" stroke="#007A3E" strokeWidth="2" fill="none" />
@@ -511,13 +511,13 @@ export default function About() {
 
                     {/* Information Column */}
                     <motion.div
-                      initial={{ opacity: 0, x: isEven ? 40 : -40 }}
-                      whileInView={{ opacity: 1, x: 0 }}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, margin: '-60px' }}
                       transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                      className={`lg:col-span-5 text-left space-y-5 ${isEven ? 'lg:order-3' : 'lg:order-1'}`}
+                      className={`lg:col-span-5 text-left space-y-5 relative z-10 bg-white p-6 sm:p-8 rounded-3xl border border-gray-200/90 shadow-xl lg:bg-transparent lg:p-0 lg:border-none lg:shadow-none ${isEven ? 'lg:order-3' : 'lg:order-1'}`}
                     >
-                      <h3 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#263238] font-sans tracking-tight">
+                      <h3 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#263238] font-sans tracking-tight text-center lg:text-left">
                         {m.period}
                       </h3>
 

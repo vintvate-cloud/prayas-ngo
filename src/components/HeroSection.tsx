@@ -15,9 +15,9 @@ export default function HeroSection() {
     () => [
       {
         id: 1,
-        mainPrefix: "Let's ensure",
-        highlight: "happy childhoods",
-        mainSuffix: "for India's children",
+        mainPrefix: "Let’s empower",
+        highlight: "every child",
+        mainSuffix: "to dream, learn, and grow.",
         description: t(
           'hero.slides.education.desc',
           'Providing quality education, Sanskarshala centers, and nutrition to underprivileged children so every child gets to learn and thrive with dignity.'
