@@ -23,6 +23,7 @@ export default function HeroSection() {
           'Providing quality education, Sanskarshala centers, and nutrition to underprivileged children so every child gets to learn and thrive with dignity.'
         ),
         image: '/P1039409.JPG',
+        objectPosition: 'center 25%',
         ctaText: '♥ Yes! I Want To Help!',
         route: '/education',
       },
@@ -36,6 +37,7 @@ export default function HeroSection() {
           'Fostering female leadership through vocational sewing centers, Sabji Wali Didi micro-entrepreneurship, and self-help group financial freedom.'
         ),
         image: '/P1039322.JPG',
+        objectPosition: 'center 30%',
         ctaText: '♥ Empower A Woman!',
         route: '/women-empowerment',
       },
@@ -49,6 +51,7 @@ export default function HeroSection() {
           'Organizing free health camps, organ donation drives, disability support, and elderly care to ensure no one is left behind.'
         ),
         image: '/PRAYASHEALTHCAMP.jpeg',
+        objectPosition: 'center 20%',
         ctaText: '♥ Support Health Camps!',
         route: '/healthcare',
       },
@@ -62,6 +65,7 @@ export default function HeroSection() {
           'Holistic village adoption programs installing clean drinking water facilities, sanitation infrastructure, and self-reliant grassroots growth.'
         ),
         image: '/EDUCATION.JPG',
+        objectPosition: '85% 25%',
         ctaText: '♥ Adopt A Village!',
         route: '/rural-development',
       },
@@ -75,6 +79,7 @@ export default function HeroSection() {
           'Dedicated to tree plantation drives, Kargil Vatika memorial forests, and rainwater harvesting to restore ecological balance.'
         ),
         image: '/TREEGROW.jpg',
+        objectPosition: 'center center',
         ctaText: '♥ Plant A Tree Today!',
         route: '/environment',
       },
@@ -212,39 +217,36 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* ─── RIGHT COLUMN: Premium Enlarged Spray-Paint Masked Photo Frame ─── */}
-        <div className="lg:col-span-7 px-2 sm:px-6 lg:px-8 relative flex items-center justify-center py-4">
+        {/* ─── RIGHT COLUMN: Moon-Border Curved Photo Frame ─── */}
+        <div className="lg:col-span-7 pr-0 sm:pr-0 lg:pr-0 pl-2 sm:pl-6 relative flex items-center justify-end py-1 -mt-4 sm:-mt-8 lg:-mt-12 z-20">
 
-          {/* Organic Asymmetric Yellow Spray Paint Canvas Container (Enlarged) */}
-          <div className="relative w-full h-[420px] sm:h-[520px] lg:h-[580px] p-2 sm:p-3.5 rounded-[2.5rem] bg-[#FFF314] shadow-2xl transition-transform duration-500 hover:scale-[1.01] rotate-[-1deg]">
+          {/* Yellow Canvas Container with Lunar Arc / Moon Curve on Bottom-Left Corner */}
+          <div className="relative w-full h-[460px] sm:h-[560px] lg:h-[640px] p-2.5 sm:p-4 rounded-tr-3xl rounded-tl-3xl rounded-br-3xl rounded-bl-[140px] sm:rounded-bl-[220px] lg:rounded-bl-[300px] bg-[#FFF314] shadow-2xl transition-transform duration-500 hover:scale-[1.01]">
 
-            {/* ─── Spray Paint Texture & Edge Splatter SVG Overlay ─── */}
-
-            {/* Spray Paint Splatters - Top Left Corner */}
-            <svg className="absolute -top-8 -left-8 w-24 h-24 text-[#FFF314] pointer-events-none z-20" viewBox="0 0 100 100">
+            {/* Spray Paint Splatters - Moon Curve Bottom Left Accent */}
+            <svg className="absolute -bottom-6 -left-6 w-28 h-28 text-[#FFF314] pointer-events-none z-20" viewBox="0 0 100 100">
               <path d="M50,50 Q20,10 0,30 Q30,70 10,90 Q60,70 50,50 Z" fill="currentColor" opacity="0.9" />
-              <circle cx="20" cy="15" r="4" fill="currentColor" />
-              <circle cx="8" cy="40" r="6" fill="currentColor" />
-              <circle cx="35" cy="10" r="3" fill="currentColor" />
-              <circle cx="70" cy="18" r="5" fill="currentColor" />
+              <circle cx="20" cy="85" r="5" fill="currentColor" />
+              <circle cx="8" cy="60" r="6" fill="currentColor" />
+              <circle cx="35" cy="90" r="4" fill="currentColor" />
+              <circle cx="70" cy="82" r="5" fill="currentColor" />
             </svg>
 
-            {/* Spray Paint Splatters - Bottom Right Corner */}
-            <svg className="absolute -bottom-8 -right-8 w-28 h-28 text-[#FFF314] pointer-events-none z-20" viewBox="0 0 100 100">
+            {/* Spray Paint Splatters - Top Right Corner */}
+            <svg className="absolute -top-6 -right-6 w-24 h-24 text-[#FFF314] pointer-events-none z-20" viewBox="0 0 100 100">
               <path d="M50,50 Q80,90 100,70 Q70,30 90,10 Q40,30 50,50 Z" fill="currentColor" opacity="0.9" />
-              <circle cx="85" cy="85" r="5" fill="currentColor" />
-              <circle cx="95" cy="60" r="4" fill="currentColor" />
-              <circle cx="65" cy="90" r="6" fill="currentColor" />
-              <circle cx="45" cy="80" r="3" fill="currentColor" />
+              <circle cx="85" cy="15" r="5" fill="currentColor" />
+              <circle cx="95" cy="40" r="4" fill="currentColor" />
+              <circle cx="65" cy="10" r="6" fill="currentColor" />
             </svg>
 
-            {/* Spray Paint Fine Mist Particles along borders */}
-            <div className="absolute inset-0 border-4 border-dashed border-[#F5B800]/40 rounded-[2.5rem] pointer-events-none" />
+            {/* Fine Border Accents along Moon Curve */}
+            <div className="absolute inset-0 border-4 border-dashed border-[#F5B800]/40 rounded-tr-3xl rounded-tl-3xl rounded-br-3xl rounded-bl-[140px] sm:rounded-bl-[220px] lg:rounded-bl-[300px] pointer-events-none" />
 
-            {/* Inner Photo Container - 100% Unobscured & Perfectly Visible */}
-            <div className="relative w-full h-full rounded-[2rem] overflow-hidden bg-gray-950 shadow-inner group">
+            {/* Inner Photo Container - Conforming to the Moon Arc Shape */}
+            <div className="relative w-full h-full rounded-tr-2xl rounded-tl-2xl rounded-br-2xl rounded-bl-[130px] sm:rounded-bl-[208px] lg:rounded-bl-[285px] overflow-hidden bg-gray-950 shadow-inner group">
 
-              {/* Animated Photo Transition */}
+              {/* Animated Photo Transition with Precise Focal Alignment */}
               <AnimatePresence mode="wait" custom={direction}>
                 <motion.img
                   key={activeSlide.id}
@@ -257,14 +259,13 @@ export default function HeroSection() {
                     opacity: { duration: 0.6, ease: 'easeInOut' },
                     scale: { duration: 5, ease: 'easeOut' },
                   }}
-                  className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105 filter brightness-[102%] contrast-[103%]"
+                  style={{ objectPosition: activeSlide.objectPosition || 'center center' }}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-[102%] contrast-[103%]"
                 />
               </AnimatePresence>
 
               {/* Subtle Gradient Scrim at Bottom for Control Readability */}
               <div className="absolute inset-0 bg-gradient-to-t from-gray-950/70 via-transparent to-transparent opacity-60 pointer-events-none" />
-
-
 
               {/* Slide Category Indicator Dots */}
               <div className="absolute top-5 right-5 z-30 flex items-center gap-1.5 bg-gray-950/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20">
