@@ -16,18 +16,11 @@ export default function VolunteerPopup({ isOpen, onClose }: VolunteerPopupProps)
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
-      document.body.style.position = 'fixed'
-      document.body.style.width = '100%'
     } else {
-      document.body.style.overflow = 'unset'
-      document.body.style.position = 'unset'
-      document.body.style.width = 'unset'
+      document.body.style.overflow = ''
     }
     return () => {
-      // Cleanup when component unmounts or isOpen changes
-      document.body.style.overflow = 'unset'
-      document.body.style.position = 'unset'
-      document.body.style.width = 'unset'
+      document.body.style.overflow = ''
     }
   }, [isOpen])
 

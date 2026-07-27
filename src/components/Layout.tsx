@@ -31,7 +31,7 @@ export default function Layout() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#263238] font-sans flex flex-col relative overflow-x-hidden">
+    <div className="min-h-screen bg-[#FFFFFF] text-[#263238] font-sans flex flex-col relative overflow-x-clip">
       {loaderVisible && <SmoothLoader />}
       
       <Navbar />
