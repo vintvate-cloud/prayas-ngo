@@ -88,12 +88,13 @@ export default function TrustFlow() {
         scrollTrigger: {
           trigger: triggerRef.current,
           start: 'top top',
-          end: () => `+=${getScrollAmount() + 500}`,
+          end: () => `+=${getScrollAmount() + 450}`,
           pin: true,
           scrub: 1,
+          anticipatePin: 1,
           snap: {
             snapTo: 1 / (numCards - 1),
-            duration: { min: 0.25, max: 0.5 },
+            duration: { min: 0.2, max: 0.45 },
             delay: 0.05,
             ease: 'power2.inOut',
           },
@@ -125,9 +126,9 @@ export default function TrustFlow() {
   };
 
   return (
-    <section ref={triggerRef} className="relative w-full overflow-hidden bg-white select-none z-10 my-0">
+    <section ref={triggerRef} className="relative w-full overflow-hidden bg-white select-none z-10 my-0 font-sans">
       
-      {/* ─── 1. ULTRA SMOOTH GRADIENT ORGANIC MASK BACKGROUND (Feathered Airbrushed Golden Yellow) ─── */}
+      {/* ─── 1. ULTRA SMOOTH GRADIENT ORGANIC MASK BACKGROUND ─── */}
       <div className="absolute top-0 left-0 right-0 h-[380px] sm:h-[450px] pointer-events-none z-0 overflow-hidden">
         {/* Soft Radial Ambient Airbrush Glow */}
         <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[1000px] h-[360px] bg-gradient-to-b from-[#FFD400] via-[#FFE033]/70 to-transparent blur-[50px] opacity-90" />
@@ -139,7 +140,6 @@ export default function TrustFlow() {
           preserveAspectRatio="none"
         >
           <defs>
-            {/* Multi-stop Soft Feathered Gradients */}
             <linearGradient id="ultra-soft-yellow-top" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#FFD400" stopOpacity="1" />
               <stop offset="45%" stopColor="#FFE033" stopOpacity="0.85" />
@@ -153,7 +153,6 @@ export default function TrustFlow() {
               <stop offset="100%" stopColor="#FFE666" stopOpacity="0.75" />
             </linearGradient>
 
-            {/* Airbrushed Soft Blur Filters */}
             <filter id="ultra-feather-blur" x="-20%" y="-20%" width="140%" height="140%">
               <feGaussianBlur stdDeviation="16" />
             </filter>
@@ -163,7 +162,7 @@ export default function TrustFlow() {
             </filter>
           </defs>
 
-          {/* Deep Soft Feathered Under-glow Bleed Layer */}
+          {/* Deep Soft Feathered Bleed Layer */}
           <path
             d="M0,180 C240,280 440,80 680,210 C920,340 1140,100 1340,240 C1400,280 1440,260 1440,260 L1440,0 L0,0 Z"
             fill="url(#ultra-soft-yellow-top)"
@@ -171,7 +170,7 @@ export default function TrustFlow() {
             opacity="0.85"
           />
 
-          {/* Organic Fluid Wave Middle Feathered Mask Layer */}
+          {/* Organic Fluid Wave Middle Mask Layer */}
           <path
             d="M0,140 C200,240 380,40 600,160 C820,280 1020,60 1240,190 C1360,260 1440,200 1440,200 L1440,0 L0,0 Z"
             fill="url(#liquid-flow-gradient)"
@@ -188,7 +187,7 @@ export default function TrustFlow() {
         </svg>
       </div>
 
-      {/* ─── 2. SECTION HEADER (Clean Spacing, No Overlap) ─── */}
+      {/* ─── 2. SECTION HEADER ─── */}
       <div className="relative z-10 pt-10 sm:pt-14 pb-4 px-4 sm:px-6 lg:px-8 text-center max-w-4xl mx-auto">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-amber-300 text-[#263238] text-xs font-mono font-bold uppercase tracking-wider shadow-sm mb-3">
           <Award className="w-4 h-4 text-amber-600" />
@@ -196,7 +195,7 @@ export default function TrustFlow() {
         </div>
 
         <h2 className="text-3xl sm:text-5xl font-extrabold text-[#263238] tracking-tight leading-tight font-sans">
-          Modeled Around Lasting Change
+          Our Systemic Approach
         </h2>
         <div className="w-20 h-1 bg-[#263238] mx-auto mt-3 rounded-full" />
 
@@ -205,9 +204,9 @@ export default function TrustFlow() {
         </p>
       </div>
 
-      {/* ─── 3. HORIZONTAL SCROLL CARDS TRACK (Magnet Lock Snapping) ─── */}
+      {/* ─── 3. HORIZONTAL SCROLL CARDS TRACK (Hardware Accelerated & Magnet Snapping) ─── */}
       <div className="relative z-10 min-h-[55vh] sm:min-h-[62vh] flex items-center py-4">
-        
+
         {/* Navigation Arrows */}
         <button
           onClick={() => scrollToCard(Math.max(0, activeStepIndex - 1))}
@@ -228,56 +227,63 @@ export default function TrustFlow() {
         {/* Sliding Horizontal Track */}
         <div
           ref={sectionRef}
-          className="flex gap-6 sm:gap-10 px-6 sm:px-16 lg:px-24 items-center will-change-transform"
+          className="flex gap-6 sm:gap-10 px-6 sm:px-16 lg:px-24 items-center will-change-transform transform-gpu"
         >
-          {TRUST_STEPS.map((item, index) => (
-            <div
-              key={index}
-              className="w-[88vw] sm:w-[620px] md:w-[720px] lg:w-[800px] h-[280px] sm:h-[310px] shrink-0 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-gray-200/80 bg-white flex flex-row transition-all duration-300 hover:scale-[1.01]"
-            >
-              {/* Left Side: Vibrant Color Block */}
+          {TRUST_STEPS.map((item, index) => {
+            const Icon = item.icon;
+            return (
               <div
-                className="w-1/2 p-5 sm:p-7 md:p-8 flex flex-col justify-between text-white relative z-10"
-                style={{ backgroundColor: item.bgColor }}
+                key={index}
+                className="w-[88vw] sm:w-[620px] md:w-[720px] lg:w-[800px] h-[280px] sm:h-[310px] shrink-0 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-gray-200/80 bg-white flex flex-row transition-all duration-300 hover:scale-[1.01]"
               >
-                <div className="space-y-2">
-                  <span className="text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider text-white/80 block">
-                    {item.badge}
-                  </span>
-                  <h3 className="text-base sm:text-xl md:text-2xl font-extrabold text-white leading-tight font-sans line-clamp-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-white/90 text-xs sm:text-sm font-light leading-relaxed line-clamp-2 sm:line-clamp-3">
-                    {item.description}
-                  </p>
+                {/* Left Side: Vibrant Color Block */}
+                <div
+                  className="w-1/2 p-5 sm:p-7 md:p-8 flex flex-col justify-between text-white relative z-10"
+                  style={{ backgroundColor: item.bgColor }}
+                >
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider text-white/90 block">
+                        {item.badge}
+                      </span>
+                      <Icon className="w-4 h-4 text-white/80" />
+                    </div>
+
+                    <h3 className="text-base sm:text-xl md:text-2xl font-extrabold text-white leading-tight font-sans line-clamp-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-white/90 text-xs sm:text-sm font-light leading-relaxed line-clamp-2 sm:line-clamp-3">
+                      {item.description}
+                    </p>
+                  </div>
+
+                  <div className="pt-2">
+                    <Link
+                      to={item.link}
+                      className="inline-flex items-center gap-1.5 px-4 sm:px-5 py-2 rounded-full text-xs font-bold bg-[#FFF314] hover:bg-[#FBE000] text-[#263238] shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                    >
+                      <span>Read More</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
                 </div>
 
-                <div className="pt-2">
-                  <Link
-                    to={item.link}
-                    className="inline-flex items-center gap-1.5 px-4 sm:px-5 py-2 rounded-full text-xs font-bold bg-[#FFF314] hover:bg-[#FBE000] text-[#263238] shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer"
-                  >
-                    <span>Read More</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
+                {/* Right Side: Full Height Photo */}
+                <div className="w-1/2 relative overflow-hidden h-full bg-gray-900">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                  <div className="absolute bottom-3 right-3 text-white text-[10px] sm:text-xs font-mono font-bold bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/20">
+                    {item.impact}
+                  </div>
                 </div>
               </div>
-
-              {/* Right Side: Full Height Photo */}
-              <div className="w-1/2 relative overflow-hidden h-full bg-gray-900">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                <div className="absolute bottom-3 right-3 text-white text-[10px] sm:text-xs font-mono font-bold bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/20">
-                  {item.impact}
-                </div>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

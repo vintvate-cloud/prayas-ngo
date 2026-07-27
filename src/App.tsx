@@ -82,6 +82,7 @@ export default function App() {
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/about2" element={<About2 />} />
+              <Route path="/aboutus" element={<About2 />} />
               <Route path="/about/members" element={<Members />} />
               <Route path="/about/certifications" element={<Certifications />} />
               <Route path="/our-work" element={<OurWork />} />
@@ -95,7 +96,7 @@ export default function App() {
               <Route path="/admin/*" element={<AdminDashboard />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/impact/:slug" element={<ImpactPage />} />
-              
+
               {/* Dedicated category pages */}
               <Route path="/rural-development" element={<RuralDevelopment />} />
               <Route path="/education" element={<Education />} />

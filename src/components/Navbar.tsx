@@ -17,7 +17,7 @@ const navLinks = [
     path: '/about',
     submenu: [
       { name: 'nav.about.story', path: '/about' },
-      { name: 'About 2', path: '/about2' },
+      { name: 'About Us', path: '/aboutus' },
       { name: 'nav.about.members', path: '/about/members' },
       { name: 'nav.about.certifications', path: '/about/certifications' },
     ]
@@ -145,8 +145,8 @@ export default function Navbar() {
   const borderColor = 'border-[#263238]/30';
   const bgButton = 'bg-[#263238]/5 hover:bg-[#263238]/10';
 
-  const bgHeader = isScrolled 
-    ? 'bg-white/95 backdrop-blur-md shadow-sm' 
+  const bgHeader = isScrolled
+    ? 'bg-white/95 backdrop-blur-md shadow-sm'
     : 'bg-white border-b border-[#263238]/5';
 
   const handleMouseEnter = (name: string) => setOpenDropdown(name);
@@ -194,7 +194,7 @@ export default function Navbar() {
               {navLinks.map((link) => {
                 const hasSubmenu = link.submenu && link.submenu.length > 0;
                 const isActive = location.pathname === link.path || (hasSubmenu && isSubmenuActive(link.submenu!));
-                
+
                 if (hasSubmenu) {
                   return (
                     <div
@@ -204,16 +204,14 @@ export default function Navbar() {
                       onMouseLeave={handleMouseLeave}
                     >
                       <button
-                        className={`text-xs font-medium transition-colors relative py-2 group flex items-center gap-1 whitespace-nowrap ${
-                          isActive ? 'text-red-600' : `${textColor} ${textColorHover}`
-                        }`}
+                        className={`text-xs font-medium transition-colors relative py-2 group flex items-center gap-1 whitespace-nowrap ${isActive ? 'text-red-600' : `${textColor} ${textColorHover}`
+                          }`}
                       >
                         {safeT(link.name)}
                         <ChevronDown className={`w-3 h-3 transition-transform ${openDropdown === link.name ? 'rotate-180' : ''}`} />
                         <span
-                          className={`absolute -bottom-1 left-0 h-[2px] bg-red-600 transition-all ${
-                            isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                          }`}
+                          className={`absolute -bottom-1 left-0 h-[2px] bg-red-600 transition-all ${isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                            }`}
                         />
                       </button>
                       <AnimatePresence>
@@ -229,11 +227,10 @@ export default function Navbar() {
                               <Link
                                 key={sub.path}
                                 to={sub.path}
-                                className={`block px-5 py-2.5 text-xs font-medium transition-colors ${
-                                  location.pathname === sub.path
-                                    ? 'text-red-600 bg-red-50 font-semibold'
-                                    : 'text-gray-800 hover:bg-red-50 hover:text-red-600'
-                                }`}
+                                className={`block px-5 py-2.5 text-xs font-medium transition-colors ${location.pathname === sub.path
+                                  ? 'text-red-600 bg-red-50 font-semibold'
+                                  : 'text-gray-800 hover:bg-red-50 hover:text-red-600'
+                                  }`}
                               >
                                 {safeT(sub.name)}
                               </Link>
@@ -249,17 +246,15 @@ export default function Navbar() {
                   <Link
                     key={link.name}
                     to={link.path}
-                    className={`text-xs font-medium transition-colors relative py-2 group whitespace-nowrap ${
-                      location.pathname === link.path
-                        ? 'text-red-600'
-                        : `${textColor} ${textColorHover}`
-                    }`}
+                    className={`text-xs font-medium transition-colors relative py-2 group whitespace-nowrap ${location.pathname === link.path
+                      ? 'text-red-600'
+                      : `${textColor} ${textColorHover}`
+                      }`}
                   >
                     {safeT(link.name)}
                     <span
-                      className={`absolute -bottom-1 left-0 h-[2px] bg-red-600 transition-all ${
-                        location.pathname === link.path ? 'w-full' : 'w-0 group-hover:w-full'
-                      }`}
+                      className={`absolute -bottom-1 left-0 h-[2px] bg-red-600 transition-all ${location.pathname === link.path ? 'w-full' : 'w-0 group-hover:w-full'
+                        }`}
                     />
                   </Link>
                 );
@@ -292,11 +287,10 @@ export default function Navbar() {
                         <button
                           key={lang.code}
                           onClick={() => changeLanguage(lang.code)}
-                          className={`block w-full text-left px-5 py-2.5 text-xs font-medium transition-colors cursor-pointer ${
-                            i18n.language === lang.code
-                              ? 'text-red-600 bg-red-50 font-semibold'
-                              : 'text-gray-800 hover:bg-red-50 hover:text-red-600'
-                          }`}
+                          className={`block w-full text-left px-5 py-2.5 text-xs font-medium transition-colors cursor-pointer ${i18n.language === lang.code
+                            ? 'text-red-600 bg-red-50 font-semibold'
+                            : 'text-gray-800 hover:bg-red-50 hover:text-red-600'
+                            }`}
                         >
                           {lang.label}
                         </button>
@@ -347,7 +341,7 @@ export default function Navbar() {
       </header>
 
       {/* ---------- MOBILE MENU ---------- */}
-         <AnimatePresence>
+      <AnimatePresence>
         {isMobileOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
@@ -367,11 +361,10 @@ export default function Navbar() {
                     <div key={link.name} className="border-b border-[#263238]/5 last:border-0">
                       <button
                         onClick={() => toggleMobileSubmenu(link.name)}
-                        className={`w-full text-left text-lg font-medium py-3 px-2 rounded-lg transition-colors flex items-center justify-between ${
-                          isActive
-                            ? 'text-red-600 bg-red-600/10'
-                            : 'text-[#263238] hover:text-red-600 hover:bg-[#263238]/5'
-                        }`}
+                        className={`w-full text-left text-lg font-medium py-3 px-2 rounded-lg transition-colors flex items-center justify-between ${isActive
+                          ? 'text-red-600 bg-red-600/10'
+                          : 'text-[#263238] hover:text-red-600 hover:bg-[#263238]/5'
+                          }`}
                       >
                         {safeT(link.name)}
                         <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
@@ -390,11 +383,10 @@ export default function Navbar() {
                                 <Link
                                   key={sub.path}
                                   to={sub.path}
-                                  className={`py-2 px-2 rounded-lg text-sm transition-colors ${
-                                    location.pathname === sub.path
-                                      ? 'text-red-600 bg-red-600/10'
-                                      : 'text-[#263238]/70 hover:text-red-600 hover:bg-[#263238]/5'
-                                  }`}
+                                  className={`py-2 px-2 rounded-lg text-sm transition-colors ${location.pathname === sub.path
+                                    ? 'text-red-600 bg-red-600/10'
+                                    : 'text-[#263238]/70 hover:text-red-600 hover:bg-[#263238]/5'
+                                    }`}
                                 >
                                   {safeT(sub.name)}
                                 </Link>
@@ -411,11 +403,10 @@ export default function Navbar() {
                   <Link
                     key={link.name}
                     to={link.path}
-                    className={`text-lg font-medium py-3 px-2 rounded-lg transition-colors ${
-                      location.pathname === link.path
-                        ? 'text-red-600 bg-red-600/10'
-                        : 'text-[#263238] hover:text-red-600 hover:bg-[#263238]/5'
-                    }`}
+                    className={`text-lg font-medium py-3 px-2 rounded-lg transition-colors ${location.pathname === link.path
+                      ? 'text-red-600 bg-red-600/10'
+                      : 'text-[#263238] hover:text-red-600 hover:bg-[#263238]/5'
+                      }`}
                   >
                     {safeT(link.name)}
                   </Link>
@@ -432,11 +423,10 @@ export default function Navbar() {
                         changeLanguage(lang.code);
                         setIsMobileOpen(false);
                       }}
-                      className={`py-2 px-3 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
-                        i18n.language === lang.code
-                          ? 'bg-red-600 text-white'
-                          : 'bg-[#263238]/5 text-[#263238] hover:bg-red-600/10 hover:text-red-600'
-                      }`}
+                      className={`py-2 px-3 rounded-lg text-sm font-medium transition-colors cursor-pointer ${i18n.language === lang.code
+                        ? 'bg-red-600 text-white'
+                        : 'bg-[#263238]/5 text-[#263238] hover:bg-red-600/10 hover:text-red-600'
+                        }`}
                     >
                       {lang.label}
                     </button>
@@ -473,4 +463,4 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-      }             
+}             

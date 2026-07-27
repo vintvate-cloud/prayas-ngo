@@ -72,7 +72,7 @@ export default function FocusAreas() {
   return (
     <section className="bg-white py-8 md:py-16 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         {/* ─── SECTION HEADER ─── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -89,7 +89,7 @@ export default function FocusAreas() {
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#263238] mt-2"
             style={{ fontFamily: 'var(--font-heading)' }}
           >
-            {t('focus.title', 'Our Focus Areas')}
+            {t('focus.title', 'What We Do')}
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-red-600 to-red-400 mx-auto mt-3 rounded-full shadow-xs" />
           <p className="text-[#263238]/70 mt-3 max-w-2xl mx-auto text-sm md:text-base font-light">
@@ -187,7 +187,7 @@ export default function FocusAreas() {
         <div className="block md:hidden px-1 py-2">
           {/* Main Yellow Card Container */}
           <div className="relative w-full rounded-3xl overflow-hidden bg-[#FFF314] shadow-2xl p-4 sm:p-6 pt-6">
-            
+
             {/* Top Children Header Illustration / Banner Image */}
             <div className="absolute top-0 left-0 right-0 h-36 overflow-hidden">
               <img
@@ -200,7 +200,7 @@ export default function FocusAreas() {
 
             {/* Middle Card Slider Area with Arrow Buttons */}
             <div className="relative mt-4 mb-4 px-2">
-              
+
               {/* Left Arrow Button */}
               <button
                 onClick={prevSlide}
@@ -294,9 +294,8 @@ export default function FocusAreas() {
                 <button
                   key={idx}
                   onClick={() => setCurrentIndex(idx)}
-                  className={`h-2.5 rounded-full transition-all cursor-pointer ${
-                    idx === currentIndex ? 'w-7 bg-[#263238]' : 'w-2.5 bg-[#263238]/30'
-                  }`}
+                  className={`h-2.5 rounded-full transition-all cursor-pointer ${idx === currentIndex ? 'w-7 bg-[#263238]' : 'w-2.5 bg-[#263238]/30'
+                    }`}
                   aria-label={`Go to slide ${idx + 1}`}
                 />
               ))}

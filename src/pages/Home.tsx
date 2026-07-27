@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import HeroSection from '../components/HeroSection'
-import ScrollStory from '../components/ScrollStory'
+import HelpChildrenSection from '../components/HelpChildrenSection'
 import ImpactCategories from '../components/ImpactCategories'
 import ImpactCounter from '../components/ImpactCounter'
 import TrustFlow from '../components/TrustFlow'
@@ -23,11 +23,8 @@ export default function Home() {
     <div className="w-full">
       <HeroSection />
 
-      {/* About Section – ScrollStory (white background) */}
-      <ScrollStory />
-
-      {/* Vision & Mission */}
-      <VisionMission />
+      {/* How do you want to help children section */}
+      <HelpChildrenSection />
 
       {/* Focus Areas – 5 segments (preview of "What We Do") */}
       <FocusAreas />
