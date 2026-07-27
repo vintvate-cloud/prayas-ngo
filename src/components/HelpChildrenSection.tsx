@@ -68,9 +68,9 @@ export default function HelpChildrenSection() {
           {/* ─── LEFT COLUMN: Headline & Subtext ─── */}
           <div className="lg:col-span-5 space-y-6">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#263238] tracking-tight leading-[1.2]">
-              How do you want to{' '}
+              How would you like to{' '}
               <span className="text-[#F5B800] font-heading font-normal relative inline-block">
-                help children
+                create change
               </span>{' '}
               today?
             </h2>

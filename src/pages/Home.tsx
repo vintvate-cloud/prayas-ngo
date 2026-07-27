@@ -23,7 +23,7 @@ export default function Home() {
     <div className="w-full">
       <HeroSection />
 
-      {/* How do you want to help children section */}
+      {/* How would you like to create change section */}
       <HelpChildrenSection />
 
       {/* Focus Areas – 5 segments (preview of "What We Do") */}
