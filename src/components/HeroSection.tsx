@@ -163,8 +163,8 @@ export default function HeroSection() {
       {/* ─── Main Hero Split Layout Grid ─── */}
       <div className="w-full flex-1 grid grid-cols-1 lg:grid-cols-12 items-center relative z-10 py-6 sm:py-10">
 
-        {/* ─── LEFT COLUMN: Clean White Side with Synced Text & Hand-Drawn Highlights ─── */}
-        <div className="lg:col-span-5 px-6 sm:px-10 lg:px-14 py-6 md:py-10 flex flex-col justify-center relative z-30">
+        {/* ─── LEFT COLUMN: Clean White Side with Synced Text & Hand-Drawn Highlights (Order 2 on Mobile, Order 1 on Desktop) ─── */}
+        <div className="lg:col-span-5 px-6 sm:px-10 lg:px-14 py-6 md:py-10 flex flex-col justify-center relative z-30 order-2 lg:order-1">
 
           <div className="my-auto py-2 space-y-6 sm:space-y-8 max-w-xl">
             <AnimatePresence mode="wait" custom={direction}>
@@ -217,11 +217,11 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* ─── RIGHT COLUMN: Moon-Border Curved Photo Frame ─── */}
-        <div className="lg:col-span-7 pr-0 sm:pr-0 lg:pr-0 pl-2 sm:pl-6 relative flex items-center justify-end py-1 -mt-4 sm:-mt-8 lg:-mt-12 z-20">
+        {/* ─── RIGHT COLUMN: Moon-Border Curved Photo Frame (Order 1 on Mobile, Order 2 on Desktop) ─── */}
+        <div className="lg:col-span-7 pr-0 sm:pr-0 lg:pr-0 pl-2 sm:pl-6 relative flex items-center justify-end py-1 mt-0 lg:-mt-12 z-20 order-1 lg:order-2">
 
           {/* Yellow Canvas Container with Lunar Arc / Moon Curve on Bottom-Left Corner */}
-          <div className="relative w-full h-[460px] sm:h-[560px] lg:h-[640px] p-2.5 sm:p-4 rounded-tr-3xl rounded-tl-3xl rounded-br-3xl rounded-bl-[140px] sm:rounded-bl-[220px] lg:rounded-bl-[300px] bg-[#FFF314] shadow-2xl transition-transform duration-500 hover:scale-[1.01]">
+          <div className="relative w-full h-[320px] sm:h-[500px] lg:h-[640px] p-2.5 sm:p-4 rounded-tr-3xl rounded-tl-3xl rounded-br-3xl rounded-bl-[100px] sm:rounded-bl-[200px] lg:rounded-bl-[300px] bg-[#FFF314] shadow-2xl transition-transform duration-500 hover:scale-[1.01]">
 
             {/* Spray Paint Splatters - Moon Curve Bottom Left Accent */}
             <svg className="absolute -bottom-6 -left-6 w-28 h-28 text-[#FFF314] pointer-events-none z-20" viewBox="0 0 100 100">
