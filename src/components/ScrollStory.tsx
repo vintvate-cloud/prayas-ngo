@@ -1,56 +1,131 @@
-// src/components/ScrollStory.tsx
+import { motion } from 'framer-motion';
+import { ArrowRight, Sparkles, ShieldCheck, History, HeartHandshake } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 export default function ScrollStory() {
-  return (
-    // md:h-screen and flex-col ensures the section perfectly fits one desktop screen
-    // overflow-hidden on desktop prevents the page itself from scrolling past this block
-    <section className="bg-white border-y border-[#263238]/10 w-full md:h-screen flex flex-col py-8 md:py-12 overflow-hidden">
-      
-      {/* ─── Top Heading ─── */}
-      <div className="w-full flex-shrink-0 px-4 mb-6 md:mb-10">
-        <h2
-          className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#263238] text-center"
-          style={{ fontFamily: 'var(--font-heading)' }}
-        >
-          About Us
-        </h2>
-      </div>
+  const { t } = useTranslation();
+  const navigate = useNavigate();
 
-      {/* ─── 50/50 Split Content Area ─── */}
-      <div className="flex-1 max-w-7xl mx-auto w-full px-4 flex flex-col md:flex-row items-center gap-8 md:gap-12 min-h-0">
+  return (
+    <section className="relative w-full py-16 sm:py-20 md:py-24 bg-gradient-to-b from-gray-50 via-white to-gray-50 text-[#263238] border-y border-gray-200/80 overflow-hidden">
+      {/* ─── Ambient Subtle Decorative Elements ─── */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-teal-500/5 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 rounded-full bg-amber-500/5 blur-3xl pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Left Side: YouTube Video */}
-        {/* Takes 50% width on desktop. aspect-video keeps the YouTube player ratio perfect */}
-        <div className="w-full md:w-1/2 flex-shrink-0 rounded-lg overflow-hidden shadow-lg aspect-video">
-          <iframe
-            className="w-full h-full"
-            src="https://www.youtube.com/embed/8fA5MBs4mr0"
-            title="Prayas - About Us"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3">
+          <motion.h2
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#263238] tracking-tight leading-tight"
+          >
+            Empowering Communities Since 2001
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-base sm:text-lg text-gray-600 leading-relaxed font-sans"
+          >
+            Dedicated to creating meaningful, self-sustaining social transformation through education, healthcare, women empowerment, and rural development.
+          </motion.p>
         </div>
 
-        {/* Right Side: Text Information */}
-        {/* Takes 50% width. overflow-y-auto allows the text to scroll independently if it's too long for smaller laptops */}
-        <div className="w-full md:w-1/2 h-full flex flex-col justify-center overflow-y-auto pr-2 md:pr-4 space-y-4 md:space-y-6 text-[#263238]/80 text-base sm:text-lg md:text-xl leading-relaxed py-2 md:py-0">
+        {/* ─── Main 50/50 Content Grid ─── */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           
-          <p className="first-letter:text-6xl first-letter:font-bold first-letter:text-[#FFF314] first-letter:mr-2 first-letter:float-left first-letter:drop-shadow-sm font-medium text-[#263238]">
-            Prayas is a non-profit organization dedicated to creating meaningful and sustainable change in society. Established in 2001, we have been working towards empowering communities and improving lives through education, healthcare, social awareness, and community development initiatives.
-          </p>
-          
-          <p>
-            For over two decades, Prayas has been committed to supporting underprivileged families, children, women, and communities by providing opportunities, resources, and guidance for a better future. Our efforts focus on building a society where every individual gets the chance to learn, grow, and live with dignity.
-          </p>
-          
-          <p>
-            With the support of volunteers, donors, and well-wishers, Prayas has made a positive impact on the lives of millions of people across different communities.
-          </p>
-          
+          {/* Left Column: Styled Video Frame Showcase (6 cols) */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-6 relative"
+          >
+            {/* Outer Decorative Frame Border */}
+            <div className="relative p-2.5 sm:p-3 bg-white rounded-3xl border border-gray-200 shadow-2xl">
+              
+              {/* YouTube Aspect Ratio Frame */}
+              <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-gray-900 shadow-inner group">
+                <iframe
+                  className="w-full h-full object-cover"
+                  src="https://www.youtube.com/embed/8fA5MBs4mr0?rel=0"
+                  title="Prayas NGO Story"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+
+              {/* Floating Stat Pill overlay on video */}
+              <div className="absolute -bottom-4 right-6 bg-[#263238] text-white px-4 py-2 rounded-xl shadow-xl border border-white/20 flex items-center gap-2.5 text-xs font-semibold">
+                <ShieldCheck size={16} className="text-teal-400" />
+                <span>Registered Non-Profit Society</span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right Column: Editorial Text & Key Pillars (6 cols) */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-6 space-y-6"
+          >
+            <div className="space-y-4 text-gray-700 text-base sm:text-lg leading-relaxed font-sans">
+              <p className="font-medium text-[#263238]">
+                Prayas Social Welfare Society is a grassroot non-profit organization dedicated to enabling dignity, hope, and self-reliance for vulnerable populations across India.
+              </p>
+              <p>
+                For over two decades, our team and dedicated volunteers have worked tirelessly to support underprivileged families, children, and women through actionable programs in rural development, vocational skill centers, digital education, and healthcare outreach.
+              </p>
+            </div>
+
+            {/* 3 Key Impact Pillars */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              <div className="p-4 rounded-xl bg-white border border-gray-200/80 shadow-sm hover:shadow-md transition-shadow flex items-start gap-3">
+                <div className="p-2 rounded-lg bg-teal-600/10 text-teal-700 shrink-0 mt-0.5">
+                  <History size={18} />
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-[#263238]">20+ Years Legacy</h4>
+                  <p className="text-xs text-gray-500 mt-0.5">Consistent ground impact & community trust</p>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-xl bg-white border border-gray-200/80 shadow-sm hover:shadow-md transition-shadow flex items-start gap-3">
+                <div className="p-2 rounded-lg bg-amber-500/10 text-amber-700 shrink-0 mt-0.5">
+                  <HeartHandshake size={18} />
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-[#263238]">Grassroot Reach</h4>
+                  <p className="text-xs text-gray-500 mt-0.5">Direct aid in villages & urban slums</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="pt-2 flex items-center gap-4">
+              <button
+                onClick={() => navigate('/about')}
+                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-semibold bg-[#263238] hover:bg-[#1a2328] text-white transition-all shadow-md hover:shadow-lg cursor-pointer"
+              >
+                <span>Read Full Story</span>
+                <ArrowRight size={16} />
+              </button>
+            </div>
+          </motion.div>
+
         </div>
 
       </div>
     </section>
-  )
+  );
 }

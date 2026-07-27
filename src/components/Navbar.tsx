@@ -222,16 +222,16 @@ export default function Navbar() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 10 }}
                             transition={{ duration: 0.15 }}
-                            className="absolute left-0 top-full mt-1 bg-white dark:bg-[#1a1a2e] rounded-xl shadow-xl border border-[#263238]/10 dark:border-white/10 min-w-[200px] py-2 z-50"
+                            className="absolute left-0 top-full mt-1 bg-white rounded-xl shadow-2xl border border-gray-200 min-w-[220px] py-2 z-50 overflow-hidden"
                           >
                             {link.submenu!.map((sub) => (
                               <Link
                                 key={sub.path}
                                 to={sub.path}
-                                className={`block px-5 py-2.5 text-xs transition-colors ${
+                                className={`block px-5 py-2.5 text-xs font-medium transition-colors ${
                                   location.pathname === sub.path
-                                    ? 'text-red-600 bg-red-600/10'
-                                    : `text-[#263238] dark:text-white hover:bg-red-600/10 hover:text-red-600`
+                                    ? 'text-red-600 bg-red-50 font-semibold'
+                                    : 'text-gray-800 hover:bg-red-50 hover:text-red-600'
                                 }`}
                               >
                                 {safeT(sub.name)}
@@ -285,16 +285,16 @@ export default function Navbar() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute right-0 top-full mt-1 bg-white dark:bg-[#1a1a2e] rounded-xl shadow-xl border border-[#263238]/10 dark:border-white/10 min-w-[150px] py-2 z-50 pointer-events-auto"
+                      className="absolute right-0 top-full mt-1 bg-white rounded-xl shadow-2xl border border-gray-200 min-w-[160px] py-2 z-50 pointer-events-auto overflow-hidden"
                     >
                       {LANGUAGES.map((lang) => (
                         <button
                           key={lang.code}
                           onClick={() => changeLanguage(lang.code)}
-                          className={`block w-full text-left px-5 py-2.5 text-sm transition-colors cursor-pointer ${
+                          className={`block w-full text-left px-5 py-2.5 text-xs font-medium transition-colors cursor-pointer ${
                             i18n.language === lang.code
-                              ? 'text-red-600 bg-red-600/10'
-                              : 'text-[#263238] dark:text-white hover:bg-red-600/10 hover:text-red-600'
+                              ? 'text-red-600 bg-red-50 font-semibold'
+                              : 'text-gray-800 hover:bg-red-50 hover:text-red-600'
                           }`}
                         >
                           {lang.label}
@@ -307,7 +307,7 @@ export default function Navbar() {
 
               <Link
                 to="/donate"
-                className="inline-flex items-center gap-1.5 px-2.5 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all shadow-lg hover:shadow-[#FFF314]/30 hover:scale-105 bg-[#FFF314] text-[#263238] shadow-[#FFF314]/40 hover:bg-[#FFF314]/90"
+                className="inline-flex items-center gap-1.5 px-2.5 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all shadow-lg hover:scale-105 bg-red-600 hover:bg-red-700 text-white shadow-red-600/30 cursor-pointer"
               >
                 <Heart className="w-4 h-4" />
                 <span className="hidden sm:inline">{donateText}</span>
@@ -315,7 +315,7 @@ export default function Navbar() {
 
               <Link
                 to="/volunteer"
-                className="inline-flex items-center gap-1.5 px-2.5 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all shadow-lg hover:shadow-[#FFF314]/30 hover:scale-105 bg-[#FFF314] text-[#263238] shadow-[#FFF314]/40 hover:bg-[#FFF314]/90"
+                className="inline-flex items-center gap-1.5 px-2.5 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all shadow-lg hover:scale-105 bg-red-600 hover:bg-red-700 text-white shadow-red-600/30 cursor-pointer"
               >
                 <UserPlus className="w-4 h-4" />
                 <span className="hidden sm:inline">{volunteerText}</span>
@@ -445,14 +445,14 @@ export default function Navbar() {
 
               <Link
                 to="/donate"
-                className="mt-3 w-full text-center rounded-full bg-[#FFF314] px-6 py-3.5 font-semibold text-[#263238] flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-transform"
+                className="mt-3 w-full text-center rounded-full bg-red-600 hover:bg-red-700 px-6 py-3.5 font-semibold text-white flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-transform"
               >
                 {donateText} <Heart className="w-5 h-5" />
               </Link>
 
               <Link
                 to="/volunteer"
-                className="mt-2 w-full text-center rounded-full bg-[#FFF314] px-6 py-3.5 font-semibold text-[#263238] flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-transform"
+                className="mt-2 w-full text-center rounded-full bg-red-600 hover:bg-red-700 px-6 py-3.5 font-semibold text-white flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-transform"
               >
                 {volunteerText} <UserPlus className="w-5 h-5" />
               </Link>
