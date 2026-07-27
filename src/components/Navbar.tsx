@@ -301,14 +301,6 @@ export default function Navbar() {
               </div>
 
               <Link
-                to="/donate"
-                className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 text-xs sm:text-sm font-medium rounded-full border transition-all hover:scale-105 cursor-pointer ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
-              >
-                <Heart className="w-4 h-4" />
-                <span className="hidden sm:inline">{donateText}</span>
-              </Link>
-
-              <Link
                 to="/volunteer"
                 className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 text-xs sm:text-sm font-medium rounded-full border transition-all hover:scale-105 cursor-pointer ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
               >
@@ -327,6 +319,14 @@ export default function Navbar() {
                   </span>
                 </Link>
               )}
+
+              <Link
+                to="/donate"
+                className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-bold rounded-full bg-[#FFF314] hover:bg-[#FBE000] text-[#263238] shadow-sm hover:shadow transition-all hover:scale-105 cursor-pointer border border-[#E6DB00]"
+              >
+                <Heart className="w-4 h-4 text-red-600 fill-red-600" />
+                <span>{t('nav.donateNow', 'Donate Now')}</span>
+              </Link>
 
               <button
                 className={`xl:hidden p-2.5 -m-1 rounded-full transition-colors ${textColor} ${textColorHover} ${bgButton}`}
@@ -436,9 +436,9 @@ export default function Navbar() {
 
               <Link
                 to="/donate"
-                className="mt-3 w-full text-center rounded-full border border-[#263238]/30 px-6 py-3.5 font-semibold text-[#263238] hover:text-red-600 hover:border-red-600 flex items-center justify-center gap-2 active:scale-[0.98] transition-transform"
+                className="mt-3 w-full text-center rounded-full bg-[#FFF314] hover:bg-[#FBE000] px-6 py-3.5 font-bold text-[#263238] border border-[#E6DB00] shadow-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-transform"
               >
-                {donateText} <Heart className="w-5 h-5" />
+                {t('nav.donateNow', 'Donate Now')} <Heart className="w-5 h-5 text-red-600 fill-red-600" />
               </Link>
 
               <Link
