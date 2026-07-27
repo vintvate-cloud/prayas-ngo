@@ -218,7 +218,7 @@ export default function HeroSection() {
         </div>
 
         {/* ─── RIGHT COLUMN: Moon-Border Curved Photo Frame (Order 1 on Mobile, Order 2 on Desktop) ─── */}
-        <div className="lg:col-span-7 pr-0 sm:pr-0 lg:pr-0 pl-0 sm:pl-6 relative flex items-start justify-end pt-0 pb-1 mt-0 lg:-mt-10 z-20 order-1 lg:order-2">
+        <div className="lg:col-span-7 pr-0 sm:pr-0 lg:pr-0 pl-0 sm:pl-6 relative flex items-start justify-end pt-0 pb-1 mt-0 z-20 order-1 lg:order-2">
 
           {/* Yellow Canvas Container with Lunar Arc / Moon Curve on Bottom-Left Corner */}
           <div className="relative w-full h-[320px] sm:h-[500px] lg:h-[640px] p-2.5 sm:p-4 rounded-tr-3xl rounded-tl-3xl rounded-br-3xl rounded-bl-[100px] sm:rounded-bl-[200px] lg:rounded-bl-[300px] bg-[#FFF314] shadow-2xl transition-transform duration-500 hover:scale-[1.01] -mt-0.5">
