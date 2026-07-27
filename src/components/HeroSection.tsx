@@ -25,7 +25,7 @@ export default function HeroSection() {
         image: '/P1039409.JPG',
         objectPosition: 'center 25%',
         ctaText: '♥ Yes! I Want To Help!',
-        route: '/education',
+        route: '/donate',
       },
       {
         id: 2,
@@ -39,7 +39,7 @@ export default function HeroSection() {
         image: '/P1039322.JPG',
         objectPosition: 'center 30%',
         ctaText: '♥ Empower A Woman!',
-        route: '/women-empowerment',
+        route: '/donate',
       },
       {
         id: 3,
@@ -53,7 +53,7 @@ export default function HeroSection() {
         image: '/PRAYASHEALTHCAMP.jpeg',
         objectPosition: 'center 20%',
         ctaText: '♥ Support Health Camps!',
-        route: '/healthcare',
+        route: '/donate',
       },
       {
         id: 4,
@@ -67,7 +67,7 @@ export default function HeroSection() {
         image: '/EDUCATION.JPG',
         objectPosition: '85% 25%',
         ctaText: '♥ Adopt A Village!',
-        route: '/rural-development',
+        route: '/donate',
       },
       {
         id: 5,
@@ -81,7 +81,7 @@ export default function HeroSection() {
         image: '/TREEGROW.jpg',
         objectPosition: 'center center',
         ctaText: '♥ Plant A Tree Today!',
-        route: '/environment',
+        route: '/donate',
       },
     ],
     [t]
