@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -128,7 +128,7 @@ export default function HeroSection() {
   const activeSlide = SLIDES[currentSlide];
 
   // Motion variants for synced left text transition
-  const textVariants = {
+  const textVariants: Variants = {
     enter: (dir: number) => ({
       y: dir > 0 ? 25 : -25,
       opacity: 0,
@@ -137,8 +137,8 @@ export default function HeroSection() {
       y: 0,
       opacity: 1,
       transition: {
-        y: { type: 'spring', stiffness: 300, damping: 28 },
-        opacity: { duration: 0.4 },
+        duration: 0.4,
+        ease: 'easeOut',
       },
     },
     exit: (dir: number) => ({
