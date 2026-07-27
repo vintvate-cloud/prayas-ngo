@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import {
   Trees,
@@ -25,6 +25,8 @@ import {
   Sprout,
   ShoppingBag,
   Home,
+  ArrowRight,
+  Sparkles,
 } from 'lucide-react'
 
 interface WorkItem {
@@ -49,11 +51,7 @@ interface WorkCategory {
 
 export default function OurWork() {
   const { t } = useTranslation()
-  const [flipped, setFlipped] = useState<Record<number, boolean>>({})
-
-  const toggleFlip = (id: number) => {
-    setFlipped((prev) => ({ ...prev, [id]: !prev[id] }))
-  }
+  const [hoveredId, setHoveredId] = useState<number | null>(null)
 
   const RURAL_CATEGORY_ID = 1
   const RURAL_ROUTE = '/rural-development'
@@ -79,7 +77,7 @@ export default function OurWork() {
     return null
   }
 
-  // ========== CATEGORIES (with WOMEN.jpeg added) ==========
+  // ========== CATEGORIES ==========
   const categories: WorkCategory[] = [
     // 1. Rural Development
     {
@@ -89,7 +87,7 @@ export default function OurWork() {
       description:
         'Transforming rural communities through sustainable development initiatives that improve quality of life and create self-reliant villages.',
       longDescription:
-        'Our Rural Development programme is designed to uplift rural communities by addressing critical gaps in infrastructure, education, healthcare, and livelihood opportunities. We work closely with village panchayats, local leaders, and community members to co‑create solutions that are both sustainable and culturally appropriate. Over the years, we have adopted multiple villages, provided clean drinking water, built sanitation facilities, and empowered local youth with skills for employment. Our holistic approach ensures that every intervention is community‑led and continues to thrive long after we have moved on.',
+        'Our Rural Development programme is designed to uplift rural communities by addressing critical gaps in infrastructure, education, healthcare, and livelihood opportunities. We work closely with village panchayats, local leaders, and community members to co‑create solutions that are both sustainable and culturally appropriate. Over the years, we have adopted multiple villages, provided clean drinking water, built sanitation facilities, and empowered local youth with skills for employment.',
       image: 'https://i.ibb.co/fWWWk9S/Whats-App-Image-2026-07-12-at-2-50-03-PM-1.jpg',
       color: '#849989',
       bgColor: 'bg-[#849989]/20',
@@ -100,32 +98,32 @@ export default function OurWork() {
           title: 'Village Adoption',
           description: 'Adopting villages to provide holistic development support.',
           longDescription:
-            'Under the Village Adoption programme, we select underserved villages and commit to a multi‑year transformation plan. We work with the community to assess needs and priorities – from building roads and schools to setting up health camps and digital literacy centres. Our goal is to make each adopted village self‑sufficient by the end of our engagement, with active community participation and local ownership of all assets created.',
+            'Under the Village Adoption programme, we select underserved villages and commit to a multi‑year transformation plan. We work with the community to assess needs and priorities.',
         },
         {
           icon: Droplets,
           title: 'Water & Sanitation',
           description: 'Ensuring access to clean drinking water and proper sanitation.',
           longDescription:
-            'Access to clean water and proper sanitation is a fundamental right. Our Water & Sanitation projects include installing deep‑bore hand pumps, constructing rainwater harvesting structures, and building individual household toilets. We also conduct hygiene awareness sessions, especially focusing on women and children, to reduce water‑borne diseases and improve overall health outcomes in the villages.',
+            'Access to clean water and proper sanitation is a fundamental right. Our Water & Sanitation projects include installing deep‑bore hand pumps, constructing rainwater harvesting structures, and building individual household toilets.',
         },
         {
           icon: Building,
           title: 'Infrastructure',
           description: 'Building and improving rural infrastructure.',
           longDescription:
-            'We believe that strong infrastructure is the backbone of rural progress. Our infrastructure initiatives range from constructing village community halls and anganwadi centres to laying internal roads and providing solar lighting. These projects not only improve daily life but also create employment opportunities for local labourers and masons, boosting the local economy.',
+            'We believe that strong infrastructure is the backbone of rural progress. Our infrastructure initiatives range from constructing village community halls to laying internal roads and providing solar lighting.',
         },
         {
           icon: Users,
           title: 'Community Development',
           description: 'Empowering communities through capacity building.',
           longDescription:
-            'True development happens when communities lead it. Our Community Development efforts focus on capacity building – training community members in participatory planning, financial literacy, and local governance. We facilitate the formation of village development committees and help them access government schemes and funds. This ensures that the village itself becomes the driver of its own progress.',
+            'True development happens when communities lead it. Our Community Development efforts focus on capacity building – training community members in participatory planning.',
         },
       ],
     },
-    // 2. Women Empowerment & Livelihood  ← IMAGE ADDED HERE
+    // 2. Women Empowerment & Livelihood
     {
       id: 2,
       title: 'Women Empowerment & Livelihood',
@@ -133,8 +131,8 @@ export default function OurWork() {
       description:
         'Empowering women through skill development, financial independence, and sustainable livelihood opportunities.',
       longDescription:
-        'Women are at the heart of every community, and empowering them is key to breaking the cycle of poverty. Our Women Empowerment & Livelihood programmes provide women with vocational skills, financial literacy, and access to micro‑credit through Self‑Help Groups (SHGs). We have established tailoring centres, food processing units, and small‑scale manufacturing hubs that enable women to earn a dignified income. We also work closely with women to build their confidence and leadership abilities, ensuring they have a voice in family and community decisions.',
-      image: '/WOMEN.jpeg',   // <-- This line ensures the image is used on the front of the card
+        'Women are at the heart of every community, and empowering them is key to breaking the cycle of poverty. Our Women Empowerment & Livelihood programmes provide women with vocational skills, financial literacy, and access to micro‑credit through Self‑Help Groups (SHGs). We have established tailoring centres, food processing units, and small‑scale manufacturing hubs.',
+      image: '/WOMEN.jpeg',
       color: '#777e91',
       bgColor: 'bg-[#777e91]/20',
       borderColor: 'border-[#777e91]',
@@ -144,35 +142,35 @@ export default function OurWork() {
           title: 'Sabji Wali Didi',
           description: 'Empowering women vegetable vendors with financial literacy and market access.',
           longDescription:
-            'The Sabji Wali Didi programme supports women who sell vegetables in local markets. We provide them with financial literacy training, access to micro‑credit, and linkages to better supply chains. They learn to manage their earnings, invest in quality produce, and build a loyal customer base. This initiative has helped hundreds of women double their daily income and gain respect in their communities.',
+            'The Sabji Wali Didi programme supports women who sell vegetables in local markets. We provide them with financial literacy training and access to micro‑credit.',
         },
         {
           icon: Scissors,
           title: 'Sewing Centres',
           description: 'Vocational training in tailoring and garment‑making.',
           longDescription:
-            'Our Sewing Centres are equipped with modern sewing machines and staffed by experienced instructors. We offer a comprehensive 6‑month course that covers stitching, cutting, embroidery, and garment finishing. Graduates are able to start their own tailoring businesses or find employment in local garment factories. Many of our trainees have gone on to become master trainers themselves, creating a multiplier effect.',
+            'Our Sewing Centres offer a comprehensive course covering stitching, cutting, embroidery, and garment finishing.',
         },
         {
           icon: Users2,
           title: 'SHGs (Self Help Groups)',
           description: 'Forming and strengthening women self‑help groups.',
           longDescription:
-            'Self‑Help Groups are the cornerstone of our women empowerment strategy. We facilitate the formation of SHGs, train them in bookkeeping, micro‑savings, and inter‑lending. We also link SHGs to formal banking institutions and government schemes. Beyond finances, SHGs become platforms for women to discuss social issues, health, and legal rights, fostering a strong sense of solidarity and collective action.',
+            'Self‑Help Groups are the cornerstone of our women empowerment strategy. We facilitate the formation of SHGs and train them in bookkeeping.',
         },
         {
           icon: Factory,
           title: 'Entrepreneurship',
           description: 'Supporting women to start and scale their own businesses.',
           longDescription:
-            'Our Entrepreneurship programme guides women through the entire business lifecycle – from ideation to scaling. We offer mentoring, business plan development, access to seed funding, and connections to markets. We focus on sectors where women have a natural advantage, such as food processing, handicrafts, and beauty services. Many of our entrepreneurs now run successful enterprises and employ other women in their communities.',
+            'Our Entrepreneurship programme guides women through the entire business lifecycle – from ideation to scaling.',
         },
         {
           icon: Home,
           title: 'Grah Udyog',
           description: 'Promoting home‑based industries for sustainable livelihoods.',
           longDescription:
-            'Grah Udyog supports women to start home‑based enterprises – from pickle making and papad rolling to agarbatti (incense stick) production and handloom weaving. We provide initial raw materials, design training, and market linkages. Our aim is to create sustainable, flexible income opportunities that allow women to work from home while managing their household responsibilities.',
+            'Grah Udyog supports women to start home‑based enterprises – from pickle making to agarbatti production.',
         },
       ],
     },
@@ -184,46 +182,46 @@ export default function OurWork() {
       description:
         'Providing quality education and skill development opportunities to build a brighter future for children and youth.',
       longDescription:
-        'Education is the most powerful tool to break the cycle of poverty and create lasting change. Our Education & Skill Development initiatives go beyond the classroom – we run after‑school tutoring centres, digital literacy labs, and career guidance programmes. We also focus on value‑based education through our Sanskarshala programme, which instils ethics, empathy, and cultural pride in children. For youth, we offer vocational training in computer skills, spoken English, and soft skills to enhance employability.',
+        'Education is the most powerful tool to break the cycle of poverty and create lasting change. Our Education & Skill Development initiatives go beyond the classroom – we run after‑school tutoring centres, digital literacy labs, and career guidance programmes. We also focus on value‑based education through our Sanskarshala programme.',
       image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=500&fit=crop',
-      color: '#9eada0',
-      bgColor: 'bg-[#9eada0]/20',
-      borderColor: 'border-[#9eada0]',
+      color: '#5b8266',
+      bgColor: 'bg-[#5b8266]/20',
+      borderColor: 'border-[#5b8266]',
       items: [
         {
           icon: GraduationCap,
           title: 'Sanskarshala',
           description: 'Value‑based education for holistic development.',
           longDescription:
-            'Sanskarshala is our flagship programme that integrates moral education with academic learning. We conduct interactive sessions on ethics, environmental stewardship, and civic responsibility, using storytelling, role‑play, and community projects. The programme also includes yoga and meditation to promote mental well‑being. Parents and teachers often report that children become more disciplined, compassionate, and confident after participating in Sanskarshala.',
+            'Sanskarshala is our flagship programme that integrates moral education with academic learning.',
         },
         {
           icon: Laptop,
           title: 'Digital Literacy',
           description: 'Bridging the digital divide with computer education.',
           longDescription:
-            'In today’s world, digital literacy is as essential as reading and writing. Our Digital Literacy programme sets up computer centres in rural areas, equipped with computers and internet connectivity. We train both children and adults in basic computer operations, internet usage, email, and online safety. We also offer advanced courses in programming, graphic design, and data entry for those who wish to pursue careers in IT.',
+            'Our Digital Literacy programme sets up computer centres in rural areas, equipped with computers and internet connectivity.',
         },
         {
           icon: Compass,
           title: 'Career Guidance',
           description: 'Helping youth make informed career choices.',
           longDescription:
-            'Many young people in rural areas are unaware of the diverse career options available to them. Our Career Guidance programme conducts workshops, aptitude tests, and one‑on‑one counselling sessions. We invite professionals from various fields to speak about their journeys. We also provide information about scholarships, entrance exams, and vocational training institutes, helping youth to make confident decisions about their futures.',
+            'Our Career Guidance programme conducts workshops, aptitude tests, and one‑on‑one counselling sessions.',
         },
         {
           icon: Shield,
           title: 'Self‑Defence',
           description: 'Training for women and children to ensure safety.',
           longDescription:
-            'We believe that every woman and child has the right to feel safe. Our Self‑Defence programme offers practical martial arts training, situational awareness drills, and legal awareness about rights and protections. The programme has been highly popular among school‑going girls and has significantly boosted their confidence. We also train teachers and parents so that they can reinforce these skills at home and in school.',
+            'Our Self‑Defence programme offers practical martial arts training, situational awareness drills, and legal awareness.',
         },
         {
           icon: Users2,
           title: 'Youth Leadership',
           description: 'Developing young leaders for community transformation.',
           longDescription:
-            'Our Youth Leadership programme identifies and nurtures young individuals with the potential to lead. We offer training in communication, project management, conflict resolution, and social entrepreneurship. Participants work on real‑world community projects, mentored by experienced professionals. Many of our alumni now hold leadership positions in government, NGOs, and the corporate sector, continuing to drive positive change.',
+            'Our Youth Leadership programme identifies and nurtures young individuals with the potential to lead.',
         },
       ],
     },
@@ -235,53 +233,46 @@ export default function OurWork() {
       description:
         'Comprehensive healthcare and social welfare programmes ensuring the well‑being of all community members.',
       longDescription:
-        'Health is the foundation of a prosperous society. Our Health & Social Welfare initiatives cover preventive, curative, and promotive healthcare. We organise free health camps, conduct awareness drives on hygiene and nutrition, and facilitate access to government health schemes. We also have specialised programmes for organ donation awareness, elderly care, and support for persons with disabilities. Our community health workers regularly visit households to monitor health parameters and provide basic first aid.',
+        'Health is the foundation of a prosperous society. Our Health & Social Welfare initiatives cover preventive, curative, and promotive healthcare. We organise free health camps, conduct awareness drives on hygiene and nutrition, and facilitate access to government health schemes. We also have specialised programmes for organ donation awareness.',
       image: '/healthcaret.jpg',
-      color: '#8d9159',
-      bgColor: 'bg-[#8d9159]/20',
-      borderColor: 'border-[#8d9159]',
+      color: '#8d6e63',
+      bgColor: 'bg-[#8d6e63]/20',
+      borderColor: 'border-[#8d6e63]',
       items: [
         {
           icon: HeartPulse,
           title: 'Organ Donation',
           description: 'Creating awareness and facilitating organ donation.',
           longDescription:
-            'Organ donation is a life‑saving gift, yet awareness remains low. Our Organ Donation campaign educates communities about the importance of donating organs, dispels myths, and simplifies the registration process. We partner with hospitals and transplant coordinators to provide end‑to‑end support for donors and recipients. Through our efforts, we have registered thousands of potential donors and facilitated several successful transplants.',
+            'Our Organ Donation campaign educates communities about the importance of donating organs and dispels myths.',
         },
         {
           icon: Stethoscope,
           title: 'Health Camps',
           description: 'Free medical camps for underserved communities.',
           longDescription:
-            'We organise regular health camps in remote villages, bringing doctors and specialists to people who otherwise have little access to healthcare. Services include general check‑ups, dental, eye, and gynaecological screenings, as well as distribution of free medicines. We also link patients to government hospitals for follow‑up care. Our camps often see hundreds of patients, providing critical early diagnosis and treatment.',
+            'We organise regular health camps in remote villages, bringing doctors and specialists to people with limited access.',
         },
         {
           icon: Heart,
           title: 'Elderly Care',
           description: 'Support and companionship for senior citizens.',
           longDescription:
-            'Our elderly population deserves dignity and care. Our Elderly Care programme conducts home visits to provide health check‑ups, medication support, and emotional companionship. We also organise social gatherings and recreational activities to combat loneliness and isolation. Additionally, we help elderly people access government pensions and other entitlements, ensuring they live their golden years with security and respect.',
+            'Our Elderly Care programme conducts home visits to provide health check‑ups, medication support, and companionship.',
         },
         {
           icon: Accessibility,
           title: 'Support for Persons with Disabilities',
           description: 'Inclusive support and opportunities for persons with disabilities.',
           longDescription:
-            'Persons with disabilities often face multiple barriers. Our inclusive programme focuses on providing assistive devices, such as wheelchairs and hearing aids, and making public spaces and schools accessible. We also offer skill‑training tailored to different abilities and work with employers to create inclusive job opportunities. We advocate for the rights of people with disabilities and ensure their voices are heard in community decisions.',
+            'Our inclusive programme focuses on providing assistive devices and making public spaces accessible.',
         },
         {
           icon: Baby,
           title: 'Child Welfare',
           description: "Protecting children's rights and well‑being.",
           longDescription:
-            'Children are the future, and we are committed to protecting their rights. Our Child Welfare programme includes nutrition supplementation, immunisation drives, and early childhood education. We also work to prevent child labour and child marriage through awareness and legal support. We collaborate with schools and anganwadi centres to ensure every child has access to quality education and healthcare from an early age.',
-        },
-        {
-          icon: UsersRound,
-          title: 'Community Welfare',
-          description: 'Addressing diverse social needs holistically.',
-          longDescription:
-            'Community Welfare is the umbrella under which we address diverse social issues – from food security and legal aid to mental health and disaster relief. We run community kitchens during crises, provide counselling services, and facilitate access to government schemes. Our community‑based approach ensures that we are responsive to emerging needs and that no one is left behind.',
+            'Our Child Welfare programme includes nutrition supplementation, immunisation drives, and early childhood education.',
         },
       ],
     },
@@ -293,36 +284,39 @@ export default function OurWork() {
       description:
         'Protecting the environment and promoting sustainable practices for a greener and healthier planet.',
       longDescription:
-        'Environmental degradation is one of the biggest challenges of our time. Our Environment & Sustainability programmes focus on conservation, reforestation, and sustainable resource management. We organise massive tree plantation drives, promote water harvesting, and educate communities about waste management and renewable energy. We also work with schools to instil environmental values in children, ensuring that the next generation inherits a healthier planet.',
+        'Environmental degradation is one of the biggest challenges of our time. Our Environment & Sustainability programmes focus on conservation, reforestation, and sustainable resource management. We organise massive tree plantation drives, promote water harvesting, and educate communities about waste management.',
       image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&h=500&fit=crop',
-      color: '#9e8b70',
-      bgColor: 'bg-[#9e8b70]/20',
-      borderColor: 'border-[#9e8b70]',
+      color: '#43a047',
+      bgColor: 'bg-[#43a047]/20',
+      borderColor: 'border-[#43a047]',
       items: [
         {
           icon: Trees,
           title: 'Plantation',
           description: 'Massive tree plantation drives for ecological balance.',
           longDescription:
-            'Our Plantation programme is not just about planting trees – it is about creating forests. We select native species, involve local communities in nurturing saplings, and monitor survival rates. We have planted over 50,000 trees across various regions, creating green corridors and improving biodiversity. We also educate farmers about agro‑forestry to enhance soil fertility and provide additional income from timber and fruits.',
+            'Our Plantation programme selects native species and involves local communities in nurturing saplings.',
         },
         {
           icon: Leaf,
           title: 'Kargil Vatika',
           description: 'A tribute forest honouring the brave soldiers of Kargil.',
           longDescription:
-            'Kargil Vatika is a special memorial garden dedicated to the martyrs of the Kargil War. We have planted thousands of trees in a dedicated area, each tree symbolising the valour and sacrifice of our soldiers. The Vatika serves as a living tribute, a place for reflection, and a reminder of our duty to protect the nation and its environment. We maintain the garden with the help of local communities and schools, teaching children about patriotism and environmental stewardship.',
+            'Kargil Vatika is a special memorial garden dedicated to the martyrs of the Kargil War.',
         },
         {
           icon: Sprout,
           title: 'Water Conservation',
           description: 'Water harvesting and sustainable water management.',
           longDescription:
-            'Water scarcity affects millions. Our Water Conservation initiatives include constructing check dams, ponds, and rooftop rainwater harvesting systems. We also promote drip irrigation and water‑efficient farming practices. We work with village communities to map water sources and develop sustainable usage plans. Our efforts have significantly raised groundwater levels and reduced water‑borne diseases in many villages.',
+            'Our Water Conservation initiatives include constructing check dams, ponds, and rooftop rainwater harvesting.',
         },
       ],
     },
   ]
+
+  const activeCategory = categories.find((c) => c.id === hoveredId) || null
+  const activeRoute = activeCategory ? getCategoryRoute(activeCategory.id) : null
 
   // ===== ANIMATION VARIANTS =====
   const containerVariants = {
@@ -330,134 +324,253 @@ export default function OurWork() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
+        staggerChildren: 0.12,
       },
     },
   }
 
   const cardVariants = {
-    hidden: { opacity: 0, scale: 0.95 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
-      scale: 1,
-      transition: { duration: 0.4 },
+      y: 0,
+      transition: { duration: 0.5, ease: 'easeOut' },
     },
   }
 
   return (
     <div 
-      className="min-h-screen bg-white pb-16"
+      className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50 pb-24 relative"
       style={{ paddingTop: 'var(--navbar-height, 100px)' }}
     >
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      {/* FULL-SCREEN BACKDROP BLUR WHEN ANY CARD IS HOVERED */}
+      <AnimatePresence>
+        {hoveredId !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 bg-black/60 backdrop-blur-md z-40 pointer-events-auto"
+            onClick={() => setHoveredId(null)}
+          />
+        )}
+      </AnimatePresence>
+
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
         >
+          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 mb-4 text-xs font-semibold uppercase tracking-wider text-[#263238] bg-amber-100/90 rounded-full border border-amber-200 shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+            Our Initiatives
+          </span>
           <h2
-            className="text-5xl sm:text-6xl md:text-7xl font-normal text-[#263238] mb-4"
+            className="text-5xl sm:text-6xl md:text-7xl font-normal text-[#263238] mb-4 tracking-tight"
             style={{ fontFamily: 'var(--font-heading)' }}
           >
             what we do
           </h2>
-          <p className="text-lg text-[#263238]/60 max-w-2xl mx-auto">
-            Explore our five key focus areas where we create lasting impact in communities across India.
+          <p className="text-lg text-[#263238]/70 max-w-2xl mx-auto font-light leading-relaxed">
+            Hover over any initiative to separate it and explore details in full screen focus.
           </p>
         </motion.div>
 
+        {/* GRID CARDS */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 sm:gap-8"
         >
           {categories.map((category) => {
-            const isFlipped = flipped[category.id] || false
+            const isHovered = hoveredId === category.id
             const route = getCategoryRoute(category.id)
+
             return (
               <motion.div
                 key={category.id}
                 variants={cardVariants}
-                className="relative h-96 w-full cursor-pointer [perspective:1000px]"
-                onClick={() => toggleFlip(category.id)}
+                onMouseEnter={() => setHoveredId(category.id)}
+                className={`relative group h-[420px] w-full rounded-3xl overflow-hidden cursor-pointer border border-gray-200/80 bg-white transition-all duration-300 ${
+                  isHovered ? 'z-50 opacity-0 scale-95 pointer-events-none' : 'hover:border-white/50 z-10'
+                }`}
+                style={{
+                  boxShadow: `0 10px 30px -10px ${category.color}35`,
+                }}
               >
-                <div
-                  className={`relative w-full h-full transition-transform duration-700 [transform-style:preserve-3d] ${
-                    isFlipped ? '[transform:rotateY(180deg)]' : ''
-                  }`}
+                <Link
+                  to={route || '#'}
+                  className="block w-full h-full relative overflow-hidden rounded-3xl"
                 >
-                  {/* FRONT – 1px border on top, left, right only */}
-                  <div
-                    className="absolute inset-0 [backface-visibility:hidden] overflow-hidden shadow-lg border-0 border-t border-l border-r flex flex-col items-center justify-center p-4 group"
-                    style={{
-                      backgroundColor: category.color,
-                      borderColor: category.color,
-                    }}
-                  >
-                    <div className="w-full flex-1 overflow-hidden relative rounded-md">
-                      <img
-                        src={category.image}
-                        alt={category.title}
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).src =
-                            'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500"%3E%3Crect width="800" height="500" fill="%23263238"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="28" fill="%23FFF314" font-weight="bold"%3EPrayas Foundation%3C/text%3E%3C/svg%3E'
-                        }}
-                      />
-                      <span className="absolute bottom-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-xs">
-                        Tap for info
+                  <div className="absolute inset-0 w-full h-full overflow-hidden bg-slate-900">
+                    <img
+                      src={category.image}
+                      alt={category.title}
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src =
+                          'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500"%3E%3Crect width="800" height="500" fill="%23263238"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="28" fill="%23FFF314" font-weight="bold"%3EPrayas Foundation%3C/text%3E%3C/svg%3E'
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
+                  </div>
+
+                  <div className="absolute inset-0 p-6 flex flex-col justify-between z-10">
+                    <div className="flex justify-between items-center">
+                      <span
+                        className="p-3 rounded-2xl text-white backdrop-blur-md shadow-lg border border-white/20"
+                        style={{ backgroundColor: `${category.color}E6` }}
+                      >
+                        <category.icon className="w-6 h-6" />
+                      </span>
+                      <span className="bg-black/50 backdrop-blur-md text-white text-[11px] font-medium px-3 py-1 rounded-full border border-white/20 tracking-wide shadow-sm">
+                        Hover to Focus
                       </span>
                     </div>
-                    <h3 className="text-white text-lg font-bold mt-2 text-center">
-                      {category.title}
-                    </h3>
-                  </div>
 
-                  {/* BACK – 1px border on top, left, right only */}
-                  <div
-                    className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] overflow-hidden shadow-lg p-6 flex flex-col justify-between border-0 border-t border-l border-r"
-                    style={{
-                      backgroundColor: category.color,
-                      borderColor: category.color,
-                    }}
-                  >
                     <div>
-                      <h3 className="text-xl font-bold text-white mb-3">
+                      <h3 className="text-2xl font-bold text-white mb-2 leading-tight drop-shadow-md">
                         {category.title}
                       </h3>
-                      <p className="text-white/90 text-sm leading-relaxed line-clamp-5">
-                        {category.longDescription}
+                      <p className="text-white/80 text-xs line-clamp-2 leading-relaxed font-light">
+                        {category.description}
                       </p>
                     </div>
-
-                    {route ? (
-                      <Link
-                        to={route}
-                        className="mt-4 w-full py-2.5 px-4 bg-white text-[#263238] font-semibold rounded-full hover:bg-gray-100 transition-colors shadow-md text-center inline-block"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        Read More →
-                      </Link>
-                    ) : (
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          alert(`Learn more about ${category.title}`)
-                        }}
-                        className="mt-4 w-full py-2.5 px-4 bg-white text-[#263238] font-semibold rounded-full hover:bg-gray-100 transition-colors shadow-md"
-                      >
-                        Read More →
-                      </button>
-                    )}
                   </div>
-                </div>
+                </Link>
               </motion.div>
             )
           })}
         </motion.div>
       </section>
+
+      {/* CENTERED EXPANDED SPOTLIGHT CARD (WIDER SPLIT VIEW ON HOVER) */}
+      <AnimatePresence>
+        {activeCategory && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85, y: '-45%', x: '-50%' }}
+            animate={{ opacity: 1, scale: 1, y: '-50%', x: '-50%' }}
+            exit={{ opacity: 0, scale: 0.85, y: '-45%', x: '-50%' }}
+            transition={{ type: 'spring', stiffness: 340, damping: 26 }}
+            onMouseEnter={() => setHoveredId(activeCategory.id)}
+            onMouseLeave={() => setHoveredId(null)}
+            className="fixed top-1/2 left-1/2 z-50 w-[94vw] max-w-4xl h-[500px] rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/30 text-white grid grid-cols-1 md:grid-cols-12 bg-slate-900"
+            style={{
+              boxShadow: `0 30px 70px -15px ${activeCategory.color}90, 0 0 50px rgba(0,0,0,0.6)`,
+            }}
+          >
+            {/* LEFT SIDE: FEATURED IMAGE */}
+            <div className="md:col-span-5 relative h-48 md:h-full overflow-hidden bg-slate-950">
+              <img
+                src={activeCategory.image}
+                alt={activeCategory.title}
+                className="w-full h-full object-cover scale-105 transition-transform duration-700 brightness-90"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src =
+                    'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500"%3E%3Crect width="800" height="500" fill="%23263238"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="28" fill="%23FFF314" font-weight="bold"%3EPrayas Foundation%3C/text%3E%3C/svg%3E'
+                }}
+              />
+              <div 
+                className="absolute inset-0"
+                style={{
+                  background: `linear-gradient(to top, rgba(15, 23, 42, 0.85) 0%, transparent 60%), linear-gradient(to right, transparent 50%, rgba(15, 23, 42, 0.95) 100%)`,
+                }}
+              />
+
+              {/* Floating Badge on Image */}
+              <div className="absolute top-5 left-5 flex items-center gap-2.5 z-10">
+                <span
+                  className="p-3 rounded-2xl text-white backdrop-blur-md shadow-xl border border-white/30"
+                  style={{ backgroundColor: `${activeCategory.color}F0` }}
+                >
+                  <activeCategory.icon className="w-6 h-6" />
+                </span>
+              </div>
+
+              <div className="absolute bottom-5 left-5 right-5 z-10 hidden md:block">
+                <span className="bg-black/50 backdrop-blur-md text-amber-300 text-[11px] font-bold px-3 py-1 rounded-full border border-amber-300/30 uppercase tracking-widest">
+                  {activeCategory.items.length} Key Projects Included
+                </span>
+              </div>
+            </div>
+
+            {/* RIGHT SIDE: CONTENT & DETAILS */}
+            <div 
+              className="md:col-span-7 p-6 sm:p-8 flex flex-col justify-between h-full relative overflow-y-auto"
+              style={{
+                background: `linear-gradient(135deg, ${activeCategory.color}E6 0%, rgba(15, 23, 42, 0.96) 100%)`,
+              }}
+            >
+              {/* TOP HEADER */}
+              <div className="border-b border-white/20 pb-4">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-amber-300">
+                    Focus Area Spotlight
+                  </span>
+                  <span className="bg-white/20 backdrop-blur-md text-white text-[10px] font-semibold px-2.5 py-1 rounded-full border border-white/30">
+                    Center View
+                  </span>
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                  {activeCategory.title}
+                </h3>
+              </div>
+
+              {/* MIDDLE BODY */}
+              <div className="my-3 space-y-4">
+                <p className="text-white/90 text-sm leading-relaxed font-light line-clamp-4">
+                  {activeCategory.longDescription}
+                </p>
+
+                {/* Sub-item Initiatives Grid */}
+                <div>
+                  <h4 className="text-xs font-semibold uppercase tracking-wider text-white/70 mb-2">
+                    Included Programs
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {activeCategory.items.map((item, idx) => (
+                      <span
+                        key={idx}
+                        className="text-xs bg-white/20 text-white px-3 py-1.5 rounded-xl backdrop-blur-md font-medium border border-white/20 shadow-xs flex items-center gap-1.5 hover:bg-white/30 transition-colors"
+                      >
+                        <item.icon className="w-3.5 h-3.5 text-amber-300" />
+                        {item.title}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* BOTTOM CTA BUTTON */}
+              <div className="pt-4 border-t border-white/20">
+                {activeRoute ? (
+                  <Link
+                    to={activeRoute}
+                    className="w-full py-3.5 px-6 bg-white text-[#263238] font-bold rounded-2xl shadow-xl hover:bg-amber-300 transition-all duration-300 flex items-center justify-center gap-2.5 text-sm uppercase tracking-wider group"
+                  >
+                    <span>Explore {activeCategory.title}</span>
+                    <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </Link>
+                ) : (
+                  <button
+                    onClick={() => alert(`Learn more about ${activeCategory.title}`)}
+                    className="w-full py-3.5 px-6 bg-white text-[#263238] font-bold rounded-2xl shadow-xl hover:bg-amber-300 transition-all duration-300 flex items-center justify-center gap-2.5 text-sm uppercase tracking-wider group"
+                  >
+                    <span>Explore Initiative</span>
+                    <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </button>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
+
+

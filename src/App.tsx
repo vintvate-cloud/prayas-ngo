@@ -10,7 +10,7 @@ const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
 const OurWork = lazy(() => import('./pages/OurWork'));
 const Programs = lazy(() => import('./pages/Programs'));
-const Gallery = lazy(() => import('./pages/Gallery'));
+import Gallery from './pages/Gallery';
 const Stories = lazy(() => import('./pages/Stories'));
 const Children = lazy(() => import('./pages/Children'));
 const Donate = lazy(() => import('./pages/Donate'));

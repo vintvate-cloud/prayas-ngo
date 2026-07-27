@@ -25,21 +25,48 @@ const DEFAULT_GALLERY: GalleryImage[] = [
 ];
 
 export default function Gallery() {
-  const [images, setImages] = useState<GalleryImage[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [images, setImages] = useState<GalleryImage[]>(DEFAULT_GALLERY);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(Math.floor(DEFAULT_GALLERY.length / 2));
 
   // Drag state
   const dragStartX = useRef(0);
   const isDragging = useRef(false);
+  const lastWheelTime = useRef(0);
 
   useEffect(() => {
+    // Preload image assets immediately into browser cache for instant display
+    DEFAULT_GALLERY.forEach((item) => {
+      if (item.image_url) {
+        const img = new Image();
+        img.src = item.image_url;
+      }
+    });
+
     fetchImages();
   }, []);
 
+  // ── Wheel / Scroll handler ──
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      const now = Date.now();
+      if (now - lastWheelTime.current < 220) return; // Throttled for smooth scrolling
+
+      if (e.deltaY > 10 || e.deltaX > 10) {
+        setActiveIndex((prev) => Math.min(images.length - 1, prev + 1));
+        lastWheelTime.current = now;
+      } else if (e.deltaY < -10 || e.deltaX < -10) {
+        setActiveIndex((prev) => Math.max(0, prev - 1));
+        lastWheelTime.current = now;
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: true });
+    return () => window.removeEventListener('wheel', handleWheel);
+  }, [images.length]);
+
   const fetchImages = async () => {
-    setLoading(true);
     try {
       const { data, error } = await supabase
         .from('gallery')
@@ -48,18 +75,20 @@ export default function Gallery() {
         .order('display_order', { ascending: true })
         .order('created_at', { ascending: false });
 
-      if (error || !data || data.length === 0) {
-        setImages(DEFAULT_GALLERY);
-        setActiveIndex(Math.floor(DEFAULT_GALLERY.length / 2));
-      } else {
+      if (!error && data && data.length > 0) {
         setImages(data);
         setActiveIndex(Math.floor(data.length / 2));
+
+        // Preload database images
+        data.forEach((item) => {
+          if (item.image_url) {
+            const img = new Image();
+            img.src = item.image_url;
+          }
+        });
       }
     } catch (err: any) {
-      setImages(DEFAULT_GALLERY);
-      setActiveIndex(Math.floor(DEFAULT_GALLERY.length / 2));
-    } finally {
-      setLoading(false);
+      // Fallback seamlessly to default images already loaded
     }
   };
 
@@ -82,22 +111,6 @@ export default function Gallery() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#F1F8F5] flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-[#263238]" />
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen bg-[#F1F8F5] flex items-center justify-center text-red-600">
-        Error loading gallery: {error}
-      </div>
-    );
-  }
-
   if (images.length === 0) {
     return (
       <div className="min-h-screen bg-[#F1F8F5] flex flex-col items-center justify-center">
@@ -119,7 +132,7 @@ export default function Gallery() {
           Our <span className="text-[#FFF314]">Gallery</span>
         </h1>
         <p className="text-[#263238]/60 text-sm mt-2">
-          {images.length} images · Swipe or drag to explore
+          {images.length} images · Scroll, swipe or drag to explore
         </p>
       </div>
 
@@ -162,6 +175,9 @@ export default function Gallery() {
                   src={item.image_url}
                   alt={item.title || 'Gallery image'}
                   draggable={false}
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority={isActive ? 'high' : 'auto'}
                   className="w-full h-full object-cover rounded-2xl shadow-lg hover:shadow-xl transition-shadow"
                   onClick={() => toSlide(i)}
                   onError={(e) => {
