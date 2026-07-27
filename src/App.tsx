@@ -8,6 +8,7 @@ import Layout from './components/Layout';
 // Dynamic lazy loading of page components for optimal bundle splitting
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
+const About2 = lazy(() => import('./pages/About2'));
 const OurWork = lazy(() => import('./pages/OurWork'));
 const Programs = lazy(() => import('./pages/Programs'));
 import Gallery from './pages/Gallery';
@@ -53,6 +54,7 @@ export default function App() {
             <Route element={<Layout />}>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
+              <Route path="/about2" element={<About2 />} />
               <Route path="/about/members" element={<Members />} />
               <Route path="/about/certifications" element={<Certifications />} />
               <Route path="/our-work" element={<OurWork />} />

@@ -17,6 +17,7 @@ const navLinks = [
     path: '/about',
     submenu: [
       { name: 'nav.about.story', path: '/about' },
+      { name: 'About 2', path: '/about2' },
       { name: 'nav.about.members', path: '/about/members' },
       { name: 'nav.about.certifications', path: '/about/certifications' },
     ]
