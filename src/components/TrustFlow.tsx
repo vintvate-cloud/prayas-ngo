@@ -56,7 +56,7 @@ const TRUST_STEPS = [
 
 export default function TrustFlow() {
   return (
-    <section className="w-full py-16 sm:py-24 bg-gradient-to-b from-gray-50 via-white to-gray-50 text-[#263238] relative overflow-hidden select-none">
+    <section className="w-full py-16 sm:py-24 bg-white text-[#263238] relative overflow-hidden select-none">
       {/* ─── Ambient Glow Accents ─── */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-amber-500/5 rounded-full blur-[160px] pointer-events-none -z-10" />
 

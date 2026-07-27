@@ -70,7 +70,7 @@ export default function FocusAreas() {
   const currentArea = areas[currentIndex]
 
   return (
-    <section className="bg-gradient-to-b from-gray-50 via-white to-gray-50 py-8 md:py-16 overflow-hidden">
+    <section className="bg-white py-8 md:py-16 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* ─── SECTION HEADER ─── */}

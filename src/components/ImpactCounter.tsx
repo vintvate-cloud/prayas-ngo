@@ -180,7 +180,7 @@ export default function ImpactCounter() {
   return (
     <section
       ref={sectionRef}
-      className="py-16 sm:py-24 bg-gradient-to-b from-gray-50 via-white to-gray-50 text-[#263238] relative overflow-hidden select-none"
+      className="py-16 sm:py-24 bg-white text-[#263238] relative overflow-hidden select-none"
     >
       {/* ─── Ambient Glow Backdrop ─── */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-500/5 rounded-full blur-[150px] pointer-events-none -z-10" />

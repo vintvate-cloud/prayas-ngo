@@ -8,11 +8,7 @@ export default function ScrollStory() {
   const navigate = useNavigate();
 
   return (
-    <section className="relative w-full py-16 sm:py-20 md:py-24 bg-gradient-to-b from-gray-50 via-white to-gray-50 text-[#263238] border-y border-gray-200/80 overflow-hidden">
-      {/* ─── Ambient Subtle Decorative Elements ─── */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-teal-500/5 blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 rounded-full bg-amber-500/5 blur-3xl pointer-events-none" />
-
+    <section className="relative w-full py-16 sm:py-20 md:py-24 bg-white text-[#263238] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3">

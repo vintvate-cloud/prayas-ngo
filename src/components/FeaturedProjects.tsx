@@ -154,7 +154,7 @@ export default function FeaturedProjects() {
   const { t } = useTranslation();
 
   return (
-    <section className="relative w-full py-20 sm:py-28 bg-[#FAF9F6] text-[#263238] px-4 sm:px-6 lg:px-8 select-none border-y border-gray-200/80 font-sans overflow-x-clip">
+    <section className="relative w-full py-20 sm:py-28 bg-white text-[#263238] px-4 sm:px-6 lg:px-8 select-none font-sans overflow-x-clip">
       <div className="max-w-7xl mx-auto w-full relative z-10">
         
         {/* ─── Section Header ─── */}
