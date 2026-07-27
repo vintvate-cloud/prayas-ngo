@@ -1,5 +1,5 @@
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -157,10 +157,10 @@ export default function HeroSection() {
     >
       {/* ─── Main Hero Split Layout Grid ─── */}
       <div className="w-full flex-1 grid grid-cols-1 lg:grid-cols-12 items-center relative z-10 py-6 sm:py-10">
-        
+
         {/* ─── LEFT COLUMN: Clean White Side with Synced Text & Hand-Drawn Highlights ─── */}
         <div className="lg:col-span-5 px-6 sm:px-10 lg:px-14 py-6 md:py-10 flex flex-col justify-center relative z-30">
-          
+
           <div className="my-auto py-2 space-y-6 sm:space-y-8 max-w-xl">
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
@@ -214,12 +214,12 @@ export default function HeroSection() {
 
         {/* ─── RIGHT COLUMN: Premium Enlarged Spray-Paint Masked Photo Frame ─── */}
         <div className="lg:col-span-7 px-2 sm:px-6 lg:px-8 relative flex items-center justify-center py-4">
-          
+
           {/* Organic Asymmetric Yellow Spray Paint Canvas Container (Enlarged) */}
           <div className="relative w-full h-[420px] sm:h-[520px] lg:h-[580px] p-2 sm:p-3.5 rounded-[2.5rem] bg-[#FFF314] shadow-2xl transition-transform duration-500 hover:scale-[1.01] rotate-[-1deg]">
-            
+
             {/* ─── Spray Paint Texture & Edge Splatter SVG Overlay ─── */}
-            
+
             {/* Spray Paint Splatters - Top Left Corner */}
             <svg className="absolute -top-8 -left-8 w-24 h-24 text-[#FFF314] pointer-events-none z-20" viewBox="0 0 100 100">
               <path d="M50,50 Q20,10 0,30 Q30,70 10,90 Q60,70 50,50 Z" fill="currentColor" opacity="0.9" />
@@ -243,7 +243,7 @@ export default function HeroSection() {
 
             {/* Inner Photo Container - 100% Unobscured & Perfectly Visible */}
             <div className="relative w-full h-full rounded-[2rem] overflow-hidden bg-gray-950 shadow-inner group">
-              
+
               {/* Animated Photo Transition */}
               <AnimatePresence mode="wait" custom={direction}>
                 <motion.img
@@ -264,23 +264,7 @@ export default function HeroSection() {
               {/* Subtle Gradient Scrim at Bottom for Control Readability */}
               <div className="absolute inset-0 bg-gradient-to-t from-gray-950/70 via-transparent to-transparent opacity-60 pointer-events-none" />
 
-              {/* Slide Navigation Arrows */}
-              <div className="absolute bottom-5 right-5 z-30 flex items-center gap-2">
-                <button
-                  onClick={handlePrevSlide}
-                  className="p-3 rounded-full bg-white/90 hover:bg-white text-[#263238] shadow-xl backdrop-blur-md hover:scale-110 active:scale-95 transition-all cursor-pointer border border-gray-200"
-                  aria-label="Previous slide"
-                >
-                  <ChevronLeft size={20} />
-                </button>
-                <button
-                  onClick={handleNextSlide}
-                  className="p-3 rounded-full bg-white/90 hover:bg-white text-[#263238] shadow-xl backdrop-blur-md hover:scale-110 active:scale-95 transition-all cursor-pointer border border-gray-200"
-                  aria-label="Next slide"
-                >
-                  <ChevronRight size={20} />
-                </button>
-              </div>
+
 
               {/* Slide Category Indicator Dots */}
               <div className="absolute top-5 right-5 z-30 flex items-center gap-1.5 bg-gray-950/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20">
@@ -288,9 +272,8 @@ export default function HeroSection() {
                   <button
                     key={idx}
                     onClick={() => goToSlide(idx)}
-                    className={`w-2.5 h-2.5 rounded-full transition-all cursor-pointer ${
-                      idx === currentSlide ? 'bg-[#FFF314] w-6' : 'bg-white/60 hover:bg-white'
-                    }`}
+                    className={`w-2.5 h-2.5 rounded-full transition-all cursor-pointer ${idx === currentSlide ? 'bg-[#FFF314] w-6' : 'bg-white/60 hover:bg-white'
+                      }`}
                     aria-label={`Go to slide ${idx + 1}`}
                   />
                 ))}
