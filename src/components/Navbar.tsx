@@ -116,7 +116,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 1280) {
+      if (window.innerWidth >= 1024) {
         setIsMobileOpen(false);
         setMobileSubmenuOpen(null);
       }
@@ -183,14 +183,14 @@ export default function Navbar() {
           className={`transition-all duration-500 ${bgHeader} 
             min-h-[58px] sm:min-h-[64px] lg:min-h-[68px] flex items-center py-1 px-3 sm:px-6 lg:px-8`}
         >
-          <div className="max-w-7xl mx-auto w-full flex items-center justify-between gap-3">
+          <div className="max-w-7xl mx-auto w-full flex items-center justify-between gap-2 sm:gap-3">
             {/* Logo on Left */}
             <div className="flex-shrink-0 z-50">
               <BrandLogo to="/" variant="navbar" />
             </div>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden xl:flex items-center gap-3 lg:gap-5 mx-auto">
+            <nav className="hidden lg:flex items-center gap-2.5 xl:gap-5 mx-auto">
               {navLinks.map((link) => {
                 const hasSubmenu = link.submenu && link.submenu.length > 0;
                 const isActive = location.pathname === link.path || (hasSubmenu && isSubmenuActive(link.submenu!));
@@ -204,7 +204,7 @@ export default function Navbar() {
                       onMouseLeave={handleMouseLeave}
                     >
                       <button
-                        className={`text-xs font-medium transition-colors relative py-2 group flex items-center gap-1 whitespace-nowrap ${isActive ? 'text-red-600' : `${textColor} ${textColorHover}`
+                        className={`text-xs xl:text-sm font-medium transition-colors relative py-2 group flex items-center gap-1 whitespace-nowrap ${isActive ? 'text-red-600' : `${textColor} ${textColorHover}`
                           }`}
                       >
                         {safeT(link.name)}
@@ -246,7 +246,7 @@ export default function Navbar() {
                   <Link
                     key={link.name}
                     to={link.path}
-                    className={`text-xs font-medium transition-colors relative py-2 group whitespace-nowrap ${location.pathname === link.path
+                    className={`text-xs xl:text-sm font-medium transition-colors relative py-2 group whitespace-nowrap ${location.pathname === link.path
                       ? 'text-red-600'
                       : `${textColor} ${textColorHover}`
                       }`}
@@ -262,7 +262,7 @@ export default function Navbar() {
             </nav>
 
             {/* Right side actions */}
-            <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0 ml-auto xl:ml-0">
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0 ml-auto lg:ml-0">
               <div className="relative z-20">
                 <button
                   onClick={(e) => {
@@ -272,7 +272,7 @@ export default function Navbar() {
                   className={`flex items-center gap-1 px-2.5 sm:px-3 py-1.5 text-xs font-medium rounded-full border transition-all hover:scale-105 cursor-pointer ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
                 >
                   <Globe className="w-4 h-4" />
-                  <span className="hidden sm:inline">{currentLangLabel}</span>
+                  <span className="hidden md:inline">{currentLangLabel}</span>
                 </button>
                 <AnimatePresence>
                   {langDropdownOpen && (
@@ -302,19 +302,19 @@ export default function Navbar() {
 
               <Link
                 to="/volunteer"
-                className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 text-xs sm:text-sm font-medium rounded-full border transition-all hover:scale-105 cursor-pointer ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
+                className={`hidden sm:inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 text-xs sm:text-sm font-medium rounded-full border transition-all hover:scale-105 cursor-pointer ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
               >
                 <UserPlus className="w-4 h-4" />
-                <span className="hidden sm:inline">{volunteerText}</span>
+                <span className="hidden md:inline">{volunteerText}</span>
               </Link>
 
               {showAuthLink && !loading && (
                 <Link
                   to={isAuthenticated ? "/profile" : "/auth"}
-                  className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 text-xs sm:text-sm font-medium rounded-full border transition-all hover:scale-105 ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
+                  className={`hidden sm:inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 text-xs sm:text-sm font-medium rounded-full border transition-all hover:scale-105 ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
                 >
                   <User className="w-4 h-4" />
-                  <span className="hidden sm:inline">
+                  <span className="hidden md:inline">
                     {isAuthenticated ? safeT('nav.profile') : safeT('nav.signin')}
                   </span>
                 </Link>
@@ -322,14 +322,14 @@ export default function Navbar() {
 
               <Link
                 to="/donate"
-                className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-bold rounded-full bg-[#FFF314] hover:bg-[#FBE000] text-[#263238] shadow-sm hover:shadow transition-all hover:scale-105 cursor-pointer border border-[#E6DB00]"
+                className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-bold rounded-full bg-[#FFF314] hover:bg-[#FBE000] text-[#263238] shadow-sm hover:shadow transition-all hover:scale-105 cursor-pointer border border-[#E6DB00] whitespace-nowrap"
               >
                 <Heart className="w-4 h-4 text-red-600 fill-red-600" />
                 <span>{t('nav.donateNow', 'Donate Now')}</span>
               </Link>
 
               <button
-                className={`xl:hidden p-2.5 -m-1 rounded-full transition-colors ${textColor} ${textColorHover} ${bgButton}`}
+                className={`lg:hidden p-2.5 -m-1 rounded-full transition-colors ${textColor} ${textColorHover} ${bgButton}`}
                 onClick={() => setIsMobileOpen(!isMobileOpen)}
                 aria-label={isMobileOpen ? 'Close menu' : 'Open menu'}
               >
