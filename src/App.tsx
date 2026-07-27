@@ -30,6 +30,11 @@ const Healthcare = lazy(() => import('./pages/impact/Healthcare'));
 const Environment = lazy(() => import('./pages/impact/Environment'));
 const ProjectSindoda = lazy(() => import('./pages/impact/ProjectSindoda'));
 import VolunteerPopup from './components/VolunteerPopup';
+import Lenis from 'lenis';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const RouteFallback = () => (
   <div className="flex items-center justify-center min-h-[60vh]">
@@ -40,9 +45,31 @@ const RouteFallback = () => (
 export default function App() {
   const [isVolunteerPopupOpen, setIsVolunteerPopupOpen] = useState(false);
 
+  // Initialize Lenis Smooth Scrolling & Sync with GSAP ScrollTrigger
   useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      touchMultiplier: 1.5,
+    });
+
+    lenis.on('scroll', ScrollTrigger.update);
+
+    const updateTicker = (time: number) => {
+      lenis.raf(time * 1000);
+    };
+
+    gsap.ticker.add(updateTicker);
+    gsap.ticker.lagSmoothing(0);
+
     const timer = setTimeout(() => setIsVolunteerPopupOpen(true), 15000);
-    return () => clearInterval(timer);
+
+    return () => {
+      clearTimeout(timer);
+      gsap.ticker.remove(updateTicker);
+      lenis.destroy();
+    };
   }, []);
 
   return (
