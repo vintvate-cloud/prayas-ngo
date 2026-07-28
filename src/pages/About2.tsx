@@ -77,10 +77,7 @@ export default function About2() {
 
         {/* ─── 1. HERO SECTION ─── */}
         <div className="gsap-about-hero text-center max-w-4xl mx-auto space-y-5 pt-4">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-600/10 border border-red-600/20 text-red-600 text-xs sm:text-sm font-semibold tracking-wide">
-            <Sparkles className="w-4 h-4 text-red-600" />
-            <span>Prayas Social Welfare Society</span>
-          </div>
+
 
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-[#263238] tracking-tight leading-[1.15]">
             Empowering Communities <br className="hidden sm:inline" />
@@ -89,9 +86,7 @@ export default function About2() {
             </span>
           </h1>
 
-          <p className="text-base sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-sans">
-            Dedicated to creating meaningful, self-sustaining social transformation through education, healthcare, women empowerment, and rural development.
-          </p>
+
         </div>
 
         {/* ─── 2. MAIN STORY SECTION WITH YOUTUBE VIDEO ─── */}
@@ -129,7 +124,7 @@ export default function About2() {
           >
             <div className="space-y-4 text-gray-700 text-base sm:text-lg leading-relaxed font-sans">
               <p className="font-semibold text-[#263238]">
-                Prayas Social Welfare Society is a grassroot non-profit organization dedicated to enabling dignity, hope, and self-reliance for vulnerable populations across India.
+                Prayas is a non-profit organization dedicated to creating meaningful and sustainable change in society. Established in 2001, we have been working towards empowering communities and improving lives through education, healthcare, social awareness, and community development initiatives.
               </p>
               <p className="text-gray-600">
                 For over two decades, our team and dedicated volunteers have worked tirelessly to support underprivileged families, children, and women through actionable programs in rural development, vocational skill centers, digital education, and healthcare outreach.

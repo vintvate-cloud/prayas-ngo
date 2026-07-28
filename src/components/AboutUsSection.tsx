@@ -17,16 +17,7 @@ export default function AboutUsSection() {
         
         {/* ─── Section Header ─── */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-4">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-600/10 border border-red-600/20 text-red-600 text-xs sm:text-sm font-semibold tracking-wide"
-          >
-            <Sparkles className="w-4 h-4 text-red-600" />
-            <span>Prayas Social Welfare Society</span>
-          </motion.div>
+
 
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -41,15 +32,7 @@ export default function AboutUsSection() {
             </span>
           </motion.h2>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-base sm:text-lg text-gray-600 leading-relaxed font-sans max-w-2xl mx-auto"
-          >
-            Dedicated to creating meaningful, self-sustaining social transformation through education, healthcare, women empowerment, and rural development.
-          </motion.p>
+
         </div>
 
         {/* ─── MAIN STORY CARD WITH YOUTUBE VIDEO (First Card from AboutUs Page) ─── */}
@@ -92,7 +75,7 @@ export default function AboutUsSection() {
           <div className="lg:col-span-6 space-y-6">
             <div className="space-y-4 text-gray-700 text-base sm:text-lg leading-relaxed font-sans">
               <p className="font-semibold text-[#263238]">
-                Prayas Social Welfare Society is a grassroot non-profit organization dedicated to enabling dignity, hope, and self-reliance for vulnerable populations across India.
+                Prayas is a non-profit organization dedicated to creating meaningful and sustainable change in society. Established in 2001, we have been working towards empowering communities and improving lives through education, healthcare, social awareness, and community development initiatives.
               </p>
               <p className="text-gray-600 text-sm sm:text-base">
                 For over two decades, our team and dedicated volunteers have worked tirelessly to support underprivileged families, children, and women through actionable programs in rural development, vocational skill centers, digital education, and healthcare outreach.
