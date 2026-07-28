@@ -29,6 +29,7 @@ const RuralDevelopment = lazy(() => import('./pages/impact/RuralDevelopment'));
 const Healthcare = lazy(() => import('./pages/impact/Healthcare'));
 const Environment = lazy(() => import('./pages/impact/Environment'));
 const ProjectSindoda = lazy(() => import('./pages/impact/ProjectSindoda'));
+const LearnMoreDetail = lazy(() => import('./pages/LearnMoreDetail'));
 import VolunteerPopup from './components/VolunteerPopup';
 import Lenis from 'lenis';
 import gsap from 'gsap';
@@ -104,6 +105,17 @@ export default function App() {
               <Route path="/healthcare" element={<Healthcare />} />
               <Route path="/environment" element={<Environment />} />
               <Route path="/project-sindoda" element={<ProjectSindoda />} />
+
+              {/* Dedicated Learn More sub-field detail pages */}
+              <Route path="/:categorySlug/learn-more/:itemSlug" element={<LearnMoreDetail />} />
+              <Route path="/learn-more/:categorySlug/:itemSlug" element={<LearnMoreDetail />} />
+              <Route path="/learn-more/:itemSlug" element={<LearnMoreDetail />} />
+              <Route path="/rural-development/:itemSlug" element={<LearnMoreDetail />} />
+              <Route path="/education/:itemSlug" element={<LearnMoreDetail />} />
+              <Route path="/women-empowerment/:itemSlug" element={<LearnMoreDetail />} />
+              <Route path="/healthcare/:itemSlug" element={<LearnMoreDetail />} />
+              <Route path="/environment/:itemSlug" element={<LearnMoreDetail />} />
+              <Route path="/project-sindoda/:itemSlug" element={<LearnMoreDetail />} />
             </Route>
           </Routes>
         </Suspense>

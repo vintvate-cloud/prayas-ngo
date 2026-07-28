@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { ChevronRight, Sparkles, Target, Award, Users, MapPin, GraduationCap, BookOpen, Handshake, Droplets, Building, Trees } from 'lucide-react';
 
 const subCategories = [
@@ -168,10 +169,13 @@ export default function RuralDevelopment() {
                 <p className="text-gray-700 text-base leading-relaxed">
                   {sub.longDescription}
                 </p>
-                <button className="mt-6 bg-[#B45309] text-white font-semibold px-8 py-3 rounded-full shadow-md hover:shadow-lg hover:-translate-y-1 transition-all inline-flex items-center gap-2 text-sm">
+                <Link
+                  to={`/rural-development/learn-more/${sub.id}`}
+                  className="mt-6 bg-[#B45309] text-white font-semibold px-8 py-3 rounded-full shadow-md hover:shadow-lg hover:-translate-y-1 transition-all inline-flex items-center gap-2 text-sm"
+                >
                   Learn More
                   <ChevronRight className="w-4 h-4" />
-                </button>
+                </Link>
               </div>
             </motion.div>
           </div>

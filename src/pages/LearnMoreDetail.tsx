@@ -1,0 +1,682 @@
+// src/pages/LearnMoreDetail.tsx
+import { useState, useEffect, useRef } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import {
+  ArrowLeft,
+  ChevronRight,
+  Sparkles,
+  HeartHandshake,
+  Users,
+  CheckCircle2,
+  HelpCircle,
+  Share2,
+  Maximize2,
+  X,
+  Compass,
+  Award,
+  Layers,
+  ArrowUpRight,
+  BookOpen
+} from 'lucide-react';
+import { getInitiativeDetail, learnMoreData, type InitiativeDetail } from '../data/learnMoreData';
+
+gsap.registerPlugin(ScrollTrigger);
+
+export default function LearnMoreDetail() {
+  const { categorySlug = 'rural-development', itemSlug = 'village-adoption' } = useParams<{
+    categorySlug?: string;
+    itemSlug?: string;
+  }>();
+
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<'overview' | 'roadmap' | 'impact' | 'gallery' | 'faqs'>('overview');
+  const [activeFaq, setActiveFaq] = useState<number | null>(0);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  // GSAP animation refs
+  const heroRef = useRef<HTMLDivElement>(null);
+  const heroImageRef = useRef<HTMLImageElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
+
+  // Retrieve current initiative data or construct fallback
+  const initiative: InitiativeDetail =
+    getInitiativeDetail(categorySlug, itemSlug) ||
+    learnMoreData[`rural-development/village-adoption`];
+
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setActiveTab('overview');
+  }, [categorySlug, itemSlug]);
+
+  // GSAP Animations setup
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Parallax zoom effect on Hero Image
+      if (heroImageRef.current && heroRef.current) {
+        gsap.to(heroImageRef.current, {
+          scale: 1.12,
+          y: 30,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+          },
+        });
+      }
+
+      // Stats card staggered entrance
+      if (statsRef.current) {
+        gsap.fromTo(
+          statsRef.current.children,
+          { opacity: 0, y: 25, scale: 0.96 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: 'back.out(1.2)',
+            scrollTrigger: {
+              trigger: statsRef.current,
+              start: 'top 85%',
+            },
+          }
+        );
+      }
+    });
+
+    return () => ctx.revert();
+  }, [categorySlug, itemSlug]);
+
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: initiative.title,
+        text: initiative.shortDescription,
+        url: window.location.href,
+      }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    }
+  };
+
+  // Get related initiatives from same or other categories
+  const relatedInitiatives = Object.values(learnMoreData).filter(
+    (item) => item.id !== initiative.id
+  ).slice(0, 3);
+
+  const primaryColor = initiative.accentColor || '#B45309';
+
+  return (
+    <div className="min-h-screen bg-white text-[#263238] font-sans selection:bg-[#FFF314] selection:text-[#263238] pb-24 overflow-x-hidden">
+      
+      {/* ─── TOP GLASS NAVIGATION BAR ─── */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl border-b border-gray-200/80 shadow-xs transition-all duration-300">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
+          
+          {/* Back Button & Breadcrumbs */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate(-1)}
+              className="p-2 sm:p-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-[#263238] transition-all duration-300 hover:scale-105 active:scale-95 border border-slate-200"
+              aria-label="Go Back"
+            >
+              <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+
+            <nav className="hidden sm:flex items-center gap-2 text-xs sm:text-sm font-medium text-slate-500">
+              <Link to="/" className="hover:text-[#263238] transition-colors">Home</Link>
+              <ChevronRight className="w-3.5 h-3.5 opacity-40" />
+              <Link to="/our-work" className="hover:text-[#263238] transition-colors">What We Do</Link>
+              <ChevronRight className="w-3.5 h-3.5 opacity-40" />
+              <span className="text-[#263238] font-semibold line-clamp-1">{initiative.categoryName}</span>
+            </nav>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            <button
+              onClick={handleShare}
+              className="px-3.5 py-2 rounded-full bg-slate-100 hover:bg-slate-200 text-[#263238] text-xs sm:text-sm font-semibold border border-slate-200 transition-all flex items-center gap-2"
+            >
+              <Share2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">{copied ? 'Link Copied!' : 'Share'}</span>
+            </button>
+
+            <Link
+              to={`/donate?cause=${initiative.id}`}
+              className="px-4 py-2 sm:px-6 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold text-white shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-1.5"
+              style={{ backgroundColor: primaryColor }}
+            >
+              <HeartHandshake className="w-4 h-4" />
+              <span>Support Cause</span>
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      {/* ─── HERO SECTION WITH PARALLAX BANNER ─── */}
+      <section ref={heroRef} className="relative pt-20 sm:pt-24 pb-12 overflow-hidden bg-gradient-to-b from-slate-50 via-slate-50/50 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {/* Banner Container */}
+          <div className="relative h-[55vh] sm:h-[65vh] w-full rounded-3xl overflow-hidden shadow-2xl border border-slate-200/80 group">
+            
+            {/* Background Parallax Image */}
+            <img
+              ref={heroImageRef}
+              src={initiative.heroImage}
+              alt={initiative.title}
+              className="absolute inset-0 w-full h-full object-cover object-center brightness-95"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = '/ruraldevelopment.jpeg';
+              }}
+            />
+
+            {/* Gradient Overlay for Text Readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/10" />
+
+            {/* Content Over Banner */}
+            <div className="absolute inset-0 p-6 sm:p-12 flex flex-col justify-end items-start text-left z-10">
+              
+              {/* Category Pill Badge */}
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs sm:text-sm font-bold tracking-wider uppercase mb-4 shadow-md"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-[#FFF314]" />
+                <span>{initiative.categoryName}</span>
+              </motion.div>
+
+              {/* Title */}
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 tracking-tight drop-shadow-lg max-w-4xl"
+                style={{ fontFamily: 'var(--font-heading)' }}
+              >
+                {initiative.title}
+              </motion.h1>
+
+              {/* Subtitle */}
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="text-white/90 text-base sm:text-lg md:text-xl max-w-2xl font-light leading-relaxed mb-6 drop-shadow-md"
+              >
+                {initiative.subtitle}
+              </motion.p>
+
+              {/* CTA Buttons inside hero */}
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="flex flex-wrap items-center gap-3"
+              >
+                <a
+                  href="#details-hub"
+                  className="px-6 py-3 rounded-full bg-white text-[#263238] font-bold text-xs sm:text-sm shadow-xl hover:bg-[#FFF314] hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2"
+                >
+                  <span>Explore Details</span>
+                  <ChevronRight className="w-4 h-4" />
+                </a>
+
+                <Link
+                  to="/volunteer"
+                  className="px-6 py-3 rounded-full bg-white/20 backdrop-blur-md text-white font-semibold text-xs sm:text-sm border border-white/30 hover:bg-white/30 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2"
+                >
+                  <Users className="w-4 h-4" />
+                  <span>Join as Volunteer</span>
+                </Link>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── KEY IMPACT STATS COUNTER BAR ─── */}
+      <section className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 sm:-mt-12 mb-16">
+        <div
+          ref={statsRef}
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 sm:p-6 rounded-3xl bg-white border border-slate-200/90 shadow-xl"
+        >
+          {initiative.stats.map((stat, idx) => (
+            <div
+              key={idx}
+              className="p-4 sm:p-5 rounded-2xl bg-slate-50/80 border border-slate-100 hover:bg-slate-100/80 hover:shadow-md transition-all duration-300 text-center group"
+            >
+              <div
+                className="text-2xl sm:text-4xl font-extrabold mb-1 tracking-tight font-heading"
+                style={{ color: primaryColor }}
+              >
+                {stat.value}
+              </div>
+              <div className="text-xs sm:text-sm font-medium text-slate-600 leading-snug">
+                {stat.label}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ─── INTERACTIVE TABS & CONTENT HUB ─── */}
+      <section id="details-hub" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Tab Controls */}
+        <div className="flex overflow-x-auto gap-2 p-2 rounded-2xl bg-slate-100/80 border border-slate-200 mb-12 no-scrollbar">
+          {[
+            { id: 'overview', label: 'Overview & Mission', icon: Compass },
+            { id: 'roadmap', label: 'How It Works', icon: Layers },
+            { id: 'impact', label: 'Impact Story', icon: Award },
+            { id: 'gallery', label: 'Photo Gallery', icon: Maximize2 },
+            { id: 'faqs', label: 'FAQs & Support', icon: HelpCircle },
+          ].map((tab) => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as any)}
+                className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all duration-300 ${
+                  isActive
+                    ? 'bg-white text-[#263238] shadow-md border border-slate-200/80 scale-[1.02]'
+                    : 'text-slate-500 hover:text-[#263238] hover:bg-white/60'
+                }`}
+              >
+                <Icon className="w-4 h-4" style={{ color: isActive ? primaryColor : undefined }} />
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Tab Content Area */}
+        <div className="min-h-[400px]">
+          <AnimatePresence mode="wait">
+            
+            {/* TAB 1: OVERVIEW & OBJECTIVES */}
+            {activeTab === 'overview' && (
+              <motion.div
+                key="overview"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.35 }}
+                className="space-y-12"
+              >
+                {/* Deep Narrative Box */}
+                <div className="p-6 sm:p-10 rounded-3xl bg-slate-50 border border-slate-200/80 shadow-sm">
+                  <h2
+                    className="text-2xl sm:text-3xl font-bold text-[#263238] mb-4 flex items-center gap-3"
+                    style={{ fontFamily: 'var(--font-heading)' }}
+                  >
+                    <BookOpen className="w-7 h-7" style={{ color: primaryColor }} />
+                    <span>Initiative Overview</span>
+                  </h2>
+                  <p className="text-slate-700 text-base sm:text-lg leading-relaxed mb-6 font-normal">
+                    {initiative.longDescription}
+                  </p>
+                  <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+                    {initiative.shortDescription}
+                  </p>
+                </div>
+
+                {/* Key Objectives Grid */}
+                <div>
+                  <h3
+                    className="text-xl sm:text-2xl font-bold text-[#263238] mb-6 flex items-center gap-2"
+                    style={{ fontFamily: 'var(--font-heading)' }}
+                  >
+                    <Sparkles className="w-6 h-6" style={{ color: primaryColor }} />
+                    <span>Core Objectives & Key Pillars</span>
+                  </h3>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {initiative.objectives.map((obj, idx) => (
+                      <motion.div
+                        key={idx}
+                        whileHover={{ y: -4 }}
+                        className="p-6 rounded-2xl bg-white border border-slate-200/80 hover:shadow-lg hover:border-slate-300 transition-all duration-300 group"
+                      >
+                        <div
+                          className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-colors"
+                          style={{ backgroundColor: `${primaryColor}1A`, color: primaryColor }}
+                        >
+                          <CheckCircle2 className="w-5 h-5" />
+                        </div>
+                        <h4 className="text-lg font-bold text-[#263238] mb-2 group-hover:text-amber-700 transition-colors">
+                          {obj.title}
+                        </h4>
+                        <p className="text-slate-600 text-sm leading-relaxed">
+                          {obj.desc}
+                        </p>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* TAB 2: EXECUTION ROADMAP */}
+            {activeTab === 'roadmap' && (
+              <motion.div
+                key="roadmap"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.35 }}
+                className="p-6 sm:p-10 rounded-3xl bg-slate-50 border border-slate-200/80 shadow-sm"
+              >
+                <div className="text-center max-w-2xl mx-auto mb-12">
+                  <h2
+                    className="text-2xl sm:text-3xl font-bold text-[#263238] mb-3"
+                    style={{ fontFamily: 'var(--font-heading)' }}
+                  >
+                    How We Execute & Deliver Impact
+                  </h2>
+                  <p className="text-slate-600 text-sm sm:text-base">
+                    A structured 4-step framework ensuring transparent, community-led execution.
+                  </p>
+                </div>
+
+                <div className="relative border-l-2 ml-4 sm:ml-8 space-y-10 pl-6 sm:pl-10" style={{ borderColor: `${primaryColor}40` }}>
+                  {initiative.methodology.map((step, idx) => (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.4, delay: idx * 0.1 }}
+                      viewport={{ once: true }}
+                      className="relative group"
+                    >
+                      {/* Step Badge */}
+                      <span
+                        className="absolute -left-[35px] sm:-left-[51px] top-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white border-2 font-bold text-xs sm:text-sm flex items-center justify-center shadow-md group-hover:scale-110 transition-transform"
+                        style={{ borderColor: primaryColor, color: primaryColor }}
+                      >
+                        {step.step}
+                      </span>
+
+                      <div className="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:shadow-md transition-all duration-300">
+                        <h3 className="text-lg sm:text-xl font-bold text-[#263238] mb-2">
+                          {step.title}
+                        </h3>
+                        <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+                          {step.desc}
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
+            {/* TAB 3: IMPACT STORY */}
+            {activeTab === 'impact' && (
+              <motion.div
+                key="impact"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.35 }}
+                className="space-y-8"
+              >
+                {initiative.impactStory ? (
+                  <div className="relative p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-amber-500/10 via-slate-50 to-white border border-amber-200 shadow-lg overflow-hidden">
+                    <div className="text-7xl text-amber-500/15 font-serif font-black absolute top-2 left-6 select-none">
+                      “
+                    </div>
+
+                    <blockquote className="relative z-10 text-lg sm:text-2xl text-slate-800 font-serif italic leading-relaxed mb-8">
+                      "{initiative.impactStory.quote}"
+                    </blockquote>
+
+                    <div className="flex items-center gap-4 border-t border-slate-200 pt-6">
+                      <div
+                        className="w-12 h-12 rounded-full font-bold flex items-center justify-center text-lg uppercase shadow-md text-white"
+                        style={{ backgroundColor: primaryColor }}
+                      >
+                        {initiative.impactStory.author.charAt(0)}
+                      </div>
+                      <div>
+                        <div className="text-base sm:text-lg font-bold text-[#263238]">
+                          {initiative.impactStory.author}
+                        </div>
+                        <div className="text-xs sm:text-sm text-slate-500">
+                          {initiative.impactStory.role} • {initiative.impactStory.location}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="p-8 text-center text-slate-500 bg-slate-50 rounded-2xl border border-slate-200">
+                    Impact stories for this section are currently being updated.
+                  </div>
+                )}
+              </motion.div>
+            )}
+
+            {/* TAB 4: PHOTO GALLERY */}
+            {activeTab === 'gallery' && (
+              <motion.div
+                key="gallery"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.35 }}
+              >
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+                  {initiative.gallery.map((imgSrc, idx) => (
+                    <motion.div
+                      key={idx}
+                      whileHover={{ scale: 1.02 }}
+                      className="relative h-64 sm:h-72 rounded-2xl overflow-hidden cursor-pointer group shadow-md border border-slate-200 bg-slate-100"
+                      onClick={() => setSelectedImage(imgSrc)}
+                    >
+                      <img
+                        src={imgSrc}
+                        alt={`Gallery ${idx + 1}`}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-xs">
+                        <div className="p-3 rounded-full bg-white/90 text-[#263238] shadow-lg">
+                          <Maximize2 className="w-5 h-5" />
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
+            {/* TAB 5: FAQS */}
+            {activeTab === 'faqs' && (
+              <motion.div
+                key="faqs"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.35 }}
+                className="space-y-4 max-w-4xl mx-auto"
+              >
+                {initiative.faqs.map((faq, idx) => {
+                  const isOpen = activeFaq === idx;
+                  return (
+                    <div
+                      key={idx}
+                      className="rounded-2xl bg-white border border-slate-200/90 shadow-xs overflow-hidden transition-all duration-300"
+                    >
+                      <button
+                        onClick={() => setActiveFaq(isOpen ? null : idx)}
+                        className="w-full p-5 text-left font-bold text-base sm:text-lg text-[#263238] flex justify-between items-center gap-4 hover:bg-slate-50 transition-colors"
+                      >
+                        <span>{faq.question}</span>
+                        <ChevronRight
+                          className={`w-5 h-5 transition-transform duration-300 ${
+                            isOpen ? 'rotate-90 text-amber-600' : 'text-slate-400'
+                          }`}
+                        />
+                      </button>
+
+                      <AnimatePresence>
+                        {isOpen && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.25 }}
+                            className="px-5 pb-5 text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-3 font-normal"
+                          >
+                            {faq.answer}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                })}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </section>
+
+      {/* ─── CALL TO ACTION BANNER ─── */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
+        <div
+          className="relative rounded-3xl overflow-hidden p-8 sm:p-12 md:p-16 text-white shadow-2xl"
+          style={{ background: `linear-gradient(135deg, #263238 0%, ${primaryColor} 100%)` }}
+        >
+          <div className="relative z-10 max-w-3xl">
+            <h2
+              className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4"
+              style={{ fontFamily: 'var(--font-heading)' }}
+            >
+              {initiative.ctaTitle}
+            </h2>
+            <p className="text-white/90 text-base sm:text-lg font-light mb-8 leading-relaxed">
+              {initiative.ctaDescription}
+            </p>
+
+            <div className="flex flex-wrap items-center gap-4">
+              <Link
+                to={`/donate?cause=${initiative.id}`}
+                className="px-8 py-4 rounded-full bg-[#FFF314] text-[#263238] font-bold text-sm sm:text-base hover:bg-yellow-300 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2 shadow-lg"
+              >
+                <span>Support Cause Now</span>
+                <ArrowUpRight className="w-5 h-5" />
+              </Link>
+
+              <Link
+                to="/contact"
+                className="px-8 py-4 rounded-full bg-white/10 backdrop-blur-md text-white font-semibold text-sm sm:text-base hover:bg-white/20 hover:scale-105 active:scale-95 transition-all duration-300 border border-white/20"
+              >
+                Contact Program Lead
+              </Link>
+            </div>
+          </div>
+
+          {/* Decorative Subtle Icon Background */}
+          <div className="absolute right-0 bottom-0 opacity-10 pointer-events-none transform translate-x-1/4 translate-y-1/4">
+            <HeartHandshake className="w-96 h-96 text-white" />
+          </div>
+        </div>
+      </section>
+
+      {/* ─── RELATED INITIATIVES DISCOVERY GRID ─── */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24">
+        <div className="text-center mb-12">
+          <h2
+            className="text-2xl sm:text-3xl font-bold text-[#263238] mb-3"
+            style={{ fontFamily: 'var(--font-heading)' }}
+          >
+            Explore Other Focus Fields
+          </h2>
+          <p className="text-slate-600 text-sm sm:text-base">
+            Discover more ways Prayas Foundation creates positive community impact.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {relatedInitiatives.map((rel) => (
+            <Link
+              key={rel.id}
+              to={`/${rel.categorySlug}/learn-more/${rel.id}`}
+              className="group relative rounded-2xl overflow-hidden bg-white border border-slate-200/90 shadow-md hover:shadow-xl transition-all duration-500 hover:-translate-y-2 flex flex-col justify-between"
+            >
+              <div className="h-48 w-full relative overflow-hidden">
+                <img
+                  src={rel.heroImage}
+                  alt={rel.title}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = '/ruraldevelopment.jpeg';
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <span className="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] uppercase font-bold tracking-wider bg-white/90 text-[#263238] shadow-sm backdrop-blur-md">
+                  {rel.categoryName}
+                </span>
+              </div>
+
+              <div className="p-6 flex-1 flex flex-col justify-between bg-white">
+                <div>
+                  <h3 className="text-lg font-bold text-[#263238] mb-2 group-hover:text-amber-700 transition-colors">
+                    {rel.title}
+                  </h3>
+                  <p className="text-slate-600 text-xs line-clamp-2 leading-relaxed font-light mb-4">
+                    {rel.shortDescription}
+                  </p>
+                </div>
+
+                <div className="inline-flex items-center gap-1 text-[#263238] text-xs font-bold uppercase tracking-wider group-hover:translate-x-1 transition-transform">
+                  <span>Learn More</span>
+                  <ChevronRight className="w-4 h-4" />
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* ─── FULLSCREEN LIGHTBOX MODAL ─── */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
+            onClick={() => setSelectedImage(null)}
+          >
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-6 right-6 p-3 rounded-full bg-white/20 text-white hover:bg-white/30 transition-all border border-white/20"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <img
+              src={selectedImage}
+              alt="Enlarged preview"
+              className="max-w-full max-h-[85vh] rounded-2xl object-contain shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}

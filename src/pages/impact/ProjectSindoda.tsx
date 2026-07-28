@@ -71,37 +71,53 @@ export default function ProjectSindoda() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-white/10 p-8 rounded-2xl border border-white/20 backdrop-blur-sm hover:bg-white/20 transition-all hover:-translate-y-2">
+            <Link to="/project-sindoda/learn-more/cleanliness-drives" className="bg-white/10 p-8 rounded-2xl border border-white/20 backdrop-blur-sm hover:bg-white/20 transition-all hover:-translate-y-2 group block">
               <Trash2 className="w-12 h-12 text-[#FFF314] mb-6" />
               <h3 className="font-display text-2xl font-bold text-white mb-3">Waste Collection</h3>
-              <p className="font-mono text-white/80 text-sm leading-relaxed">
+              <p className="font-mono text-white/80 text-sm leading-relaxed mb-4">
                 Organizing massive community-led cleanup drives to remove existing plastic waste from streets and water bodies.
               </p>
-            </div>
+              <div className="inline-flex items-center gap-1.5 text-[#FFF314] text-xs font-bold uppercase tracking-wider group-hover:translate-x-1 transition-transform">
+                <span>Learn More</span>
+                <ArrowRight className="w-4 h-4" />
+              </div>
+            </Link>
 
-            <div className="bg-white/10 p-8 rounded-2xl border border-white/20 backdrop-blur-sm hover:bg-white/20 transition-all hover:-translate-y-2">
+            <Link to="/project-sindoda/learn-more/plastic-mukti" className="bg-white/10 p-8 rounded-2xl border border-white/20 backdrop-blur-sm hover:bg-white/20 transition-all hover:-translate-y-2 group block">
               <Recycle className="w-12 h-12 text-[#FFF314] mb-6" />
               <h3 className="font-display text-2xl font-bold text-white mb-3">Recycling Setup</h3>
-              <p className="font-mono text-white/80 text-sm leading-relaxed">
+              <p className="font-mono text-white/80 text-sm leading-relaxed mb-4">
                 Establishing local recycling centers to properly process gathered plastic and prevent it from returning to the environment.
               </p>
-            </div>
+              <div className="inline-flex items-center gap-1.5 text-[#FFF314] text-xs font-bold uppercase tracking-wider group-hover:translate-x-1 transition-transform">
+                <span>Learn More</span>
+                <ArrowRight className="w-4 h-4" />
+              </div>
+            </Link>
 
-            <div className="bg-white/10 p-8 rounded-2xl border border-white/20 backdrop-blur-sm hover:bg-white/20 transition-all hover:-translate-y-2">
+            <Link to="/project-sindoda/learn-more/plastic-mukti" className="bg-white/10 p-8 rounded-2xl border border-white/20 backdrop-blur-sm hover:bg-white/20 transition-all hover:-translate-y-2 group block">
               <Leaf className="w-12 h-12 text-[#FFF314] mb-6" />
               <h3 className="font-display text-2xl font-bold text-white mb-3">Eco-Alternatives</h3>
-              <p className="font-mono text-white/80 text-sm leading-relaxed">
+              <p className="font-mono text-white/80 text-sm leading-relaxed mb-4">
                 Distributing cloth bags and biodegradable materials to shopkeepers and residents to replace single-use plastics.
               </p>
-            </div>
+              <div className="inline-flex items-center gap-1.5 text-[#FFF314] text-xs font-bold uppercase tracking-wider group-hover:translate-x-1 transition-transform">
+                <span>Learn More</span>
+                <ArrowRight className="w-4 h-4" />
+              </div>
+            </Link>
 
-            <div className="bg-white/10 p-8 rounded-2xl border border-white/20 backdrop-blur-sm hover:bg-white/20 transition-all hover:-translate-y-2">
+            <Link to="/project-sindoda/learn-more/eco-awareness" className="bg-white/10 p-8 rounded-2xl border border-white/20 backdrop-blur-sm hover:bg-white/20 transition-all hover:-translate-y-2 group block">
               <Users className="w-12 h-12 text-[#FFF314] mb-6" />
               <h3 className="font-display text-2xl font-bold text-white mb-3">Awareness</h3>
-              <p className="font-mono text-white/80 text-sm leading-relaxed">
+              <p className="font-mono text-white/80 text-sm leading-relaxed mb-4">
                 Conducting door-to-door educational campaigns to teach families about the long-term dangers of plastic pollution.
               </p>
-            </div>
+              <div className="inline-flex items-center gap-1.5 text-[#FFF314] text-xs font-bold uppercase tracking-wider group-hover:translate-x-1 transition-transform">
+                <span>Learn More</span>
+                <ArrowRight className="w-4 h-4" />
+              </div>
+            </Link>
           </div>
         </div>
       </section>

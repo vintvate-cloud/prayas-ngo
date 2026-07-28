@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Play, ChevronRight, Sparkles, Target, Award, Users, HeartPulse, Stethoscope, Heart, Accessibility, Baby, UsersRound } from 'lucide-react';
 
 // Sub‑category data (matches items in OurWork → Health & Social Welfare)
@@ -210,10 +211,13 @@ export default function Healthcare() {
                 <p className="text-gray-700 text-base leading-relaxed">
                   {sub.longDescription}
                 </p>
-                <button className="mt-6 bg-[#0D9488] text-white font-semibold px-8 py-3 rounded-full shadow-md hover:shadow-lg hover:-translate-y-1 transition-all inline-flex items-center gap-2 text-sm">
+                <Link
+                  to={`/healthcare/learn-more/${sub.id}`}
+                  className="mt-6 bg-[#0D9488] text-white font-semibold px-8 py-3 rounded-full shadow-md hover:shadow-lg hover:-translate-y-1 transition-all inline-flex items-center gap-2 text-sm"
+                >
                   Learn More
                   <ChevronRight className="w-4 h-4" />
-                </button>
+                </Link>
               </div>
             </motion.div>
           </div>
