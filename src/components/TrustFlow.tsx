@@ -138,9 +138,7 @@ export default function TrustFlow() {
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-red-600 to-red-400 mx-auto mt-3 rounded-full shadow-xs" />
 
-          <p className="text-xs sm:text-base text-[#263238]/90 max-w-2xl mx-auto mt-2 font-medium leading-relaxed hidden sm:block">
-            We focus on changing behaviors and practices at the grassroots level and building self-reliant communities across every stage of development.
-          </p>
+
         </div>
 
         {/* ─── 3. HORIZONTAL SCROLL CARDS TRACK (Smooth Framer Motion Translation) ─── */}

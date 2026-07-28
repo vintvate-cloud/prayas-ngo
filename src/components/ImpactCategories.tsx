@@ -130,9 +130,7 @@ export default function ImpactCategories() {
 
       {/* HEADER – updated to be generic */}
       <div className="flex-shrink-0 bg-white px-4 sm:px-8 pb-8 text-center max-w-4xl mx-auto">
-        <p className="text-[#263238]/70 text-sm sm:text-base leading-relaxed mb-4">
-          {t('categories.subtitle', 'Your support helps us drive change across diverse communities. Every contribution strengthens our mission.')}
-        </p>
+
         <h2
           className="text-3xl sm:text-4xl md:text-5xl text-[#263238] font-bold mt-2"
           style={{ fontFamily: 'var(--font-heading)' }}

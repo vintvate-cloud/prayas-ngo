@@ -86,9 +86,7 @@ export default function ImageCarousel() {
   return (
     <div className="relative py-16 sm:py-24 md:py-32 bg-white overflow-hidden select-none">
       <div className="text-center mb-12 sm:mb-16 md:mb-24 px-4 sm:px-6">
-        <span className="text-[#EF4444] font-mono text-[10px] sm:text-xs uppercase tracking-widest font-semibold">
-          {t('carousel.label', 'Our Reach')}
-        </span>
+
         <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mt-4 text-[#263238] px-2">
           {t('carousel.title', 'Achievement & Accreditations')}
         </h2>

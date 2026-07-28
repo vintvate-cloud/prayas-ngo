@@ -194,12 +194,7 @@ export default function ImpactCounter() {
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-red-600 to-red-400 mx-auto rounded-full shadow-xs" />
 
-          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto font-sans leading-relaxed">
-            {t(
-              'impact.header.desc',
-              'Every number represents a life touched, a community empowered, and hope restored.'
-            )}
-          </p>
+
         </div>
 
         {/* ─── Counters Grid ─── */}
