@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import HeroSection from '../components/HeroSection'
+import AboutUsSection from '../components/AboutUsSection'
 import HelpChildrenSection from '../components/HelpChildrenSection'
 import ImpactCategories from '../components/ImpactCategories'
 import ImpactCounter from '../components/ImpactCounter'
@@ -22,6 +23,9 @@ export default function Home() {
   return (
     <div className="w-full">
       <HeroSection />
+
+      {/* About Us section - preview of first card from About Us page */}
+      <AboutUsSection />
 
       {/* How would you like to create change section */}
       <HelpChildrenSection />
