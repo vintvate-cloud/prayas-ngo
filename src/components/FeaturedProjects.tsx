@@ -159,7 +159,7 @@ export default function FeaturedProjects() {
         
         {/* ─── Section Header ─── */}
         <div className="text-center space-y-4 max-w-3xl mx-auto mb-16 sm:mb-20">
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#263238] tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-[#263238] tracking-tight leading-tight">
             {t('featured.title', 'Featured Projects & Events')}
           </h2>
           <div className="w-24 h-1.5 bg-gradient-to-r from-red-600 to-red-400 mx-auto rounded-full shadow-xs" />

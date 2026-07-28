@@ -24,7 +24,7 @@ export default function AboutUsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#263238] tracking-tight leading-[1.15]"
+            className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-[#263238] tracking-tight leading-[1.15]"
           >
             Empowering Communities <br className="hidden sm:inline" />
             <span className="text-red-600 underline decoration-[#FFF314] decoration-4 underline-offset-8">

@@ -178,7 +178,7 @@ export default function HeroSection() {
                 className="space-y-6"
               >
                 {/* Hand-lettered Headline with Yellow Sparkle Highlight */}
-                <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#263238] leading-[1.15] tracking-tight font-sans">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-[#263238] leading-[1.15] tracking-tight font-sans">
                   {activeSlide.mainPrefix}{' '}
                   <span className="relative inline-block text-[#F5B800] dark:text-[#F5B800] font-heading font-normal underline decoration-[#FFF314] decoration-4 underline-offset-4">
                     {activeSlide.highlight}
@@ -221,7 +221,7 @@ export default function HeroSection() {
         <div className="lg:col-span-7 pr-0 sm:pr-0 lg:pr-0 pl-0 sm:pl-6 relative flex items-start justify-end pt-0 pb-1 mt-0 z-20 order-1 lg:order-2">
 
           {/* Yellow Canvas Container with Lunar Arc / Moon Curve on Bottom-Left Corner */}
-          <div className="relative w-full h-[340px] sm:h-[520px] lg:h-[650px] p-2.5 sm:p-4 rounded-tr-none rounded-tl-none sm:rounded-tl-3xl rounded-br-none sm:rounded-br-none rounded-bl-[100px] sm:rounded-bl-[200px] lg:rounded-bl-[300px] bg-[#FFF314] shadow-2xl transition-transform duration-500 hover:scale-[1.01] mt-0">
+          <div className="relative w-full h-[340px] sm:h-[480px] md:h-[520px] lg:h-[540px] xl:h-[620px] p-2.5 sm:p-4 rounded-tr-none rounded-tl-none sm:rounded-tl-3xl rounded-br-none sm:rounded-br-none rounded-bl-[100px] sm:rounded-bl-[200px] lg:rounded-bl-[280px] bg-[#FFF314] shadow-2xl transition-transform duration-500 hover:scale-[1.01] mt-0">
 
             {/* Spray Paint Splatters - Moon Curve Bottom Left Accent */}
             <svg className="absolute -bottom-6 -left-6 w-28 h-28 text-[#FFF314] pointer-events-none z-20" viewBox="0 0 100 100">

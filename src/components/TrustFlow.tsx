@@ -155,7 +155,7 @@ export default function TrustFlow() {
               return (
                 <div
                   key={index}
-                  className="w-[88vw] sm:w-[620px] md:w-[720px] lg:w-[800px] h-[280px] sm:h-[310px] shrink-0 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-gray-200/80 bg-white flex flex-row transition-all duration-300 hover:scale-[1.01]"
+                  className="w-[88vw] sm:w-[560px] md:w-[660px] lg:w-[720px] xl:w-[800px] h-[280px] sm:h-[310px] shrink-0 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-gray-200/80 bg-white flex flex-row transition-all duration-300 hover:scale-[1.01]"
                 >
                   {/* Left Side: Vibrant Color Block */}
                   <div
