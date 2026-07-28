@@ -23,7 +23,7 @@ export default function CTASections() {
           >
             {t('cta.title', 'Get Involved')}
           </h2>
-          <div className="w-20 h-1 bg-[#FFF314] mx-auto mt-4 rounded-full" />
+          <div className="w-20 h-1 bg-gradient-to-r from-red-600 to-red-400 mx-auto mt-4 rounded-full shadow-xs" />
           <p className="text-[#263238]/60 mt-4 max-w-2xl mx-auto">
             {t('cta.desc', 'Your support makes our work possible. Join us in creating lasting change.')}
           </p>

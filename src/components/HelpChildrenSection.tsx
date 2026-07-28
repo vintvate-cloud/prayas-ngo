@@ -74,6 +74,7 @@ export default function HelpChildrenSection() {
               </span>{' '}
               today?
             </h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-red-600 to-red-400 mt-3 rounded-full shadow-xs" />
 
             <p className="text-base sm:text-lg text-gray-600 leading-relaxed font-sans max-w-md">
               Every small act of kindness creates a ripple of hope. Your support helps us build stronger communities through education, women empowerment, rural development, healthcare, and environmental sustainability.

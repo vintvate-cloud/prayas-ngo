@@ -136,7 +136,7 @@ export default function TrustFlow() {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#263238] tracking-tight leading-tight font-sans">
             Our Systemic Approach
           </h2>
-          <div className="w-20 h-1 bg-[#263238] mx-auto mt-2 rounded-full" />
+          <div className="w-20 h-1 bg-gradient-to-r from-red-600 to-red-400 mx-auto mt-3 rounded-full shadow-xs" />
 
           <p className="text-xs sm:text-base text-[#263238]/90 max-w-2xl mx-auto mt-2 font-medium leading-relaxed hidden sm:block">
             We focus on changing behaviors and practices at the grassroots level and building self-reliant communities across every stage of development.

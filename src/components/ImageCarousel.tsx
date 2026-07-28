@@ -92,6 +92,7 @@ export default function ImageCarousel() {
         <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mt-4 text-[#263238] px-2">
           {t('carousel.title', 'Achievement & Accreditations')}
         </h2>
+        <div className="w-20 h-1 bg-gradient-to-r from-red-600 to-red-400 mx-auto mt-4 rounded-full shadow-xs" />
       </div>
 
       <div

@@ -42,6 +42,7 @@ export default function TeamPreview() {
           >
             {t('team.title', 'Our Leadership')}
           </h2>
+          <div className="w-20 h-1 bg-gradient-to-r from-red-600 to-red-400 mx-auto mt-3 rounded-full shadow-xs" />
           <p className="text-[#263238]/60 mt-3 max-w-2xl mx-auto">
             {t('team.desc', 'Passionate individuals driving change at the grassroots.')}
           </p>

@@ -139,6 +139,7 @@ export default function ImpactCategories() {
         >
           {t('categories.heading', 'Our Impact Areas')}
         </h2>
+        <div className="w-20 h-1 bg-gradient-to-r from-red-600 to-red-400 mx-auto mt-3 rounded-full shadow-xs" />
       </div>
 
       {/* CAROUSEL AREA */}

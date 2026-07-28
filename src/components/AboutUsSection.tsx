@@ -78,7 +78,7 @@ export default function AboutUsSection() {
                 Prayas is a non-profit organization dedicated to creating meaningful and sustainable change in society. Established in 2001, we have been working towards empowering communities and improving lives through education, healthcare, social awareness, and community development initiatives.
               </p>
               <p className="text-gray-600 text-sm sm:text-base">
-                For over two decades, our team and dedicated volunteers have worked tirelessly to support underprivileged families, children, and women through actionable programs in rural development, vocational skill centers, digital education, and healthcare outreach.
+                For over two decades, Prayas has been committed to supporting underprivileged families, children, women, and communities by providing opportunities, resources, and guidance for a better future. Our efforts focus on building a society where every individual gets the chance to learn, grow, and live with dignity.
               </p>
             </div>
 
