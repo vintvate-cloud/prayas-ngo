@@ -19,11 +19,24 @@ import {
   Award,
   Layers,
   ArrowUpRight,
-  BookOpen
+  BookOpen,
+  Play,
+  ShieldCheck,
+  History
 } from 'lucide-react';
 import { getInitiativeDetail, learnMoreData, type InitiativeDetail } from '../data/learnMoreData';
 
 gsap.registerPlugin(ScrollTrigger);
+
+function getYouTubeEmbedUrl(url?: string): string | null {
+  if (!url) return null;
+  if (url.includes('youtube.com/embed/')) return url;
+  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+  if (match && match[1]) {
+    return `https://www.youtube.com/embed/${match[1]}?autoplay=0&rel=0`;
+  }
+  return url;
+}
 
 export default function LearnMoreDetail() {
   const { categorySlug = 'rural-development', itemSlug = 'village-adoption' } = useParams<{
@@ -32,7 +45,7 @@ export default function LearnMoreDetail() {
   }>();
 
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<'overview' | 'roadmap' | 'impact' | 'gallery' | 'faqs'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'video' | 'roadmap' | 'impact' | 'gallery' | 'faqs'>('overview');
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
@@ -115,6 +128,7 @@ export default function LearnMoreDetail() {
   ).slice(0, 3);
 
   const primaryColor = initiative.accentColor || '#B45309';
+  const videoEmbedUrl = getYouTubeEmbedUrl(initiative.videoUrl);
 
   return (
     <div className="min-h-screen bg-white text-[#263238] font-sans selection:bg-[#FFF314] selection:text-[#263238] pb-24 overflow-x-hidden">
@@ -235,6 +249,20 @@ export default function LearnMoreDetail() {
                   <ChevronRight className="w-4 h-4" />
                 </a>
 
+                {videoEmbedUrl && (
+                  <button
+                    onClick={() => {
+                      setActiveTab('video');
+                      const el = document.getElementById('details-hub');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="px-6 py-3 rounded-full bg-[#15803D] text-white font-bold text-xs sm:text-sm shadow-xl hover:bg-emerald-700 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2 border border-emerald-400/40"
+                  >
+                    <Play className="w-4 h-4 fill-white" />
+                    <span>Watch Video</span>
+                  </button>
+                )}
+
                 <Link
                   to="/volunteer"
                   className="px-6 py-3 rounded-full bg-white/20 backdrop-blur-md text-white font-semibold text-xs sm:text-sm border border-white/30 hover:bg-white/30 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2"
@@ -280,6 +308,7 @@ export default function LearnMoreDetail() {
         <div className="flex overflow-x-auto gap-2 p-2 rounded-2xl bg-slate-100/80 border border-slate-200 mb-12 no-scrollbar">
           {[
             { id: 'overview', label: 'Overview & Mission', icon: Compass },
+            ...(videoEmbedUrl ? [{ id: 'video', label: 'Watch Video', icon: Play }] : []),
             { id: 'roadmap', label: 'How It Works', icon: Layers },
             { id: 'impact', label: 'Impact Story', icon: Award },
             { id: 'gallery', label: 'Photo Gallery', icon: Maximize2 },
@@ -335,6 +364,113 @@ export default function LearnMoreDetail() {
                   </p>
                 </div>
 
+                {/* ─── MAIN STORY CARD WITH YOUTUBE VIDEO (Matching 2nd Section of Landing Page) ─── */}
+                {videoEmbedUrl && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.7 }}
+                    className="bg-white rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl border border-gray-200/90 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative overflow-hidden"
+                  >
+                    {/* Top Decorative Color Accent Bar */}
+                    <div
+                      className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r"
+                      style={{
+                        backgroundImage: `linear-gradient(to right, #FFF314, ${primaryColor}, #15803D)`
+                      }}
+                    />
+
+                    {/* Left Column: Styled YouTube Video Showcase (6 cols) */}
+                    <div className="lg:col-span-6 relative group">
+                      <div className="relative p-2.5 sm:p-3 bg-white rounded-3xl border border-gray-200 shadow-2xl">
+                        <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-gray-950 shadow-inner group">
+                          <iframe
+                            className="w-full h-full object-cover"
+                            src={videoEmbedUrl}
+                            title={initiative.videoTitle || initiative.title}
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowFullScreen
+                          />
+                        </div>
+                      </div>
+                      {/* Subtle Badge Overlay */}
+                      <div className="mt-3 flex items-center justify-between px-2 text-xs font-mono font-bold text-gray-500">
+                        <span className="flex items-center gap-1.5 text-emerald-700">
+                          <Play className="w-3.5 h-3.5 fill-current" /> Official Impact Video
+                        </span>
+                        <span className="flex items-center gap-1 text-emerald-600">
+                          <ShieldCheck className="w-3.5 h-3.5" /> Verified Ground Work
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Right Column: Text Overview & Key Impact Pillars (6 cols) */}
+                    <div className="lg:col-span-6 space-y-6">
+                      <div className="space-y-3">
+                        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100/80 text-[#15803D] text-xs font-bold uppercase tracking-wider">
+                          <Sparkles className="w-3.5 h-3.5 text-[#15803D]" />
+                          <span>Featured Video Documentary</span>
+                        </span>
+
+                        <h3
+                          className="text-2xl sm:text-3xl font-extrabold text-[#263238] tracking-tight leading-tight"
+                          style={{ fontFamily: 'var(--font-heading)' }}
+                        >
+                          {initiative.videoTitle || `A Green Tribute to the Heroes on Kargil Vijay Diwas 🇮🇳🌱`}
+                        </h3>
+
+                        <p className="text-gray-700 text-sm sm:text-base leading-relaxed font-sans font-medium">
+                          On the solemn occasion of Kargil Vijay Diwas, Prayas Samaj Sevi Sanstha, in collaboration with the Indore Municipal Corporation, organized a meaningful tree plantation drive at Chhota Bilawali Talab, Indore, as a tribute to the brave soldiers who made the supreme sacrifice for our nation.
+                        </p>
+
+                        <p className="text-emerald-800 text-xs sm:text-sm font-semibold bg-emerald-50 p-3 rounded-xl border border-emerald-200/80">
+                          As part of this initiative, 5,270 trees were planted in memory of 527 brave martyrs — 10 trees dedicated to each martyr. 🌳🇮🇳
+                        </p>
+                      </div>
+
+                      {/* 2 Key Stats / Highlight Badges */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                        <div className="p-4 rounded-2xl bg-gray-50 border border-gray-200/80 shadow-xs flex items-start gap-3 hover:bg-white hover:shadow-md transition-all">
+                          <div className="p-2.5 rounded-xl bg-emerald-600/10 text-emerald-700 shrink-0 mt-0.5">
+                            <History size={20} />
+                          </div>
+                          <div>
+                            <h4 className="text-sm font-bold text-[#263238]">5,270 Trees Planted</h4>
+                            <p className="text-xs text-gray-500 mt-0.5">10 trees dedicated to each martyr</p>
+                          </div>
+                        </div>
+
+                        <div className="p-4 rounded-2xl bg-gray-50 border border-gray-200/80 shadow-xs flex items-start gap-3 hover:bg-white hover:shadow-md transition-all">
+                          <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-700 shrink-0 mt-0.5">
+                            <HeartHandshake size={20} />
+                          </div>
+                          <div>
+                            <h4 className="text-sm font-bold text-[#263238]">527 Brave Martyrs</h4>
+                            <p className="text-xs text-gray-500 mt-0.5">Honoured at Chhota Bilawali Talab</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Action Button */}
+                      <div className="pt-1 flex items-center gap-4">
+                        {initiative.videoUrl && (
+                          <a
+                            href={initiative.videoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl text-sm font-bold bg-[#263238] hover:bg-emerald-700 text-white transition-all shadow-md hover:shadow-xl cursor-pointer"
+                          >
+                            <span>Watch on YouTube</span>
+                            <ArrowUpRight size={16} />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
                 {/* Key Objectives Grid */}
                 <div>
                   <h3
@@ -366,6 +502,114 @@ export default function LearnMoreDetail() {
                         </p>
                       </motion.div>
                     ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* TAB: VIDEO DOCUMENTARY */}
+            {activeTab === 'video' && videoEmbedUrl && (
+              <motion.div
+                key="video"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.35 }}
+                className="bg-white rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl border border-gray-200/90 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative overflow-hidden"
+              >
+                {/* Top Decorative Color Accent Bar */}
+                <div
+                  className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r"
+                  style={{
+                    backgroundImage: `linear-gradient(to right, #FFF314, ${primaryColor}, #15803D)`
+                  }}
+                />
+
+                {/* Left Column: Styled YouTube Video Showcase (6 cols) */}
+                <div className="lg:col-span-6 relative group">
+                  <div className="relative p-2.5 sm:p-3 bg-white rounded-3xl border border-gray-200 shadow-2xl">
+                    <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-gray-950 shadow-inner group">
+                      <iframe
+                        className="w-full h-full object-cover"
+                        src={videoEmbedUrl}
+                        title={initiative.videoTitle || initiative.title}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                      />
+                    </div>
+                  </div>
+                  {/* Subtle Badge Overlay */}
+                  <div className="mt-3 flex items-center justify-between px-2 text-xs font-mono font-bold text-gray-500">
+                    <span className="flex items-center gap-1.5 text-emerald-700">
+                      <Play className="w-3.5 h-3.5 fill-current" /> Official Impact Video
+                    </span>
+                    <span className="flex items-center gap-1 text-emerald-600">
+                      <ShieldCheck className="w-3.5 h-3.5" /> Verified Ground Work
+                    </span>
+                  </div>
+                </div>
+
+                {/* Right Column: Text Overview & Key Impact Pillars (6 cols) */}
+                <div className="lg:col-span-6 space-y-6">
+                  <div className="space-y-3">
+                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100/80 text-[#15803D] text-xs font-bold uppercase tracking-wider">
+                      <Sparkles className="w-3.5 h-3.5 text-[#15803D]" />
+                      <span>Featured Video Documentary</span>
+                    </span>
+
+                    <h3
+                      className="text-2xl sm:text-3xl font-extrabold text-[#263238] tracking-tight leading-tight"
+                      style={{ fontFamily: 'var(--font-heading)' }}
+                    >
+                      {initiative.videoTitle || `A Green Tribute to the Heroes on Kargil Vijay Diwas 🇮🇳🌱`}
+                    </h3>
+
+                    <p className="text-gray-700 text-sm sm:text-base leading-relaxed font-sans font-medium">
+                      On the solemn occasion of Kargil Vijay Diwas, Prayas Samaj Sevi Sanstha, in collaboration with the Indore Municipal Corporation, organized a meaningful tree plantation drive at Chhota Bilawali Talab, Indore, as a tribute to the brave soldiers who made the supreme sacrifice for our nation.
+                    </p>
+
+                    <p className="text-emerald-800 text-xs sm:text-sm font-semibold bg-emerald-50 p-3 rounded-xl border border-emerald-200/80">
+                      As part of this initiative, 5,270 trees were planted in memory of 527 brave martyrs — 10 trees dedicated to each martyr. 🌳🇮🇳
+                    </p>
+                  </div>
+
+                  {/* 2 Key Stats / Highlight Badges */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                    <div className="p-4 rounded-2xl bg-gray-50 border border-gray-200/80 shadow-xs flex items-start gap-3 hover:bg-white hover:shadow-md transition-all">
+                      <div className="p-2.5 rounded-xl bg-emerald-600/10 text-emerald-700 shrink-0 mt-0.5">
+                        <History size={20} />
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-bold text-[#263238]">5,270 Trees Planted</h4>
+                        <p className="text-xs text-gray-500 mt-0.5">10 trees dedicated to each martyr</p>
+                      </div>
+                    </div>
+
+                    <div className="p-4 rounded-2xl bg-gray-50 border border-gray-200/80 shadow-xs flex items-start gap-3 hover:bg-white hover:shadow-md transition-all">
+                      <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-700 shrink-0 mt-0.5">
+                        <HeartHandshake size={20} />
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-bold text-[#263238]">527 Brave Martyrs</h4>
+                        <p className="text-xs text-gray-500 mt-0.5">Honoured at Chhota Bilawali Talab</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Action Button */}
+                  <div className="pt-1 flex items-center gap-4">
+                    {initiative.videoUrl && (
+                      <a
+                        href={initiative.videoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl text-sm font-bold bg-[#263238] hover:bg-emerald-700 text-white transition-all shadow-md hover:shadow-xl cursor-pointer"
+                      >
+                        <span>Watch on YouTube</span>
+                        <ArrowUpRight size={16} />
+                      </a>
+                    )}
                   </div>
                 </div>
               </motion.div>

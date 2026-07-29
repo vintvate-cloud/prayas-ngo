@@ -12,6 +12,8 @@ export interface InitiativeDetail {
   gradientBg: string;
   shortDescription: string;
   longDescription: string;
+  videoUrl?: string;
+  videoTitle?: string;
   stats: { label: string; value: string; icon?: string }[];
   objectives: { title: string; desc: string; iconName?: string }[];
   methodology: { step: string; title: string; desc: string }[];
@@ -1057,48 +1059,51 @@ export const learnMoreData: Record<string, InitiativeDetail> = {
     id: 'kargil-vatika',
     categorySlug: 'environment',
     categoryName: 'Environment & Sustainability',
-    title: 'Kargil Vatika - Patriotic Tribute Memorial Forest',
-    subtitle: 'A living green monument honoring the brave martyrs of the Kargil War',
+    title: 'A Green Tribute to the Heroes on Kargil Vijay Diwas 🇮🇳🌱',
+    subtitle: '5,270 Trees Planted in Memory of 527 Brave Martyrs',
     heroImage: 'https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=1200&fit=crop',
     accentColor: '#15803D',
     secondaryColor: '#DCFCE7',
     gradientBg: 'from-[#14532D] via-[#15803D] to-[#86EFAC]',
-    shortDescription: 'Planting thousands of memorial trees named after Kargil war heroes, patriotic educational visits, and eco-memorial gardens.',
+    shortDescription: 'On Kargil Vijay Diwas, Prayas Samaj Sevi Sanstha with Indore Municipal Corporation planted 5,270 trees at Chhota Bilawali Talab, Indore — 10 trees dedicated to each of the 527 brave martyrs.',
     longDescription:
-      'Kargil Vatika is Prayas Foundation flagship eco-patriotic memorial project. Created as a living tribute to the 527 brave soldiers who sacrificed their lives during the 1999 Kargil War, every tree in Kargil Vatika carries a plaque bearing the name, rank, and regiment of a martyr. The Vatika features walking trails, flag posts, information kiosks, and amphitheaters where thousands of students gather for eco-citizenship workshops.',
+      'On the solemn occasion of Kargil Vijay Diwas, Prayas Samaj Sevi Sanstha, in collaboration with the Indore Municipal Corporation, organized a meaningful tree plantation drive at Chhota Bilawali Talab, Indore, as a tribute to the brave soldiers who made the supreme sacrifice for our nation. As part of this initiative, 5,270 trees were planted in memory of 527 brave martyrs — 10 trees dedicated to each martyr. This initiative was more than just a plantation drive. It was a heartfelt Green Tribute to the courage, sacrifice, and patriotism of our soldiers. Through every tree planted, we aim to keep the memory of our heroes alive while creating a greener and healthier environment for future generations. The event was graced by the presence of Shri Pushyamitra Bhargava Ji, Mayor of Indore; Smt. Madhu Verma Ji, MLA, Rau; and Shri Rajendra Rathore Ji, MIC Member, Indore Municipal Corporation, along with citizens and supporters who came together to honour our nation\'s heroes.',
+    videoUrl: 'https://youtu.be/2xQGt3tTGDI?si=bgL4YicocapUktKN',
+    videoTitle: 'A Green Tribute to the Heroes on Kargil Vijay Diwas 🇮🇳🌱',
     stats: [
-      { label: 'Martyr Tribute Trees', value: '527+' },
-      { label: 'Annual Visitors', value: '45,000+' },
-      { label: 'Student Study Tours', value: '120+' },
-      { label: 'Area Covered', value: '15 Acres' },
+      { label: 'Brave Martyrs Honoured', value: '527' },
+      { label: 'Trees Planted', value: '5,270' },
+      { label: 'Trees Dedicated / Martyr', value: '10' },
+      { label: 'Green Tribute Location', value: 'Bilawali Talab' },
     ],
     objectives: [
-      { title: 'Patriotic Eco-Memorial', desc: 'Honoring soldiers through living trees that cleanse the air for generations.' },
-      { title: 'Interactive Educational Trail', desc: 'Informational plaques highlighting battle history, bravery, and biodiversity.' },
-      { title: 'Community Gathering Space', desc: 'Hosting Independence Day, Republic Day, and Kargil Vijay Diwas events.' },
-      { title: 'Youth Citizenship Education', desc: 'Inspiring youth towards national service and environmental stewardship.' },
+      { title: '10 Trees Dedicated per Martyr', desc: 'Planting and nurturing 10 individual named trees for each of the 527 Kargil bravehearts.' },
+      { title: 'Civic & Leadership Support', desc: 'Organized with Indore Municipal Corporation, Mayor Shri Pushyamitra Bhargava Ji, and MLA Smt. Madhu Verma Ji.' },
+      { title: 'Chhota Bilawali Talab Reforestation', desc: 'Transforming lakefront areas into a lush green memorial forest zone in Indore.' },
+      { title: 'Patriotic Eco-Citizenship', desc: 'Inspiring citizens to remember our heroes while protecting nature for future generations.' },
     ],
     methodology: [
-      { step: '01', title: 'Land Allotment & Landscaping', desc: 'Developing dedicated park acres with soil enrichment and fencing.' },
-      { step: '02', title: 'Martyr Plaque Installation', desc: 'Engraving brass plaques honoring individual Kargil heroes.' },
-      { step: '03', title: 'Tree Plantation & Care', desc: 'Planting long-lifespan trees like Banyan, Neem, and Peepal.' },
-      { step: '04', title: 'Public Dedication & School Tours', desc: 'Inviting army veterans and students for daily educational tours.' },
+      { step: '01', title: '527 Martyrs Tribute Mapping', desc: 'Allocating 10 saplings per martyr across designated green blocks.' },
+      { step: '02', title: 'Indore Municipal Collaboration', desc: 'Joint execution with Shri Pushyamitra Bhargava Ji (Mayor) and Smt. Madhu Verma Ji (MLA).' },
+      { step: '03', title: 'Bilawali Lakefront Planting', desc: 'Planting resilient native trees around Chhota Bilawali Talab.' },
+      { step: '04', title: 'Long-Term Green Care', desc: 'Ensuring daily irrigation and nurturing so every tree grows as a permanent living tribute.' },
     ],
     impactStory: {
-      quote: "Standing under the tree named after my fallen comrade Captain Vikram Batra inside Kargil Vatika moved me to tears. It is a magnificent green tribute.",
-      author: "Col. S. P. Sharma (Retd)",
-      location: "Kargil Vatika Campus",
-      role: "Army Veteran",
+      quote: "One Martyr. Ten Trees. One Green Tribute. Through this initiative, Prayas continues its commitment to honouring our heroes, protecting nature, and building a greener future. Jai Hind! 🇮🇳 Salute to our Kargil Heroes. 🌱❤️",
+      author: "Prayas & Indore Municipal Corporation",
+      location: "Chhota Bilawali Talab, Indore",
+      role: "Kargil Vijay Diwas Initiative",
     },
     gallery: [
       'https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=800&h=500&fit=crop',
       '/TREEGROW.jpg',
     ],
     faqs: [
-      { question: 'Where is Kargil Vatika located?', answer: 'The main memorial forest is situated near Indore, open to public and school tours.' },
+      { question: 'How many trees were planted in memory of each Kargil martyr?', answer: '10 trees were dedicated to each of the 527 brave martyrs, totaling 5,270 trees.' },
+      { question: 'Where did the Kargil Vijay Diwas plantation take place?', answer: 'It was organized at Chhota Bilawali Talab, Indore, in partnership with the Indore Municipal Corporation.' },
     ],
-    ctaTitle: 'Sponsor a Hero’s Tribute Tree',
-    ctaDescription: 'Honor a soldier by planting and adopting a permanent memorial tree.',
+    ctaTitle: 'Support the Green Tribute Initiative',
+    ctaDescription: 'Help us care for the 5,270 trees planted for our 527 Kargil heroes.',
   },
 
   'environment/water-conservation': {
