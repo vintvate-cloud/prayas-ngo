@@ -452,21 +452,6 @@ export default function LearnMoreDetail() {
                           </div>
                         </div>
                       </div>
-
-                      {/* Action Button */}
-                      <div className="pt-1 flex items-center gap-4">
-                        {initiative.videoUrl && (
-                          <a
-                            href={initiative.videoUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl text-sm font-bold bg-[#263238] hover:bg-emerald-700 text-white transition-all shadow-md hover:shadow-xl cursor-pointer"
-                          >
-                            <span>Watch on YouTube</span>
-                            <ArrowUpRight size={16} />
-                          </a>
-                        )}
-                      </div>
                     </div>
                   </motion.div>
                 )}
@@ -595,21 +580,6 @@ export default function LearnMoreDetail() {
                         <p className="text-xs text-gray-500 mt-0.5">Honoured at Chhota Bilawali Talab</p>
                       </div>
                     </div>
-                  </div>
-
-                  {/* Action Button */}
-                  <div className="pt-1 flex items-center gap-4">
-                    {initiative.videoUrl && (
-                      <a
-                        href={initiative.videoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl text-sm font-bold bg-[#263238] hover:bg-emerald-700 text-white transition-all shadow-md hover:shadow-xl cursor-pointer"
-                      >
-                        <span>Watch on YouTube</span>
-                        <ArrowUpRight size={16} />
-                      </a>
-                    )}
                   </div>
                 </div>
               </motion.div>
