@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Play, ChevronRight, Sparkles, Target, Award, Users, Trees, Sprout, Droplets, Leaf } from 'lucide-react';
+import {
+  ChevronRight,
+  Sparkles,
+  Target,
+  Award,
+  Users,
+  Trees,
+  Sprout,
+  Droplets,
+  Leaf,
+  Heart,
+  ArrowUpRight,
+  SunMedium
+} from 'lucide-react';
+import gsap from 'gsap';
 
-// Sub‑category data (matches items in OurWork → Environment)
 const subCategories = [
   {
     id: 'plantation',
@@ -35,46 +48,68 @@ const subCategories = [
 ];
 
 export default function Environment() {
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        '.gsap-hero-title',
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 1, ease: 'power3.out', stagger: 0.15 }
+      );
+    }, heroRef);
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <div className="min-h-screen bg-white" style={{ paddingTop: 'var(--navbar-height, 100px)' }}>
-      
-      {/* ===== HERO SECTION – FULL SCREEN IMAGE ===== */}
-      <section className="relative h-screen w-full overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1920&q=80')`,
-          }}
-        >
-          <div className="absolute inset-0 bg-black/45" />
+    <div className="min-h-screen bg-white" style={{ paddingTop: 'var(--navbar-height, 80px)' }}>
+      {/* ===== HERO SECTION ===== */}
+      <section ref={heroRef} className="relative min-h-[58vh] sm:min-h-[68vh] lg:min-h-[75vh] w-full flex items-center justify-center overflow-hidden bg-[#14532D]">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/TREEGROW.jpg"
+            alt="Environment & Sustainability"
+            className="w-full h-full object-cover object-center transition-transform duration-1000"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/25 to-black/10" />
         </div>
 
-        <div className="relative z-10 flex h-full items-center justify-center px-4 text-center text-white">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-3xl"
-          >
-            <span className="inline-block bg-[#15803D]/80 px-4 py-1.5 rounded-full text-sm font-mono tracking-widest uppercase mb-6">
-              Environment & Sustainability
-            </span>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-              Protecting <span className="text-[#86EFAC]">Our Planet</span>
-            </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-white/80 max-w-2xl mx-auto mb-8">
-              Tree plantation, water conservation, and sustainable practices for a greener future.
-            </p>
-            <button className="inline-flex items-center gap-2 bg-[#86EFAC] text-[#14532D] font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-              Plant a Tree
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </motion.div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[calc(var(--navbar-height,70px)+3.25rem)] sm:pt-[calc(var(--navbar-height,70px)+4rem)] pb-16 sm:pb-20 text-center text-white">
+          <div className="gsap-hero-title inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs sm:text-sm font-medium tracking-wide uppercase mb-6 text-[#86EFAC]">
+            <Sprout className="w-4 h-4 text-[#86EFAC]" />
+            <span>Environment & Sustainability</span>
+          </div>
+
+          <h1 className="gsap-hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight max-w-5xl mx-auto mb-6">
+            Protecting Our Planet,<br />
+            <span className="text-[#86EFAC]">Preserving Our Future.</span>
+          </h1>
+
+          <p className="gsap-hero-title text-base sm:text-lg md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed mb-10 font-light">
+            Dedicated to tree plantation drives, Kargil Vatika memorial forests, rainwater harvesting, and community eco-education for a green sustainable future.
+          </p>
+
+          <div className="gsap-hero-title flex flex-wrap items-center justify-center gap-4">
+            <Link
+              to="/donate"
+              className="inline-flex items-center gap-2 bg-[#86EFAC] text-[#14532D] font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl hover:bg-white transition-all hover:scale-105 text-sm sm:text-base cursor-pointer"
+            >
+              <Heart className="w-5 h-5 text-red-600 fill-red-600" />
+              <span>Plant A Tree Today</span>
+            </Link>
+            <Link
+              to="/volunteer"
+              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md text-white font-semibold px-8 py-4 rounded-full border border-white/30 hover:bg-white/20 transition-all text-sm sm:text-base cursor-pointer"
+            >
+              <span>Become a Volunteer</span>
+              <ChevronRight className="w-4 h-4" />
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* ===== WHY ENVIRONMENT & SUSTAINABILITY ===== */}
-      <section className="py-20 md:py-28 bg-white">
+      {/* ===== WHY ENVIRONMENT ===== */}
+      <section className="py-20 sm:py-28 bg-[#F0FDF4]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -83,24 +118,18 @@ export default function Environment() {
             viewport={{ once: true }}
             className="text-center max-w-3xl mx-auto mb-16"
           >
-            <span className="inline-block text-[#15803D] font-mono text-xs tracking-[0.2em] uppercase font-bold mb-4">
+            <span className="inline-block text-[#16A34A] font-mono text-xs tracking-[0.2em] uppercase font-bold mb-3">
               Why Environment & Sustainability
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#14532D] mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#14532D] tracking-tight mb-6">
               Protecting the environment for future generations
             </h2>
-            <p className="text-gray-600 text-lg leading-relaxed">
+            <p className="text-gray-600 text-base sm:text-lg leading-relaxed">
               We work to restore ecological balance through reforestation, water harvesting, and community awareness – because a healthy planet is the foundation of all life.
             </p>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
                 icon: Target,
@@ -118,87 +147,116 @@ export default function Environment() {
                 desc: 'Empower people with knowledge on climate action, water conservation, and eco‑friendly living.'
               }
             ].map((item, i) => (
-              <div key={i} className="group bg-[#F0FDF4] p-8 rounded-2xl border border-[#15803D]/20 hover:shadow-xl transition-all hover:-translate-y-1">
-                <div className="bg-[#15803D]/10 rounded-full w-14 h-14 flex items-center justify-center mb-6 group-hover:bg-[#15803D]/20 transition-colors">
-                  <item.icon className="w-7 h-7 text-[#15803D]" />
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-white p-8 rounded-3xl border border-[#16A34A]/15 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1 text-center group"
+              >
+                <div className="w-14 h-14 mx-auto rounded-2xl bg-[#F0FDF4] border border-[#16A34A]/20 flex items-center justify-center text-[#16A34A] mb-6 group-hover:bg-[#16A34A] group-hover:text-white transition-colors">
+                  <item.icon className="w-7 h-7" />
                 </div>
                 <h3 className="text-xl font-bold text-[#14532D] mb-3">{item.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{item.desc}</p>
-              </div>
+                <p className="text-gray-600 leading-relaxed text-sm sm:text-base">{item.desc}</p>
+              </motion.div>
             ))}
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            viewport={{ once: true }}
-            className="mt-12 text-center"
-          >
-            <button className="bg-[#15803D] text-white font-bold px-10 py-4 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all inline-flex items-center gap-2 text-sm sm:text-base">
-              Join the Movement
+          <div className="mt-14 text-center">
+            <Link
+              to="/donate"
+              className="inline-flex items-center gap-2 bg-[#16A34A] hover:bg-[#14532D] text-white font-bold px-9 py-4 rounded-full shadow-md hover:shadow-lg transition-all text-sm sm:text-base cursor-pointer"
+            >
+              <span>Sponsor Tree Plantation</span>
               <ChevronRight className="w-5 h-5" />
-            </button>
-          </motion.div>
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* ===== SUB‑CATEGORIES – each with hero + content ===== */}
-      {subCategories.map((sub, index) => (
-        <section key={sub.id} className="py-20 md:py-28 even:bg-[#F0FDF4] odd:bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 * index }}
-              viewport={{ once: true }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
-            >
-              {/* Hero Image (left) */}
-              <div className="relative rounded-2xl overflow-hidden shadow-xl aspect-[4/3] lg:aspect-auto lg:h-[400px] w-full">
-                <img
-                  src={sub.image}
-                  alt={sub.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                <div className="absolute bottom-6 left-6 text-white">
-                  <div className="bg-[#15803D]/80 inline-block p-2 rounded-full mb-2">
-                    <sub.icon className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-2xl font-bold drop-shadow-lg">{sub.title}</h3>
-                </div>
-              </div>
-
-              {/* Content (right) */}
-              <div>
-                <span className="inline-block text-[#15803D] font-mono text-xs tracking-[0.2em] uppercase font-bold mb-2">
-                  {sub.title}
-                </span>
-                <h2 className="text-3xl sm:text-4xl font-bold text-[#14532D] mb-4">
-                  {sub.title}
-                </h2>
-                <p className="text-gray-600 text-base leading-relaxed mb-4">
-                  {sub.description}
-                </p>
-                <p className="text-gray-700 text-base leading-relaxed">
-                  {sub.longDescription}
-                </p>
-                <Link
-                  to={`/environment/learn-more/${sub.id}`}
-                  className="mt-6 bg-[#15803D] text-white font-semibold px-8 py-3 rounded-full shadow-md hover:shadow-lg hover:-translate-y-1 transition-all inline-flex items-center gap-2 text-sm"
-                >
-                  Learn More
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </motion.div>
+      {/* ===== SUB-CATEGORIES SHOWCASE ===== */}
+      <section className="py-20 sm:py-28 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+          <div className="text-center max-w-3xl mx-auto">
+            <span className="inline-block text-[#16A34A] font-mono text-xs tracking-[0.2em] uppercase font-bold mb-3">
+              Key Initiatives
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#14532D] tracking-tight">
+              Environment & Green Initiatives
+            </h2>
           </div>
-        </section>
-      ))}
+
+          {subCategories.map((sub, idx) => {
+            const isEven = idx % 2 === 0;
+            const Icon = sub.icon;
+
+            return (
+              <motion.div
+                key={sub.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center"
+              >
+                {/* Photo Column */}
+                <div className={`lg:col-span-6 relative ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
+                  <div className="absolute -inset-3 bg-[#F0FDF4] rounded-[2.5rem] transform -rotate-1 pointer-events-none" />
+                  <div className="relative rounded-3xl overflow-hidden shadow-xl aspect-[4/3] border-4 border-white group">
+                    <img
+                      src={sub.image}
+                      alt={sub.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-70" />
+                    <div className="absolute bottom-5 left-5 text-white flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-[#16A34A] flex items-center justify-center shadow-lg">
+                        <Icon className="w-5 h-5 text-white" />
+                      </div>
+                      <span className="font-bold text-lg drop-shadow">{sub.title}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Content Column */}
+                <div className={`lg:col-span-6 space-y-5 text-center ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F0FDF4] text-[#16A34A] font-mono text-xs font-bold uppercase tracking-wider">
+                    <Icon className="w-3.5 h-3.5" />
+                    <span>{sub.title}</span>
+                  </div>
+
+                  <h3 className="text-3xl sm:text-4xl font-extrabold text-[#14532D] tracking-tight">
+                    {sub.title}
+                  </h3>
+
+                  <p className="text-gray-800 font-medium text-base sm:text-lg leading-relaxed">
+                    {sub.description}
+                  </p>
+
+                  <p className="text-gray-600 text-sm sm:text-base leading-relaxed font-light">
+                    {sub.longDescription}
+                  </p>
+
+                  <div className="pt-2">
+                    <Link
+                      to="/donate"
+                      className="inline-flex items-center gap-2 bg-[#16A34A] hover:bg-[#14532D] text-white font-semibold px-7 py-3 rounded-full shadow-md transition-all text-sm group"
+                    >
+                      <span>Support This Initiative</span>
+                      <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </section>
 
       {/* ===== WHERE WE WORK ===== */}
-      <section className="py-20 md:py-28 bg-[#F0FDF4]">
+      <section className="py-20 sm:py-28 bg-[#F0FDF4]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -207,62 +265,69 @@ export default function Environment() {
             viewport={{ once: true }}
             className="text-center max-w-3xl mx-auto mb-16"
           >
-            <span className="inline-block text-[#15803D] font-mono text-xs tracking-[0.2em] uppercase font-bold mb-4">
+            <span className="inline-block text-[#16A34A] font-mono text-xs tracking-[0.2em] uppercase font-bold mb-3">
               Where We Work
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#14532D] mb-6">
-              Making an impact in <span className="text-[#15803D]">rural and urban communities</span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#14532D] tracking-tight mb-4">
+              Making an impact in <span className="text-[#16A34A]">rural and urban communities</span>
             </h2>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
+                icon: Trees,
                 title: 'Tree Plantation',
                 desc: 'Massive drives to increase green cover and combat climate change.'
               },
               {
+                icon: Droplets,
                 title: 'Water Conservation',
                 desc: 'Rainwater harvesting, check dams, and sustainable water management.'
               },
               {
+                icon: Leaf,
                 title: 'Kargil Vatika',
                 desc: 'A tribute forest honouring the brave soldiers of Kargil.'
               },
               {
+                icon: SunMedium,
                 title: 'Eco‑Education',
                 desc: 'Workshops and awareness campaigns for sustainable living.'
               }
             ].map((item, i) => (
-              <div key={i} className="bg-white p-6 rounded-2xl border border-[#15803D]/20 hover:shadow-lg transition-all hover:-translate-y-1 text-center">
-                <div className="text-4xl mb-4">🌳</div>
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-white p-6 rounded-2xl border border-[#16A34A]/20 hover:shadow-lg transition-all text-center"
+              >
+                <div className="w-12 h-12 mx-auto rounded-xl bg-[#F0FDF4] flex items-center justify-center text-[#16A34A] mb-4">
+                  <item.icon className="w-6 h-6" />
+                </div>
                 <h3 className="text-lg font-bold text-[#14532D] mb-2">{item.title}</h3>
                 <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
-              </div>
+              </motion.div>
             ))}
-          </motion.div>
+          </div>
 
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="mt-12 bg-[#14532D] rounded-2xl p-8 md:p-12 text-white"
+            className="mt-12 bg-[#14532D] rounded-3xl p-8 sm:p-12 text-white shadow-xl"
           >
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div>
-                <h3 className="text-xl md:text-2xl font-bold mb-1">Working across 6 states</h3>
-                <p className="text-white/60 text-sm">From forests to urban green spaces</p>
+                <h3 className="text-xl sm:text-2xl font-bold mb-1">Working across 6 states</h3>
+                <p className="text-white/70 text-sm">From forests to urban green spaces</p>
               </div>
               <div className="flex flex-wrap justify-center gap-2">
                 {['Uttar Pradesh', 'Bihar', 'Rajasthan', 'Madhya Pradesh', 'Odisha', 'Jharkhand'].map((state) => (
-                  <span key={state} className="bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs border border-white/10">
+                  <span key={state} className="bg-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs border border-white/15">
                     {state}
                   </span>
                 ))}
@@ -272,39 +337,8 @@ export default function Environment() {
         </div>
       </section>
 
-      {/* ===== JOIN THE MOVEMENT ===== */}
-      <section className="py-20 md:py-28 bg-[#F0FDF4]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <span className="inline-block text-[#15803D] font-mono text-xs tracking-[0.2em] uppercase font-bold mb-4">
-              Join the Movement
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#14532D] mb-6">
-              Be part of a growing community of changemakers
-            </h2>
-            <p className="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-              Help us protect the planet and build a sustainable future for all.
-            </p>
-            <div className="mt-10 flex flex-wrap justify-center gap-4">
-              <button className="bg-[#15803D] text-white font-bold px-10 py-4 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all inline-flex items-center gap-2 text-sm sm:text-base">
-                Join Us
-                <ChevronRight className="w-5 h-5" />
-              </button>
-              <button className="bg-white text-[#15803D] font-bold px-10 py-4 rounded-full shadow-md hover:shadow-lg hover:-translate-y-1 transition-all border border-[#15803D]/30 text-sm sm:text-base">
-                Learn More
-              </button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
       {/* ===== FINAL CTA ===== */}
-      <section className="py-20 md:py-28 bg-[#14532D]">
+      <section className="py-20 sm:py-28 bg-[#14532D] text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -312,26 +346,32 @@ export default function Environment() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <div className="inline-flex items-center gap-3 mb-6">
-              <Sparkles className="w-6 h-6 text-[#86EFAC]" />
-              <span className="text-[#86EFAC] font-mono text-xs tracking-[0.2em] uppercase font-bold">
-                Ready to Make a Difference?
-              </span>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-mono tracking-widest uppercase mb-6 text-[#86EFAC]">
+              <Sparkles className="w-4 h-4" />
+              <span>Ready to Make a Difference?</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
+
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">
               Plant a tree, protect a future
             </h2>
-            <p className="text-white/60 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
+
+            <p className="text-white/80 text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed font-light">
               Every tree planted and every drop saved creates a healthier planet for generations to come.
             </p>
+
             <div className="flex flex-wrap justify-center gap-4">
-              <button className="bg-[#86EFAC] text-[#14532D] font-bold px-10 py-4 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all inline-flex items-center gap-2 text-sm sm:text-base">
-                Get Started
-                <ChevronRight className="w-5 h-5" />
-              </button>
-              <button className="bg-white/10 backdrop-blur-sm text-white font-bold px-10 py-4 rounded-full border border-white/20 hover:bg-white/20 transition-all text-sm sm:text-base">
-                Contact Us
-              </button>
+              <Link
+                to="/donate"
+                className="bg-[#86EFAC] hover:bg-white text-[#14532D] font-bold px-10 py-4 rounded-full shadow-lg hover:shadow-xl transition-all text-sm sm:text-base cursor-pointer"
+              >
+                Plant A Tree Today
+              </Link>
+              <Link
+                to="/volunteer"
+                className="bg-white/10 backdrop-blur-md text-white font-semibold px-10 py-4 rounded-full border border-white/30 hover:bg-white/20 transition-all text-sm sm:text-base cursor-pointer"
+              >
+                Become a Volunteer
+              </Link>
             </div>
           </motion.div>
         </div>

@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ChevronRight, Sparkles, GraduationCap, Laptop, Compass, Shield, Users, BookOpen } from 'lucide-react';
+import {
+  ChevronRight,
+  Sparkles,
+  Laptop,
+  Compass,
+  Shield,
+  Users,
+  BookOpen,
+  Heart,
+  ArrowUpRight,
+  CheckCircle2,
+  Building2,
+  GraduationCap
+} from 'lucide-react';
+import gsap from 'gsap';
 
 const subCategories = [
   {
@@ -52,25 +66,72 @@ const subCategories = [
 ];
 
 export default function Education() {
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        '.gsap-hero-title',
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 1, ease: 'power3.out', stagger: 0.15 }
+      );
+    }, heroRef);
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <div className="min-h-screen bg-white" style={{ paddingTop: 'var(--navbar-height, 100px)' }}>
-      
-      {/* ===== HERO – right side visible on mobile ===== */}
-      <section className="relative h-[85vh] w-full overflow-hidden">
-        <img
-          src="/education1.jpeg"
-          alt="Education"
-          className="absolute inset-0 w-full h-full object-cover object-right sm:object-center"
-          style={{ imageRendering: '-webkit-optimize-contrast' }}
-        />
-        <h1 className="absolute top-6 left-6 sm:top-12 sm:left-12 z-10 text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold drop-shadow-lg">
-          Building Leaders,<br />
-          <span className="text-[#FFF314]">One Classroom at a Time</span>
-        </h1>
+    <div className="min-h-screen bg-white" style={{ paddingTop: 'var(--navbar-height, 80px)' }}>
+      {/* ===== HERO SECTION ===== */}
+      <section ref={heroRef} className="relative min-h-[58vh] sm:min-h-[68vh] lg:min-h-[75vh] w-full flex items-center justify-center overflow-hidden bg-[#075985]">
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover object-center"
+          >
+            <source src="/education-video-child2.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/25 to-black/10" />
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[calc(var(--navbar-height,70px)+1.75rem)] sm:pt-[calc(var(--navbar-height,70px)+2.5rem)] pb-12 sm:pb-16 text-center text-white">
+          <div className="gsap-hero-title inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs sm:text-sm font-medium tracking-wide uppercase mb-6 text-[#FFF314]">
+            <GraduationCap className="w-4 h-4" />
+            <span>Education & Skill Development</span>
+          </div>
+
+          <h1 className="gsap-hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight max-w-5xl mx-auto mb-6">
+            Building Leaders,<br />
+            <span className="text-[#FFF314]">One Classroom at a Time.</span>
+          </h1>
+
+          <p className="gsap-hero-title text-base sm:text-lg md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed mb-10 font-light">
+            Providing quality education, Sanskarshala moral centers, digital literacy, and youth leadership training so every child learns and thrives with dignity.
+          </p>
+
+          <div className="gsap-hero-title flex flex-wrap items-center justify-center gap-4">
+            <Link
+              to="/donate"
+              className="inline-flex items-center gap-2 bg-[#FFF314] text-[#075985] font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl hover:bg-white transition-all hover:scale-105 text-sm sm:text-base cursor-pointer"
+            >
+              <Heart className="w-5 h-5 text-red-600 fill-red-600" />
+              <span>Support Education Today</span>
+            </Link>
+            <Link
+              to="/volunteer"
+              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md text-white font-semibold px-8 py-4 rounded-full border border-white/30 hover:bg-white/20 transition-all text-sm sm:text-base cursor-pointer"
+            >
+              <span>Become a Volunteer</span>
+              <ChevronRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
       </section>
 
-      {/* ===== Rest of the page – unchanged ===== */}
-      <section className="py-20 md:py-28 bg-white">
+      {/* ===== WHY EDUCATION / CORE PILLARS ===== */}
+      <section className="py-20 sm:py-28 bg-[#F0F9FF]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -79,115 +140,145 @@ export default function Education() {
             viewport={{ once: true }}
             className="text-center max-w-3xl mx-auto mb-16"
           >
-            <span className="inline-block text-[#0056B3] font-mono text-xs tracking-[0.2em] uppercase font-bold mb-4">
+            <span className="inline-block text-[#0284C7] font-mono text-xs tracking-[0.2em] uppercase font-bold mb-3">
               Why Join Us
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0a1628] mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#075985] tracking-tight mb-6">
               The Program will teach you the skills to be a leader
             </h2>
-            <p className="text-gray-600 text-lg leading-relaxed">
-              Develop an awareness of how poverty and inequity impacts children; and your role in creating change.
+            <p className="text-gray-600 text-base sm:text-lg leading-relaxed">
+              Develop an awareness of how poverty and inequity impacts children, and your role in creating meaningful change.
             </p>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
+                num: '01',
                 title: 'Find your purpose',
                 desc: 'Develop a deep understanding of social challenges and discover how you can contribute meaningfully.'
               },
               {
+                num: '02',
                 title: 'Become a leader',
                 desc: 'Build concrete leadership skills – planning, execution, reflection, and stakeholder management.'
               },
               {
+                num: '03',
                 title: 'Join a community',
                 desc: 'Connect with like-minded individuals and work together towards a shared mission.'
               }
             ].map((item, i) => (
-              <div key={i} className="group bg-[#F8FAFC] p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1">
-                <div className="bg-[#0056B3]/10 rounded-full w-14 h-14 flex items-center justify-center mb-6 group-hover:bg-[#0056B3]/20 transition-colors">
-                  <span className="text-2xl font-bold text-[#0056B3]">{String(i + 1).padStart(2, '0')}</span>
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-white p-8 rounded-3xl border border-[#0284C7]/15 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1 text-center group"
+              >
+                <div className="w-14 h-14 mx-auto rounded-2xl bg-[#F0F9FF] border border-[#0284C7]/20 flex items-center justify-center text-[#0284C7] font-extrabold text-xl mb-6 group-hover:bg-[#0284C7] group-hover:text-white transition-colors">
+                  {item.num}
                 </div>
-                <h3 className="text-xl font-bold text-[#0a1628] mb-3">{item.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{item.desc}</p>
-              </div>
+                <h3 className="text-xl font-bold text-[#075985] mb-3">{item.title}</h3>
+                <p className="text-gray-600 leading-relaxed text-sm sm:text-base">{item.desc}</p>
+              </motion.div>
             ))}
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            viewport={{ once: true }}
-            className="mt-12 text-center"
-          >
-            <button className="bg-[#0056B3] text-white font-bold px-10 py-4 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all inline-flex items-center gap-2 text-sm sm:text-base">
-              Apply Now
+          <div className="mt-14 text-center">
+            <Link
+              to="/donate"
+              className="inline-flex items-center gap-2 bg-[#0284C7] hover:bg-[#075985] text-white font-bold px-9 py-4 rounded-full shadow-md hover:shadow-lg transition-all text-sm sm:text-base cursor-pointer"
+            >
+              <span>Apply / Support Now</span>
               <ChevronRight className="w-5 h-5" />
-            </button>
-          </motion.div>
+            </Link>
+          </div>
         </div>
       </section>
 
-      {subCategories.map((sub, index) => (
-        <section key={sub.id} className="py-20 md:py-28 even:bg-[#F8FAFC] odd:bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 * index }}
-              viewport={{ once: true }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
-            >
-              <div className="relative rounded-2xl overflow-hidden shadow-xl aspect-[4/3] lg:aspect-auto lg:h-[400px] w-full">
-                <img
-                  src={sub.image}
-                  alt={sub.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                <div className="absolute bottom-6 left-6 text-white">
-                  <div className="bg-[#0056B3]/80 inline-block p-2 rounded-full mb-2">
-                    <sub.icon className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-2xl font-bold drop-shadow-lg">{sub.title}</h3>
-                </div>
-              </div>
-
-              <div>
-                <span className="inline-block text-[#0056B3] font-mono text-xs tracking-[0.2em] uppercase font-bold mb-2">
-                  {sub.title}
-                </span>
-                <h2 className="text-3xl sm:text-4xl font-bold text-[#0a1628] mb-4">
-                  {sub.title}
-                </h2>
-                <p className="text-gray-600 text-base leading-relaxed mb-4">
-                  {sub.description}
-                </p>
-                <p className="text-gray-700 text-base leading-relaxed">
-                  {sub.longDescription}
-                </p>
-                <Link
-                  to={`/education/learn-more/${sub.id}`}
-                  className="mt-6 bg-[#0056B3] text-white font-semibold px-8 py-3 rounded-full shadow-md hover:shadow-lg hover:-translate-y-1 transition-all inline-flex items-center gap-2 text-sm"
-                >
-                  Learn More
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </motion.div>
+      {/* ===== SUB-CATEGORIES SHOWCASE ===== */}
+      <section className="py-20 sm:py-28 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+          <div className="text-center max-w-3xl mx-auto">
+            <span className="inline-block text-[#0284C7] font-mono text-xs tracking-[0.2em] uppercase font-bold mb-3">
+              Key Initiatives
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#075985] tracking-tight">
+              Our Education Programmes
+            </h2>
           </div>
-        </section>
-      ))}
 
-      <section className="py-20 md:py-28 bg-[#F8FAFC]">
+          {subCategories.map((sub, idx) => {
+            const isEven = idx % 2 === 0;
+            const Icon = sub.icon;
+
+            return (
+              <motion.div
+                key={sub.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center"
+              >
+                {/* Photo Column */}
+                <div className={`lg:col-span-6 relative ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
+                  <div className="absolute -inset-3 bg-[#F0F9FF] rounded-[2.5rem] transform -rotate-1 pointer-events-none" />
+                  <div className="relative rounded-3xl overflow-hidden shadow-xl aspect-[4/3] border-4 border-white group">
+                    <img
+                      src={sub.image}
+                      alt={sub.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-70" />
+                    <div className="absolute bottom-5 left-5 text-white flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-[#0284C7] flex items-center justify-center shadow-lg">
+                        <Icon className="w-5 h-5 text-white" />
+                      </div>
+                      <span className="font-bold text-lg drop-shadow">{sub.title}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Content Column */}
+                <div className={`lg:col-span-6 space-y-5 text-center ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F0F9FF] text-[#0284C7] font-mono text-xs font-bold uppercase tracking-wider">
+                    <Icon className="w-3.5 h-3.5" />
+                    <span>{sub.title}</span>
+                  </div>
+
+                  <h3 className="text-3xl sm:text-4xl font-extrabold text-[#075985] tracking-tight">
+                    {sub.title}
+                  </h3>
+
+                  <p className="text-gray-800 font-medium text-base sm:text-lg leading-relaxed">
+                    {sub.description}
+                  </p>
+
+                  <p className="text-gray-600 text-sm sm:text-base leading-relaxed font-light">
+                    {sub.longDescription}
+                  </p>
+
+                  <div className="pt-2">
+                    <Link
+                      to="/donate"
+                      className="inline-flex items-center gap-2 bg-[#0284C7] hover:bg-[#075985] text-white font-semibold px-7 py-3 rounded-full shadow-md transition-all text-sm group"
+                    >
+                      <span>Support This Initiative</span>
+                      <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ===== WHERE YOU WILL SERVE ===== */}
+      <section className="py-20 sm:py-28 bg-[#F0F9FF]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -196,21 +287,15 @@ export default function Education() {
             viewport={{ once: true }}
             className="text-center max-w-3xl mx-auto mb-16"
           >
-            <span className="inline-block text-[#0056B3] font-mono text-xs tracking-[0.2em] uppercase font-bold mb-4">
+            <span className="inline-block text-[#0284C7] font-mono text-xs tracking-[0.2em] uppercase font-bold mb-3">
               Where You Will Serve
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0a1628] mb-6">
-              Make an impact in <span className="text-[#0056B3]">underserved communities</span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#075985] tracking-tight mb-4">
+              Make an impact in <span className="text-[#0284C7]">underserved communities</span>
             </h2>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
                 title: 'Full-time Teaching',
@@ -229,29 +314,38 @@ export default function Education() {
                 desc: 'Teach all subjects or specialize in key areas.'
               }
             ].map((item, i) => (
-              <div key={i} className="bg-white p-6 rounded-2xl border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1 text-center">
-                <div className="text-4xl mb-4">🏫</div>
-                <h3 className="text-lg font-bold text-[#0a1628] mb-2">{item.title}</h3>
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-white p-6 rounded-2xl border border-[#0284C7]/20 hover:shadow-lg transition-all text-center"
+              >
+                <div className="w-12 h-12 mx-auto rounded-xl bg-[#F0F9FF] flex items-center justify-center text-[#0284C7] mb-4">
+                  <Building2 className="w-6 h-6" />
+                </div>
+                <h3 className="text-lg font-bold text-[#075985] mb-2">{item.title}</h3>
                 <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
-              </div>
+              </motion.div>
             ))}
-          </motion.div>
+          </div>
 
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="mt-12 bg-[#0a1628] rounded-2xl p-8 md:p-12 text-white"
+            className="mt-12 bg-[#075985] rounded-3xl p-8 sm:p-12 text-white shadow-xl"
           >
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div>
-                <h3 className="text-xl md:text-2xl font-bold mb-1">Serve across 9 locations</h3>
-                <p className="text-white/60 text-sm">Join a diverse community of educators</p>
+                <h3 className="text-xl sm:text-2xl font-bold mb-1">Serve across 9 locations</h3>
+                <p className="text-white/70 text-sm">Join a diverse community of passionate educators</p>
               </div>
               <div className="flex flex-wrap justify-center gap-2">
                 {['Ahmedabad', 'Bengaluru', 'Chennai', 'Delhi', 'Gurgaon', 'Hyderabad', 'Kolkata', 'Mumbai', 'Pune'].map((city) => (
-                  <span key={city} className="bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs border border-white/10">
+                  <span key={city} className="bg-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs border border-white/15">
                     {city}
                   </span>
                 ))}
@@ -261,7 +355,8 @@ export default function Education() {
         </div>
       </section>
 
-      <section className="py-20 md:py-28 bg-[#F8FAFC]">
+      {/* ===== FINAL CTA ===== */}
+      <section className="py-20 sm:py-28 bg-[#075985] text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -269,56 +364,32 @@ export default function Education() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <span className="inline-block text-[#0056B3] font-mono text-xs tracking-[0.2em] uppercase font-bold mb-4">
-              Join the Movement
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0a1628] mb-6">
-              Be part of a growing community of changemakers
-            </h2>
-            <p className="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-              Find lifelong partners in this work. Don't just talk about change – build it.
-            </p>
-            <div className="mt-10 flex flex-wrap justify-center gap-4">
-              <button className="bg-[#0056B3] text-white font-bold px-10 py-4 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all inline-flex items-center gap-2 text-sm sm:text-base">
-                Apply Now
-                <ChevronRight className="w-5 h-5" />
-              </button>
-              <button className="bg-white text-[#0056B3] font-bold px-10 py-4 rounded-full shadow-md hover:shadow-lg hover:-translate-y-1 transition-all border border-[#0056B3]/20 text-sm sm:text-base">
-                Learn More
-              </button>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-mono tracking-widest uppercase mb-6 text-[#FFF314]">
+              <Sparkles className="w-4 h-4" />
+              <span>Ready to Make a Difference?</span>
             </div>
-          </motion.div>
-        </div>
-      </section>
 
-      <section className="py-20 md:py-28 bg-[#0a1628]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <div className="inline-flex items-center gap-3 mb-6">
-              <Sparkles className="w-6 h-6 text-[#FFF314]" />
-              <span className="text-[#FFF314] font-mono text-xs tracking-[0.2em] uppercase font-bold">
-                Ready to Make a Difference?
-              </span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">
               Join us in building a brighter future
             </h2>
-            <p className="text-white/60 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
-              Every contribution, big or small, creates lasting impact.
+
+            <p className="text-white/80 text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+              Every child deserves quality education and moral guidance. Your contribution directly transforms young lives.
             </p>
+
             <div className="flex flex-wrap justify-center gap-4">
-              <button className="bg-[#FFF314] text-[#0a1628] font-bold px-10 py-4 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all inline-flex items-center gap-2 text-sm sm:text-base">
-                Get Started
-                <ChevronRight className="w-5 h-5" />
-              </button>
-              <button className="bg-white/10 backdrop-blur-sm text-white font-bold px-10 py-4 rounded-full border border-white/20 hover:bg-white/20 transition-all text-sm sm:text-base">
-                Contact Us
-              </button>
+              <Link
+                to="/donate"
+                className="bg-[#FFF314] hover:bg-white text-[#075985] font-bold px-10 py-4 rounded-full shadow-lg hover:shadow-xl transition-all text-sm sm:text-base cursor-pointer"
+              >
+                Donate for Education
+              </Link>
+              <Link
+                to="/volunteer"
+                className="bg-white/10 backdrop-blur-md text-white font-semibold px-10 py-4 rounded-full border border-white/30 hover:bg-white/20 transition-all text-sm sm:text-base cursor-pointer"
+              >
+                Become a Volunteer
+              </Link>
             </div>
           </motion.div>
         </div>

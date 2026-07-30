@@ -50,8 +50,7 @@ export default function Layout() {
       </motion.main>
       <Footer />
       
-      {/* Floating elements – Volunteer button removed */}
-      <FloatingSocialIcons />
+      {/* Floating elements */}
       <FloatingDonateButton />
       {/* <FloatingVolunteerButton /> removed */}
       <ScrollToTopButton />

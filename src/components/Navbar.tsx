@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Menu, X, Heart, User, ChevronDown, Globe, UserPlus
 } from 'lucide-react';
+import { FaFacebook, FaTwitter, FaInstagram, FaYoutube, FaLinkedin } from 'react-icons/fa';
 import { supabase } from '@/lib/supabase';
 import { useTranslation } from 'react-i18next';
 import BrandLogo from './BrandLogo';
@@ -16,8 +17,8 @@ const navLinks = [
     name: 'Who We Are',
     path: '/about',
     submenu: [
-      { name: 'About Us', path: '/aboutus' },
       { name: 'nav.about.story', path: '/about' },
+      { name: 'About Us', path: '/aboutus' },
       { name: 'nav.about.members', path: '/about/members' },
       { name: 'nav.about.certifications', path: '/about/certifications' },
     ]
@@ -64,6 +65,7 @@ export default function Navbar() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileSubmenuOpen, setMobileSubmenuOpen] = useState<string | null>(null);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
+  const [isStripVisible, setIsStripVisible] = useState(true);
   const location = useLocation();
 
   // ---------- DYNAMIC NAVBAR HEIGHT ----------
@@ -75,10 +77,14 @@ export default function Navbar() {
         document.documentElement.style.setProperty('--navbar-height', `${height}px`);
       }
     };
+
     updateNavbarHeight();
     window.addEventListener('resize', updateNavbarHeight);
-    return () => window.removeEventListener('resize', updateNavbarHeight);
-  }, []); // removed dependency on isStripVisible
+
+    return () => {
+      window.removeEventListener('resize', updateNavbarHeight);
+    };
+  }, [isStripVisible]);
 
   // ---------- Auth logic ----------
   useEffect(() => {
@@ -178,6 +184,79 @@ export default function Navbar() {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-[9999]">
+        {/* ---------- TOP STRIP ---------- */}
+        {isStripVisible && (
+          <div className="hidden sm:flex bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460] text-white py-2 px-4 sm:px-8 items-center justify-between w-full shadow-md text-xs z-50">
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-[#FFF314]">Prayas NGO:</span>
+              <span className="text-white/80">Empowering lives across India with education, health & sustainability.</span>
+            </div>
+            <div className="flex items-center gap-4 shrink-0">
+              <Link
+                to="/donate"
+                className="bg-[#FFF314] text-[#263238] px-3.5 py-1 rounded-full text-xs font-bold hover:bg-white transition shadow-md whitespace-nowrap"
+              >
+                Yes! I Want To Help!
+              </Link>
+              {/* Social icons */}
+              <div className="flex items-center gap-3 text-white/70">
+                <a
+                  href="https://www.facebook.com/prayassamajiksanstha"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                  className="hover:text-red-500 transition"
+                >
+                  <FaFacebook size={14} />
+                </a>
+                <a
+                  href="https://x.com/pryasaa?s=11"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="X (Twitter)"
+                  className="hover:text-red-500 transition"
+                >
+                  <FaTwitter size={14} />
+                </a>
+                <a
+                  href="https://www.instagram.com/prayas_samajik_sanstha"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="hover:text-red-500 transition"
+                >
+                  <FaInstagram size={14} />
+                </a>
+                <a
+                  href="https://www.youtube.com/channel/UC16ZbLnP1qJxrKQoKsss12w"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="YouTube"
+                  className="hover:text-red-500 transition"
+                >
+                  <FaYoutube size={14} />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/prayas-samaj-sevi-sastha-undefined-0a468b418/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  className="hover:text-red-500 transition"
+                >
+                  <FaLinkedin size={14} />
+                </a>
+              </div>
+              <button
+                onClick={() => setIsStripVisible(false)}
+                className="text-white/50 hover:text-white transition p-0.5 cursor-pointer"
+                aria-label="Close announcement"
+              >
+                <X size={16} />
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* ---------- MAIN NAVBAR ---------- */}
         <div
           className={`transition-all duration-500 ${bgHeader} 
@@ -463,4 +542,4 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-}             
+}

@@ -1,235 +1,70 @@
 // src/pages/Gallery.tsx
-import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
 
-type GalleryImage = {
-  id: string;
-  image_url: string;
-  title: string;
-  description: string;
-  category: string;
-  display_order: number;
-};
+import DomeGallery, { type DomeGalleryImage } from '@/components/DomeGallery';
 
-const DEFAULT_GALLERY: GalleryImage[] = [
-  { id: '1', image_url: '/P1039322.JPG', title: 'Community Empowerment', description: '', category: 'Empowerment', display_order: 1 },
-  { id: '2', image_url: '/P1039409.JPG', title: 'Education & Sanskarshala', description: '', category: 'Education', display_order: 2 },
-  { id: '3', image_url: '/healthcaret.jpg', title: 'Health Camp', description: '', category: 'Healthcare', display_order: 3 },
-  { id: '4', image_url: '/TREEGROW.jpg', title: 'Tree Plantation', description: '', category: 'Environment', display_order: 4 },
-  { id: '5', image_url: '/CHILDRENGROUP.jpg', title: 'Child Support', description: '', category: 'Welfare', display_order: 5 },
-  { id: '6', image_url: '/WOMEN.jpeg', title: 'Women Tailoring Centre', description: '', category: 'Empowerment', display_order: 6 },
-  { id: '7', image_url: '/Sindoda/IMG_20191022_121001 (1).jpg', title: 'Project Sindoda', description: '', category: 'Environment', display_order: 7 },
-  { id: '8', image_url: '/CSR.jpeg', title: 'Community Welfare', description: '', category: 'Community', display_order: 8 },
+// Pure list of ground-level NGO photographs (strictly excluding hero banner duplicates and certificates)
+const ngoGalleryImages: DomeGalleryImage[] = [
+  { src: '/healthcaret.jpg', alt: 'Free Eye & Health Camp' },
+  { src: '/EDUCATION.JPG', alt: 'Sanskarshala Learning Centre' },
+  { src: '/IMG-23.jpeg', alt: 'Rural Clean Water Initiative' },
+  { src: '/IMG-25.jpeg', alt: 'Volunteer Leadership Drive' },
+  { src: '/IMG-27.jpeg', alt: 'Social Awareness Rally' },
+  { src: '/healthhj.jpeg', alt: 'Elderly Care & Nutrition Drive' },
+  { src: '/IMG-24.jpeg', alt: 'Community Skill Training' },
+  { src: '/IMG-20.jpg', alt: 'Children Educational Workshop' },
+  { src: '/IMG-21.jpg', alt: 'Youth Leadership Program' },
+  { src: '/Sindoda/IMG_20191217_133958.jpg', alt: 'Project Sindoda Model Village' },
+  { src: '/CHILDRENGROUP.jpg', alt: 'Sanskarshala Children Group' },
+  { src: '/PRAYASHEALTHCAMP.jpeg', alt: 'Prayas Health Camp' },
+  { src: '/WOMEN.jpeg', alt: 'Women Empowerment Centre' },
+  { src: '/TREEGROW.jpg', alt: 'Kargil Vatika Tree Plantation' },
+  { src: '/P1039409.JPG', alt: 'Digital Literacy Classroom' },
+  { src: '/P1039322.JPG', alt: 'Nutritious Meal Drive' },
 ];
 
 export default function Gallery() {
-  const [images, setImages] = useState<GalleryImage[]>(DEFAULT_GALLERY);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [activeIndex, setActiveIndex] = useState(Math.floor(DEFAULT_GALLERY.length / 2));
-
-  // Drag state
-  const dragStartX = useRef(0);
-  const isDragging = useRef(false);
-  const lastWheelTime = useRef(0);
-
-  useEffect(() => {
-    // Preload image assets immediately into browser cache for instant display
-    DEFAULT_GALLERY.forEach((item) => {
-      if (item.image_url) {
-        const img = new Image();
-        img.src = item.image_url;
-      }
-    });
-
-    fetchImages();
-  }, []);
-
-  // ── Wheel / Scroll handler ──
-  useEffect(() => {
-    const handleWheel = (e: WheelEvent) => {
-      const now = Date.now();
-      if (now - lastWheelTime.current < 220) return; // Throttled for smooth scrolling
-
-      if (e.deltaY > 10 || e.deltaX > 10) {
-        setActiveIndex((prev) => Math.min(images.length - 1, prev + 1));
-        lastWheelTime.current = now;
-      } else if (e.deltaY < -10 || e.deltaX < -10) {
-        setActiveIndex((prev) => Math.max(0, prev - 1));
-        lastWheelTime.current = now;
-      }
-    };
-
-    window.addEventListener('wheel', handleWheel, { passive: true });
-    return () => window.removeEventListener('wheel', handleWheel);
-  }, [images.length]);
-
-  const fetchImages = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('gallery')
-        .select('id, image_url, title, description, category, display_order')
-        .eq('is_active', true)
-        .order('display_order', { ascending: true })
-        .order('created_at', { ascending: false });
-
-      if (!error && data && data.length > 0) {
-        setImages(data);
-        setActiveIndex(Math.floor(data.length / 2));
-
-        // Preload database images
-        data.forEach((item) => {
-          if (item.image_url) {
-            const img = new Image();
-            img.src = item.image_url;
-          }
-        });
-      }
-    } catch (err: any) {
-      // Fallback seamlessly to default images already loaded
-    }
-  };
-
-  const toPrev = () => setActiveIndex((prev) => Math.max(0, prev - 1));
-  const toNext = () => setActiveIndex((prev) => Math.min(images.length - 1, prev + 1));
-  const toSlide = (index: number) => setActiveIndex(index);
-
-  // ── Drag / Swipe handlers ──
-  const handleDragStart = (clientX: number) => {
-    dragStartX.current = clientX;
-    isDragging.current = true;
-  };
-
-  const handleDragEnd = (clientX: number) => {
-    if (!isDragging.current) return;
-    isDragging.current = false;
-    const diff = dragStartX.current - clientX;
-    if (Math.abs(diff) > 50) {
-      diff > 0 ? toNext() : toPrev();
-    }
-  };
-
-  if (images.length === 0) {
-    return (
-      <div className="min-h-screen bg-[#F1F8F5] flex flex-col items-center justify-center">
-        <h1 className="text-3xl font-bold text-[#263238]">Our Gallery</h1>
-        <p className="text-[#263238]/60 mt-2">No images added yet. Check back soon!</p>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-[#F1F8F5] flex flex-col items-center justify-center relative overflow-hidden pb-28">
-      {/* Background decoration */}
-      <div className="absolute top-10 right-10 w-72 h-72 bg-[#FFF314]/5 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-10 left-10 w-72 h-72 bg-[#FFF314]/10 rounded-full blur-[100px] pointer-events-none" />
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-gray-50 to-white text-[#263238] flex flex-col pt-[var(--navbar-height,80px)] pb-16 sm:pb-24 md:pb-32 relative overflow-hidden">
+      {/* ===== HEADER BAR ===== */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4 text-center">
 
-      {/* Heading */}
-      <div className="text-center mb-8 z-10">
-        <h1 className="text-4xl sm:text-5xl font-bold text-[#263238]">
-          Our <span className="text-[#FFF314]">Gallery</span>
-        </h1>
-        <p className="text-[#263238]/60 text-sm mt-2">
-          {images.length} images · Scroll, swipe or drag to explore
-        </p>
-      </div>
 
-      {/* Carousel Wrapper — draggable */}
-      <div
-        className="w-[clamp(120px,80vmin,300px)] mt-4 z-10 cursor-grab active:cursor-grabbing select-none"
-        onMouseDown={(e) => handleDragStart(e.clientX)}
-        onMouseUp={(e) => handleDragEnd(e.clientX)}
-        onMouseLeave={(e) => handleDragEnd(e.clientX)}
-        onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
-        onTouchEnd={(e) => handleDragEnd(e.changedTouches[0].clientX)}
-      >
-        <motion.div
-          className="flex w-fit"
-          animate={{ x: `${(-activeIndex * 100) / images.length}%` }}
-          transition={{ type: 'spring', bounce: 0.1, duration: 0.8 }}
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-[#263238]"
         >
-          {images.map((item, i) => {
-            const isActive = activeIndex === i;
-            return (
-              <motion.div
-                key={item.id}
-                className="w-[clamp(120px,80vmin,300px)] aspect-square flex flex-col items-center gap-2 will-change-[transform,scale]"
-                animate={{
-                  rotate: (i - activeIndex) * 30,
-                  scale: isActive ? 1 : 0.6,
-                  y: `${(i - activeIndex) * 50}%`,
-                }}
-                transition={{ type: 'spring', bounce: 0.2, duration: 0.8 }}
-              >
-                <div
-                  className={`text-xs md:text-sm whitespace-nowrap transition-all duration-300 ${
-                    isActive ? 'opacity-100' : 'opacity-0'
-                  } text-[#263238] font-medium`}
-                >
-                  {item.title || item.category || 'Untitled'}
-                </div>
-
-                <img
-                  src={item.image_url}
-                  alt={item.title || 'Gallery image'}
-                  draggable={false}
-                  loading="eager"
-                  decoding="async"
-                  fetchPriority={isActive ? 'high' : 'auto'}
-                  className="w-full h-full object-cover rounded-2xl shadow-lg hover:shadow-xl transition-shadow"
-                  onClick={() => toSlide(i)}
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src =
-                      'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"%3E%3Crect width="400" height="400" fill="%23263238"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="24" fill="%23FFF314"%3EPrayas%3C/text%3E%3C/svg%3E'
-                  }}
-                />
-              </motion.div>
-            );
-          })}
-        </motion.div>
+          Our <span className="text-red-600">Gallery</span>
+        </motion.h1>
       </div>
 
-      {/* Controls — always visible, including mobile */}
-      <div className="fixed bottom-6 left-0 right-0 flex justify-center z-20 px-4">
-        <div className="flex items-center gap-4 bg-white/90 backdrop-blur-sm px-5 py-3 rounded-full border border-[#FFF314]/20 shadow-xl">
-          {/* Previous */}
-          <button
-            onClick={toPrev}
-            disabled={activeIndex === 0}
-            className="p-2 hover:bg-[#FFF314]/10 rounded-full transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-            aria-label="Previous"
-          >
-            <ChevronLeft className="w-5 h-5 text-[#263238]" />
-          </button>
-
-          {/* Dots */}
-          <div className="flex justify-center items-center gap-1.5 max-w-[160px] overflow-hidden">
-            {images.map((_, i) => (
-              <div
-                key={i}
-                onClick={() => toSlide(i)}
-                className={`rounded-full cursor-pointer h-2 transition-all duration-300 ${
-                  activeIndex === i
-                    ? 'w-6 bg-[#FFF314]'
-                    : 'w-2 bg-[#263238]/30 hover:bg-[#263238]/50'
-                }`}
-              />
-            ))}
-          </div>
-
-          {/* Next */}
-          <button
-            onClick={toNext}
-            disabled={activeIndex === images.length - 1}
-            className="p-2 hover:bg-[#FFF314]/10 rounded-full transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-            aria-label="Next"
-          >
-            <ChevronRight className="w-5 h-5 text-[#263238]" />
-          </button>
-        </div>
+      {/* ===== 3D DOME GALLERY CANVAS ===== */}
+      <div className="relative w-full h-[75vh] sm:h-[80vh] my-auto">
+        <DomeGallery
+          images={ngoGalleryImages}
+          fit={0.5}
+          fitBasis="auto"
+          minRadius={550}
+          maxRadius={1400}
+          padFactor={0.2}
+          overlayBlurColor="#F8FAFC"
+          maxVerticalRotationDeg={10}
+          dragSensitivity={18}
+          enlargeTransitionMs={350}
+          segments={35}
+          dragDampening={2}
+          openedImageWidth="440px"
+          openedImageHeight="440px"
+          imageBorderRadius="24px"
+          openedImageBorderRadius="24px"
+          grayscale={false}
+          autoRotateSpeed={0.12}
+        />
       </div>
+
+
     </div>
   );
 }
