@@ -84,8 +84,8 @@ export default function Footer() {
                 <div className="flex items-start gap-3 text-white/60 text-sm">
                   <MapPin className="w-4 h-4 mt-0.5 shrink-0" />
                   <span>
-                   Vijay Nagar, Indore, 452010<br />
-                    Madhya Pradesh 
+                    SAHAJ RESIDENCY, SCHEME NO.103, KESARBAGH,<br />
+                    Indore- 452009, Madhya Pradesh, India
                   </span>
                 </div>
               </li>

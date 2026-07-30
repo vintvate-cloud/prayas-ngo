@@ -391,7 +391,7 @@ export default function Donate() {
               <div className="bg-gray-50 p-3 rounded-lg md:col-span-2">
                 <span className="text-[#263238]/50 text-xs">Branch Address</span>
                 <p className="font-semibold text-[#263238] text-sm">
-                  Upper Ground Floor, G-9, HIG Colony, Main Road, Near Police Station, Indore - 452011, Madhya Pradesh
+                  SAHAJ RESIDENCY, SCHEME NO.103, KESARBAGH, Indore- 452009, Madhya Pradesh, India
                 </p>
               </div>
             </div>

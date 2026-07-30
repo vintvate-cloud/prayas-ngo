@@ -17,7 +17,7 @@ export default function Contact() {
   const [errorMsg, setErrorMsg] = useState('')
 
   const contactInfo = useMemo(() => [
-    { icon: MapPin, title: t('contact.info.address.title', 'Our Address'), details: [t('contact.info.address.line1', '123, Community Center,'), t('contact.info.address.line2', 'New Delhi – 110001, India')] },
+    { icon: MapPin, title: t('contact.info.address.title', 'Our Address'), details: [t('contact.info.address.line1', 'SAHAJ RESIDENCY, SCHEME NO.103, KESARBAGH,'), t('contact.info.address.line2', 'Indore- 452009, Madhya Pradesh, India')] },
     { icon: Phone, title: t('contact.info.phone.title', 'Call Us'), details: ['+91 98765 43210', '+91 11 2345 6789'] },
     { icon: Mail, title: t('contact.info.email.title', 'Email Us'), details: ['info@prayasfoundation.org', 'support@prayasfoundation.org'] },
     { icon: Clock, title: t('contact.info.hours.title', 'Working Hours'), details: [t('contact.info.hours.weekdays', 'Mon – Sat: 9:00 AM – 6:00 PM'), t('contact.info.hours.sunday', 'Sunday: Closed')] },
