@@ -190,11 +190,6 @@ export default function About() {
         {/* ─── 1. Luxury Hero Header ─── */}
         <div className="text-center mb-14 sm:mb-20 space-y-6 max-w-4xl mx-auto">
 
-          <div className="inline-flex items-center gap-2 px-4.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-[#263238] text-xs font-mono font-bold uppercase tracking-wider shadow-xs">
-            <Award className="w-4 h-4 text-amber-600" />
-            <span>ESTABLISHED 2001 • 25+ YEARS OF GRASSROOTS IMPACT</span>
-          </div>
-
           <h1 className="gsap-hero-title text-4xl sm:text-6xl lg:text-7xl font-extrabold text-[#263238] tracking-tight leading-[1.12] font-sans">
             Transforming Lives with{' '}
             <span className="relative inline-block text-red-600">

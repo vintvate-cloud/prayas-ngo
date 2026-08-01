@@ -87,9 +87,16 @@ export default function BrandLogo({
 
   if (to) {
     return (
-      <Link to={to} className={wrapperClasses}>
+      <a
+        href={to}
+        onClick={(e) => {
+          e.preventDefault();
+          window.location.href = to;
+        }}
+        className={wrapperClasses}
+      >
         {content}
-      </Link>
+      </a>
     );
   }
 
