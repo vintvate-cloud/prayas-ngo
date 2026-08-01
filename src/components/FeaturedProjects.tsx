@@ -20,7 +20,7 @@ const projects = [
     description: 'A living tribute to our brave soldiers – planting thousands of native trees to build a lush memorial forest and restore green ecological balance.',
     image: '/TREEGROW.jpg',
     date: '2022 – Ongoing',
-    link: '/environment',
+    link: '/environment/kargil-vatika',
     badge: 'Reforestation Drive',
   },
   {
@@ -29,7 +29,7 @@ const projects = [
     description: 'Organizing free specialized medical check‑ups, diagnostic care, free medicines, and health awareness drives for over 500+ underserved villagers.',
     image: '/healthhj.jpeg',
     date: 'January 2025',
-    link: '/healthcare',
+    link: '/healthcare/health-camps',
     badge: 'Medical Outreach',
   },
   {
@@ -38,7 +38,7 @@ const projects = [
     description: 'Empowering young women and girls with computer literacy, coding basics, digital skills, and internet safety training to build self-reliant futures.',
     image: '/education1.jpeg',
     date: '2024 – Ongoing',
-    link: '/education',
+    link: '/education/digital-literacy',
     badge: 'Education & Tech',
   },
 ];
@@ -166,7 +166,7 @@ export default function FeaturedProjects() {
         </div>
 
         {/* ─── Premium Staggered Deck Container ─── */}
-        <div className="max-w-6xl mx-auto pb-32">
+        <div className="max-w-6xl mx-auto pb-16">
           {projects.map((project, idx) => (
             <StaggeredProjectCard
               key={project.id}
@@ -175,6 +175,17 @@ export default function FeaturedProjects() {
               total={projects.length}
             />
           ))}
+        </div>
+
+        {/* ─── View All Projects CTA Button ─── */}
+        <div className="text-center mt-6">
+          <Link
+            to="/our-work"
+            className="inline-flex items-center gap-3 bg-[#263238] hover:bg-red-600 text-white font-extrabold px-9 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 text-sm sm:text-base border border-gray-200"
+          >
+            <span>View All 16 NGO Projects & Initiatives</span>
+            <ArrowRight className="w-5 h-5 text-amber-300" />
+          </Link>
         </div>
 
       </div>

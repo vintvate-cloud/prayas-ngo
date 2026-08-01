@@ -27,7 +27,9 @@ const navLinks = [
     name: 'What We Do',
     path: '/our-work',
     submenu: [
-      { name: 'Overview', path: '/our-work' },
+
+      { name: 'Overview', path: '/overview' },
+      { name: 'Our work', path: '/our-work' },
       { name: 'Rural Development', path: '/rural-development' },
       { name: 'Women Empowerment & Livelihood', path: '/women-empowerment' },
       { name: 'Education & Skill Development', path: '/education' },
