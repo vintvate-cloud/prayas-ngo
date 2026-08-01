@@ -594,7 +594,6 @@ export default function OurWork() {
             <button
               onClick={() => {
                 setSelectedCategory('All Projects');
-                setSearchQuery('');
               }}
               className="mt-4 px-6 py-2.5 bg-red-600 text-white font-bold text-xs uppercase tracking-wider rounded-full shadow-md hover:bg-red-700 transition-colors cursor-pointer"
             >
