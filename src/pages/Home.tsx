@@ -31,9 +31,6 @@ export default function Home() {
       {/* Focus Areas – 5 segments (preview of "What We Do") */}
       <FocusAreas />
 
-      {/* Our Work Section */}
-      <OurWorkSection />
-
       {/* Impact Categories – donation carousel */}
       <ImpactCategories />
 
