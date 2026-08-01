@@ -7,16 +7,16 @@ import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 const ASSETS = [
-  { src: 'https://images.unsplash.com/photo-1542810634-71277d95dcbb?q=80&w=500&auto=format&fit=crop', title: 'Women Welfare' },
-  { src: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=500&auto=format&fit=crop', title: 'Child Education' },
-  { src: 'https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=500&auto=format&fit=crop', title: 'Health & Hygiene' },
-  { src: 'https://images.unsplash.com/photo-1593113514619-33b934789d6e?q=80&w=500&auto=format&fit=crop', title: 'Nature Activity' },
-  { src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=500&auto=format&fit=crop', title: 'Rural Development' },
-  { src: 'https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=500&auto=format&fit=crop', title: 'Mental Counseling' },
-  { src: 'https://images.unsplash.com/photo-1542810634-71277d95dcbb?q=80&w=500&auto=format&fit=crop', title: 'Art & Culture' },
-  { src: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=500&auto=format&fit=crop', title: 'Sports' },
-  { src: 'https://images.unsplash.com/photo-1593113514619-33b934789d6e?q=80&w=500&auto=format&fit=crop', title: 'Special Child Support' },
-  { src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=500&auto=format&fit=crop', title: 'Slum Development' },
+  { src: '/WOMEN.jpeg', title: 'Women Welfare' },
+  { src: '/P1039409.JPG', title: 'Child Education' },
+  { src: '/healthcaret.jpg', title: 'Health & Hygiene' },
+  { src: '/TREEGROW.jpg', title: 'Nature Activity' },
+  { src: '/ruraldevelopment.jpeg', title: 'Rural Development' },
+  { src: '/P1039322.JPG', title: 'Mental Counseling' },
+  { src: '/IMG-27.jpeg', title: 'Art & Culture' },
+  { src: '/IMG-25.jpeg', title: 'Sports' },
+  { src: '/CHILDRENGROUP.jpg', title: 'Special Child Support' },
+  { src: '/SAMATI.jpeg', title: 'Slum Development' },
 ]
 
 function useResponsiveItemWidth() {
@@ -212,6 +212,10 @@ function CarouselItem({ index, item, xOffset, itemWidth, totalWidth }: {
             alt={item.title}
             className="w-full h-full object-cover pointer-events-none"
             loading="lazy"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src =
+                'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="500" height="600" viewBox="0 0 500 600"%3E%3Crect width="500" height="600" fill="%23263238"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="24" fill="%23FFF314" font-weight="bold"%3EPrayas Foundation%3C/text%3E%3C/svg%3E'
+            }}
           />
         </div>
         <motion.div

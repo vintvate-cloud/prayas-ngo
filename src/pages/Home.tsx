@@ -1,21 +1,19 @@
 // src/pages/Home.tsx
-import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import HeroSection from '../components/HeroSection'
 import AboutUsSection from '../components/AboutUsSection'
 import HelpChildrenSection from '../components/HelpChildrenSection'
+import FocusAreas from '../components/FocusAreas'
+import OurWorkSection from '../components/OurWorkSection'
 import ImpactCategories from '../components/ImpactCategories'
 import ImpactCounter from '../components/ImpactCounter'
 import TrustFlow from '../components/TrustFlow'
-import ImageCarousel from '../components/ImageCarousel'
-
-// ─── New components ───
-import VisionMission from '../components/VisionMission'
-import FocusAreas from '../components/FocusAreas'
 import FeaturedProjects from '../components/FeaturedProjects'
 import TeamPreview from '../components/TeamPreview'
 import GalleryPreview from '../components/GalleryPreview'
 import CTASections from '../components/CTASections'
+import ImageCarousel from '../components/ImageCarousel'
+import CollaboratorsSection from '../components/CollaboratorsSection'
 
 export default function Home() {
   const { t } = useTranslation()
@@ -32,6 +30,9 @@ export default function Home() {
 
       {/* Focus Areas – 5 segments (preview of "What We Do") */}
       <FocusAreas />
+
+      {/* Our Work Section */}
+      <OurWorkSection />
 
       {/* Impact Categories – donation carousel */}
       <ImpactCategories />
@@ -56,6 +57,9 @@ export default function Home() {
 
       {/* Image Carousel – Accreditations */}
       <ImageCarousel />
+
+      {/* Our Collaborators Section – Auto-moving right partners (just before footer) */}
+      <CollaboratorsSection />
     </div>
   )
 }
