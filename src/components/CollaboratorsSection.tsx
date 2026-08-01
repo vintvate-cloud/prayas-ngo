@@ -136,9 +136,13 @@ export default function CollaboratorsSection() {
         
         {/* ─── SECTION HEADER ─── */}
         <div className="text-center mb-8 sm:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#333333] inline-block px-8 py-2 bg-gray-200/75 rounded-md shadow-xs border border-gray-300/50">
+          <h2
+            className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#263238] px-2 tracking-tight"
+            style={{ fontFamily: 'var(--font-heading)' }}
+          >
             {t('collaborators.title', 'Our Collaborators')}
           </h2>
+          <div className="w-20 h-1 bg-gradient-to-r from-red-600 to-red-400 mx-auto mt-4 rounded-full shadow-xs" />
         </div>
 
         {/* ─── AUTO ROTATE RIGHT MOVING LOGOS MARQUEE ─── */}
