@@ -62,6 +62,51 @@ const MEMBERS: MemberItem[] = [
     ],
     focusAreas: ['Digital Education', 'Kargil Vatika Reforestation', 'Youth Mentorship'],
   },
+  {
+    id: 'nasera',
+    name: 'नासेरा मंसूरी',
+    role: 'Media & Outreach Lead',
+    photo: '/images/team/nasera.png',
+    badge: 'Media & Communications',
+    badgeColor: 'bg-violet-100 text-violet-800 border-violet-300',
+    bio: 'मैं नासेरा मंसूरी, बीते 14 वर्ष से इंदौर में प्रिंट मीडिया पत्रकार हूं। इन वर्षों में मैंने समाज के विभिन्न पहलुओं, आम लोगों की कहानियों और बदलते शहर को अपनी लेखनी के माध्यम से आम जन के सामने लाने का प्रयास किया है। अब, एक नए कदम के रूप में, मैं इस एनजीओ के साथ जुड़कर अपने इसी अनुभव और संवेदनशीलता को समाज सेवा की दिशा में आगे बढ़ा रही हूं। यह सफर मेरे लिए केवल पेशेवर बदलाव नहीं, बल्कि एक जिम्मेदारी है कि मैं उन लोगों तक पहुंच सकूं और उनकी आवाज बन सकूं, जो अपने लिए सामने नहीं आ सकते। इस प्लेटफॉर्म की मदद से जागरूकता, संवेदनशीलता और सकारात्मक बदलाव सामने लाने में मदद मिलेगी।',
+    achievements: [
+      '14 वर्षों से इंदौर में प्रिंट मीडिया पत्रकारिता का अनुभव',
+      'समाज के विभिन्न पहलुओं और आम लोगों की कहानियों को सामने लाना',
+      'एनजीओ के माध्यम से जागरूकता और सकारात्मक बदलाव की दिशा में कार्य',
+    ],
+    focusAreas: ['Print Media', 'Social Awareness', 'Community Voice'],
+  },
+  {
+    id: 'ruchira',
+    name: 'Ruchira',
+    role: 'Corporate Partnerships Lead',
+    photo: '/images/team/ruchira.png',
+    badge: 'Corporate & Strategy',
+    badgeColor: 'bg-blue-100 text-blue-800 border-blue-300',
+    bio: 'With a decade of experience in the corporate world, I have realized that this beautiful world truly belongs to the ‘Givers’ and not the ‘Takers’. An NGO platform became the first step in my journey of ‘self discovery’, where I found “myself.” Because when you give, whether it is the smallest portion of your time, knowledge, money, support, or in any form, you ‘grow’, you ‘live’, you ‘smile’ and ‘you’ become the reason for others to ‘Grow’. -Ruchira',
+    achievements: [
+      'A decade of professional experience in the corporate world',
+      'Driving corporate partnerships and CSR strategic initiatives',
+      'Fostering self-discovery and community empowerment programs',
+    ],
+    focusAreas: ['Corporate Social Responsibility', 'Partnerships', 'Community Growth'],
+  },
+  {
+    id: 'harsh_mehta',
+    name: 'Harsh Mehta',
+    role: 'Media Production & Animal Rights Lead',
+    photo: '/images/team/harsh_mehta.jpg',
+    badge: 'Media & Advocacy',
+    badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+    bio: 'I am Harsh Mehta. I can call me a free soul. I am a professional photographer & cinematographer. Having more than 7 years of experience in this field. Apart from my work, I love traveling, writing, making new friends. Since April 2023, I have been following vegan lifestyle and also do organise animal rights campaigns where we make people aware about their direct/indirect participation in animal cruelty. Protecting nature and working towards betterment of it is also what I am passionate about. I follow and encourage minimalistic lifestyle. I do run marathons and help people in their wellness & fitness journey. Be kind with every kind! :)',
+    achievements: [
+      '7+ years of experience in professional photography & cinematography',
+      'Organizer of local animal rights & vegan awareness campaigns',
+      'Active marathoner advocating for wellness, fitness, and minimalist living',
+    ],
+    focusAreas: ['Photography & Film', 'Animal Rights Campaigns', 'Nature Protection'],
+  },
 ];
 
 export default function Members() {
@@ -131,7 +176,7 @@ export default function Members() {
         </motion.div>
 
         {/* ─── Leadership Cards Grid ─── */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16 justify-center">
           {MEMBERS.map((member, index) => (
             <motion.div
               key={member.id}
