@@ -68,6 +68,25 @@ export default function Members() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [selectedMember, setSelectedMember] = useState<MemberItem | null>(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const handleOpenMember = (member: MemberItem) => {
+    setSelectedMember(member);
+    setIsSidebarOpen(false);
+    // Step 2: Open sidebar AFTER icon finishes expanding to full size on screen
+    setTimeout(() => {
+      setIsSidebarOpen(true);
+    }, 360);
+  };
+
+  const handleCloseMember = () => {
+    // Step 1: Close sidebar panel first
+    setIsSidebarOpen(false);
+    // Step 2: Shrink icon back into card after sidebar collapses
+    setTimeout(() => {
+      setSelectedMember(null);
+    }, 320);
+  };
 
   return (
     <section className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50 text-[#263238] pt-28 sm:pt-36 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden font-sans">
@@ -104,11 +123,15 @@ export default function Members() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.12 }}
               whileHover={{ y: -6, scale: 1.02 }}
-              onClick={() => setSelectedMember(member)}
+              onClick={() => handleOpenMember(member)}
               className="bg-white rounded-3xl py-5 px-6 sm:px-8 border border-gray-200/90 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col items-center text-center group cursor-pointer relative"
             >
-              {/* Compact Circular Photo Frame */}
-              <div className="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full overflow-hidden bg-gray-100 border-4 border-[#FFF314] shadow-md group-hover:shadow-xl group-hover:scale-105 transition-all duration-500 mb-3 shrink-0">
+              {/* Compact Circular Photo Frame with LayoutId Morphing */}
+              <motion.div
+                layoutId={`member-avatar-${member.id}`}
+                transition={{ type: 'spring', damping: 24, stiffness: 220, mass: 0.75 }}
+                className="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full overflow-hidden bg-gray-100 border-4 border-[#FFF314] shadow-md group-hover:shadow-xl group-hover:scale-105 transition-all duration-500 mb-3 shrink-0"
+              >
                 <img
                   src={member.photo}
                   alt={member.name}
@@ -123,7 +146,7 @@ export default function Members() {
                 <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white text-[11px] font-bold uppercase tracking-wider">
                   <span>View Details</span>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Clean Centered Name & Role */}
               <div className="space-y-0.5">
@@ -176,7 +199,7 @@ export default function Members() {
 
       </div>
 
-      {/* ─── INTERACTIVE MODAL (SLIDED DOWN BELOW NAVBAR) ─── */}
+      {/* ─── 100% SEQUENCED 2-STEP ANIMATION: ICON EXPANDS FIRST ➔ SIDEBAR SLIDES OUT ─── */}
       <AnimatePresence>
         {selectedMember && (
           <div className="fixed inset-0 z-[99999] flex items-center justify-center md:justify-end p-4 sm:p-8 pt-16 sm:pt-20 pb-8">
@@ -186,29 +209,24 @@ export default function Members() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setSelectedMember(null)}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              onClick={handleCloseMember}
               className="fixed inset-0 bg-black/70 backdrop-blur-md cursor-pointer"
             />
 
-            {/* Floating Card Container */}
-            <motion.div
-              initial={{ scale: 0.92, opacity: 0, y: 25 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.92, opacity: 0, y: 25 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-              className="relative w-full max-w-3xl bg-white rounded-3xl shadow-2xl p-6 sm:p-8 z-10 text-[#263238] flex flex-col md:flex-row gap-6 md:gap-8 max-h-[78vh] items-stretch mt-2 sm:mt-4 md:mr-6 overflow-visible"
-            >
-              {/* Yellow Circular Close Button (Clearly Visible Top-Right) */}
-              <button
-                onClick={() => setSelectedMember(null)}
-                className="absolute top-4 right-4 sm:top-5 sm:right-5 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#FFF314] hover:bg-[#FBE000] text-black font-extrabold flex items-center justify-center shadow-xl transition-transform hover:scale-110 cursor-pointer z-40 border-2 border-white"
-                aria-label="Close"
+            {/* Step 1: Circular Image Icon Expands FIRST To Display Position */}
+            <div className="relative w-full max-w-3xl flex flex-col md:flex-row items-center md:items-stretch pointer-events-none md:mr-6">
+              
+              <motion.div
+                layoutId={`member-avatar-${selectedMember.id}`}
+                transition={{
+                  type: 'spring',
+                  damping: 24,
+                  stiffness: 220,
+                  mass: 0.75,
+                }}
+                className="w-56 h-56 sm:w-64 sm:h-64 md:w-76 md:h-76 rounded-full overflow-hidden shadow-2xl shrink-0 border-4 border-[#FFF314] relative bg-gray-100 mx-auto md:mx-0 md:-ml-36 self-center z-30 pointer-events-auto"
               >
-                <X className="w-6 h-6 stroke-[3]" />
-              </button>
-
-              {/* Left Column: Larger Overlapping Circular Portrait Photo Shifted Left */}
-              <div className="w-56 h-56 sm:w-64 sm:h-64 md:w-76 md:h-76 rounded-full overflow-hidden shadow-2xl shrink-0 border-4 border-[#FFF314] relative bg-gray-100 mx-auto md:mx-0 md:-ml-36 self-center">
                 <img
                   src={selectedMember.photo}
                   alt={selectedMember.name}
@@ -218,74 +236,99 @@ export default function Members() {
                       'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300"%3E%3Crect width="300" height="300" fill="%23F1F5F9"/%3E%3Ccircle cx="150" cy="120" r="55" fill="%23CBD5E1"/%3E%3Cpath d="M50 280c0-50 35-80 100-80s100 30 100 80" fill="%23CBD5E1"/%3E%3C/svg%3E';
                   }}
                 />
-              </div>
+              </motion.div>
 
-              {/* Right Column: Name, Gold Role Title & Scrollable Bio Paragraphs */}
-              <div className="flex-1 flex flex-col justify-between overflow-hidden pt-1">
-                {/* Header Info */}
-                <div className="border-b border-gray-100 pb-3 mb-3">
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[#263238] tracking-tight leading-tight">
-                    {selectedMember.name}
-                  </h2>
-
-                  <p className="text-xs sm:text-sm font-extrabold text-amber-500 font-sans tracking-widest uppercase mt-1">
-                    {selectedMember.role}
-                  </p>
-                </div>
-
-                {/* Scrollable Text Content */}
-                <div className="overflow-y-auto flex-1 pr-2 space-y-4 text-gray-700 text-xs sm:text-sm leading-relaxed font-sans max-h-[50vh]">
-                  <p className="font-normal text-gray-700">
-                    {selectedMember.bio}
-                  </p>
-
-                  {/* Achievements List */}
-                  <div className="space-y-2 pt-2">
-                    <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-red-600 flex items-center gap-1.5">
-                      <ShieldCheck className="w-4 h-4" />
-                      <span>Key Leadership Milestones</span>
-                    </h4>
-                    <div className="space-y-2">
-                      {selectedMember.achievements.map((item, i) => (
-                        <div key={i} className="flex items-start gap-2.5 p-2.5 rounded-xl bg-gray-50 border border-gray-100 text-xs text-gray-800 font-medium">
-                          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                          <span>{item}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Focus Areas */}
-                  <div className="pt-2">
-                    <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-red-600 mb-2">
-                      Core Focus Areas
-                    </h4>
-                    <div className="flex flex-wrap gap-1.5">
-                      {selectedMember.focusAreas.map((area, i) => (
-                        <span key={i} className="px-3 py-1 rounded-lg bg-amber-50 text-amber-900 border border-amber-200 text-xs font-bold">
-                          {area}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Action Footer */}
-                <div className="pt-4 border-t border-gray-100 mt-3 flex justify-end">
-                  <button
-                    onClick={() => {
-                      setSelectedMember(null);
-                      navigate('/contact');
+              {/* Step 2: Sidebar Panel Slides Out AFTER Icon Has Expanded (Extends Slightly Behind Icon) */}
+              <AnimatePresence>
+                {isSidebarOpen && (
+                  <motion.div
+                    initial={{ x: '100%', opacity: 0, scale: 0.95 }}
+                    animate={{ x: 0, opacity: 1, scale: 1 }}
+                    exit={{ x: '100%', opacity: 0, scale: 0.95 }}
+                    transition={{
+                      duration: 0.35,
+                      ease: [0.16, 1, 0.3, 1],
                     }}
-                    className="px-6 py-2.5 rounded-xl bg-[#263238] hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider shadow-md transition-all flex items-center gap-2 cursor-pointer"
+                    className="relative w-full bg-white rounded-3xl shadow-2xl p-6 sm:p-8 z-20 text-[#263238] flex flex-col justify-between max-h-[78vh] items-stretch mt-2 sm:mt-4 pointer-events-auto overflow-visible md:-ml-24"
                   >
-                    <Mail className="w-4 h-4" />
-                    <span>Connect With Leadership</span>
-                  </button>
-                </div>
-              </div>
+                    {/* Yellow Circular Close Button */}
+                    <button
+                      onClick={handleCloseMember}
+                      className="absolute top-4 right-4 sm:top-5 sm:right-5 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#FFF314] hover:bg-[#FBE000] text-black font-extrabold flex items-center justify-center shadow-xl transition-transform hover:scale-110 cursor-pointer z-40 border-2 border-white"
+                      aria-label="Close"
+                    >
+                      <X className="w-6 h-6 stroke-[3]" />
+                    </button>
 
-            </motion.div>
+                    {/* Content Details (Shifted to clear the overlapping image) */}
+                    <div className="flex-1 flex flex-col justify-between overflow-hidden pt-1 pl-0 md:pl-28">
+                      {/* Header Info */}
+                      <div className="border-b border-gray-100 pb-3 mb-3">
+                        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#263238] tracking-tight leading-tight">
+                          {selectedMember.name}
+                        </h2>
+
+                        <p className="text-xs sm:text-sm font-extrabold text-amber-500 font-sans tracking-widest uppercase mt-1">
+                          {selectedMember.role}
+                        </p>
+                      </div>
+
+                      {/* Scrollable Text Content */}
+                      <div className="overflow-y-auto flex-1 pr-2 space-y-4 text-gray-700 text-xs sm:text-sm leading-relaxed font-sans max-h-[50vh]">
+                        <p className="font-normal text-gray-700">
+                          {selectedMember.bio}
+                        </p>
+
+                        {/* Achievements List */}
+                        <div className="space-y-2 pt-2">
+                          <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-red-600 flex items-center gap-1.5">
+                            <ShieldCheck className="w-4 h-4" />
+                            <span>Key Leadership Milestones</span>
+                          </h4>
+                          <div className="space-y-2">
+                            {selectedMember.achievements.map((item, i) => (
+                              <div key={i} className="flex items-start gap-2.5 p-2.5 rounded-xl bg-gray-50 border border-gray-100 text-xs text-gray-800 font-medium">
+                                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                                <span>{item}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Focus Areas */}
+                        <div className="pt-2">
+                          <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-red-600 mb-2">
+                            Core Focus Areas
+                          </h4>
+                          <div className="flex flex-wrap gap-1.5">
+                            {selectedMember.focusAreas.map((area, i) => (
+                              <span key={i} className="px-3 py-1 rounded-lg bg-amber-50 text-amber-900 border border-amber-200 text-xs font-bold">
+                                {area}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Action Footer */}
+                      <div className="pt-4 border-t border-gray-100 mt-3 flex justify-end">
+                        <button
+                          onClick={() => {
+                            handleCloseMember();
+                            navigate('/contact');
+                          }}
+                          className="px-6 py-2.5 rounded-xl bg-[#263238] hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider shadow-md transition-all flex items-center gap-2 cursor-pointer"
+                        >
+                          <Mail className="w-4 h-4" />
+                          <span>Connect With Leadership</span>
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+            </div>
           </div>
         )}
       </AnimatePresence>
