@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, ArrowRight, X, ShieldCheck, Mail, CheckCircle2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -70,6 +70,22 @@ export default function Members() {
   const [selectedMember, setSelectedMember] = useState<MemberItem | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  // Background Scroll Lock when Modal is Open
+  useEffect(() => {
+    if (selectedMember) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    };
+  }, [selectedMember]);
+
   const handleOpenMember = (member: MemberItem) => {
     setSelectedMember(member);
     setIsSidebarOpen(false);
@@ -89,11 +105,11 @@ export default function Members() {
   };
 
   return (
-    <section className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50 text-[#263238] pt-28 sm:pt-36 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden font-sans">
+    <section className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50 text-[#263238] pt-24 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden font-sans">
       
       {/* ─── Ambient Subtle Glow Accents ─── */}
-      <div className="absolute top-20 right-10 w-96 h-96 bg-red-500/5 rounded-full blur-[140px] pointer-events-none -z-10" />
-      <div className="absolute bottom-20 left-10 w-96 h-96 bg-amber-500/5 rounded-full blur-[140px] pointer-events-none -z-10" />
+      <div className="absolute top-20 right-10 w-72 sm:w-96 h-72 sm:h-96 bg-red-500/5 rounded-full blur-[140px] pointer-events-none -z-10" />
+      <div className="absolute bottom-20 left-10 w-72 sm:w-96 h-72 sm:h-96 bg-amber-500/5 rounded-full blur-[140px] pointer-events-none -z-10" />
 
       <div className="max-w-6xl mx-auto">
         
@@ -102,20 +118,20 @@ export default function Members() {
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16 space-y-4 max-w-3xl mx-auto"
+          className="text-center mb-12 sm:mb-16 space-y-3 sm:space-y-4 max-w-3xl mx-auto"
         >
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#263238] tracking-tight leading-tight">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#263238] tracking-tight leading-tight">
             {t('members.title', 'Our Dedicated')}{' '}
             <span className="text-red-600">
               {t('members.titleHighlight', 'Leadership Team')}
             </span>
           </h1>
           {/* Premium Underline Bar */}
-          <div className="w-20 h-1 bg-gradient-to-r from-red-600 to-red-400 mx-auto rounded-full shadow-xs" />
+          <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-red-600 to-red-400 mx-auto rounded-full shadow-xs" />
         </motion.div>
 
         {/* ─── Leadership Cards Grid ─── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16">
           {MEMBERS.map((member, index) => (
             <motion.div
               key={member.id}
@@ -124,13 +140,13 @@ export default function Members() {
               transition={{ duration: 0.5, delay: index * 0.12 }}
               whileHover={{ y: -6, scale: 1.02 }}
               onClick={() => handleOpenMember(member)}
-              className="bg-white rounded-3xl py-5 px-6 sm:px-8 border border-gray-200/90 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col items-center text-center group cursor-pointer relative"
+              className="bg-white rounded-3xl py-6 px-6 sm:px-8 border border-gray-200/90 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col items-center text-center group cursor-pointer relative"
             >
               {/* Compact Circular Photo Frame with LayoutId Morphing */}
               <motion.div
                 layoutId={`member-avatar-${member.id}`}
                 transition={{ type: 'spring', damping: 24, stiffness: 220, mass: 0.75 }}
-                className="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full overflow-hidden bg-gray-100 border-4 border-[#FFF314] shadow-md group-hover:shadow-xl group-hover:scale-105 transition-all duration-500 mb-3 shrink-0"
+                className="relative w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full overflow-hidden bg-gray-100 border-4 border-[#FFF314] shadow-md group-hover:shadow-xl group-hover:scale-105 transition-all duration-500 mb-4 shrink-0"
               >
                 <img
                   src={member.photo}
@@ -149,7 +165,7 @@ export default function Members() {
               </motion.div>
 
               {/* Clean Centered Name & Role */}
-              <div className="space-y-0.5">
+              <div className="space-y-1">
                 <h3 className="text-lg sm:text-xl font-extrabold text-[#263238] group-hover:text-red-600 transition-colors">
                   {member.name}
                 </h3>
@@ -159,9 +175,9 @@ export default function Members() {
                 </p>
               </div>
 
-              <div className="mt-3 pt-2.5 border-t border-gray-100 w-full flex items-center justify-center gap-1 text-[11px] text-gray-500 group-hover:text-red-600 font-medium transition-colors">
+              <div className="mt-4 pt-3 border-t border-gray-100 w-full flex items-center justify-center gap-1.5 text-xs text-gray-500 group-hover:text-red-600 font-medium transition-colors">
                 <span>Click to view profile</span>
-                <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
               </div>
             </motion.div>
           ))}
@@ -172,24 +188,24 @@ export default function Members() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="bg-white rounded-3xl p-8 sm:p-12 border border-gray-200/90 shadow-2xl text-center space-y-4 max-w-3xl mx-auto"
+          className="bg-white rounded-3xl p-6 sm:p-10 lg:p-12 border border-gray-200/90 shadow-2xl text-center space-y-4 max-w-3xl mx-auto"
         >
-          <div className="w-14 h-14 rounded-2xl bg-red-600/10 text-red-600 border border-red-600/20 flex items-center justify-center mx-auto">
-            <Heart className="w-7 h-7" />
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-red-600/10 text-red-600 border border-red-600/20 flex items-center justify-center mx-auto">
+            <Heart className="w-6 h-6 sm:w-7 sm:h-7" />
           </div>
 
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#263238]">
+          <h2 className="text-xl sm:text-3xl font-extrabold text-[#263238]">
             Want to lead or volunteer in our grassroots movement?
           </h2>
 
-          <p className="text-gray-600 text-sm sm:text-base max-w-xl mx-auto font-sans leading-relaxed">
+          <p className="text-gray-600 text-xs sm:text-base max-w-xl mx-auto font-sans leading-relaxed">
             We welcome passionate individuals, student ambassadors, and domain experts to join our team in delivering positive social change.
           </p>
 
           <div className="pt-2 flex justify-center gap-4 flex-wrap">
             <button
               onClick={() => navigate('/volunteer')}
-              className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full text-sm font-bold bg-red-600 hover:bg-red-700 text-white shadow-lg hover:shadow-xl transition-all cursor-pointer"
+              className="inline-flex items-center gap-2.5 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full text-xs sm:text-sm font-bold bg-red-600 hover:bg-red-700 text-white shadow-lg hover:shadow-xl transition-all cursor-pointer"
             >
               <span>Join As A Volunteer</span>
               <ArrowRight size={16} />
@@ -199,10 +215,10 @@ export default function Members() {
 
       </div>
 
-      {/* ─── 100% SEQUENCED 2-STEP ANIMATION: ICON EXPANDS FIRST ➔ SIDEBAR SLIDES OUT ─── */}
+      {/* ─── FULLY RESPONSIVE MODAL & SIDEBAR DRAWER WITH BACKGROUND SCROLL LOCK ─── */}
       <AnimatePresence>
         {selectedMember && (
-          <div className="fixed inset-0 z-[99999] flex items-center justify-center md:justify-end p-4 sm:p-8 pt-16 sm:pt-20 pb-8">
+          <div className="fixed inset-0 z-[999999] flex items-center justify-center md:justify-end p-3 sm:p-6 lg:p-8 pt-20 sm:pt-24 pb-6 overflow-hidden">
             
             {/* Backdrop Blur Overlay */}
             <motion.div
@@ -211,12 +227,14 @@ export default function Members() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
               onClick={handleCloseMember}
-              className="fixed inset-0 bg-black/70 backdrop-blur-md cursor-pointer"
+              onTouchMove={(e) => e.preventDefault()}
+              className="fixed inset-0 bg-black/75 backdrop-blur-md cursor-pointer z-0"
             />
 
-            {/* Step 1: Circular Image Icon Expands FIRST To Display Position */}
-            <div className="relative w-full max-w-3xl flex flex-col md:flex-row items-center md:items-stretch pointer-events-none md:mr-6">
+            {/* Modal Flex Container */}
+            <div className="relative w-full max-w-lg md:max-w-3xl flex flex-col md:flex-row items-center md:items-stretch pointer-events-none md:mr-6 my-auto z-10">
               
+              {/* Step 1: Circular Image Icon Expands FIRST To Display Position */}
               <motion.div
                 layoutId={`member-avatar-${selectedMember.id}`}
                 transition={{
@@ -225,7 +243,7 @@ export default function Members() {
                   stiffness: 220,
                   mass: 0.75,
                 }}
-                className="w-56 h-56 sm:w-64 sm:h-64 md:w-76 md:h-76 rounded-full overflow-hidden shadow-2xl shrink-0 border-4 border-[#FFF314] relative bg-gray-100 mx-auto md:mx-0 md:-ml-36 self-center z-30 pointer-events-auto"
+                className="w-36 h-36 sm:w-48 sm:h-48 md:w-76 md:h-76 rounded-full overflow-hidden shadow-2xl shrink-0 border-4 border-[#FFF314] relative bg-gray-100 mx-auto md:mx-0 -mb-16 md:mb-0 md:-ml-36 self-center z-30 pointer-events-auto"
               >
                 <img
                   src={selectedMember.photo}
@@ -238,7 +256,7 @@ export default function Members() {
                 />
               </motion.div>
 
-              {/* Step 2: Sidebar Panel Slides Out AFTER Icon Has Expanded (Extends Slightly Behind Icon) */}
+              {/* Step 2: Sidebar Panel Slides Out AFTER Icon Has Expanded */}
               <AnimatePresence>
                 {isSidebarOpen && (
                   <motion.div
@@ -249,22 +267,22 @@ export default function Members() {
                       duration: 0.35,
                       ease: [0.16, 1, 0.3, 1],
                     }}
-                    className="relative w-full bg-white rounded-3xl shadow-2xl p-6 sm:p-8 z-20 text-[#263238] flex flex-col justify-between max-h-[78vh] items-stretch mt-2 sm:mt-4 pointer-events-auto overflow-visible md:-ml-24"
+                    className="relative w-full bg-white rounded-3xl shadow-2xl p-5 sm:p-8 z-20 text-[#263238] flex flex-col max-h-[82vh] md:max-h-[78vh] mt-0 md:-ml-24 pt-16 md:pt-8 pointer-events-auto overflow-hidden"
                   >
                     {/* Yellow Circular Close Button */}
                     <button
                       onClick={handleCloseMember}
-                      className="absolute top-4 right-4 sm:top-5 sm:right-5 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#FFF314] hover:bg-[#FBE000] text-black font-extrabold flex items-center justify-center shadow-xl transition-transform hover:scale-110 cursor-pointer z-40 border-2 border-white"
+                      className="absolute top-3 right-3 sm:top-5 sm:right-5 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#FFF314] hover:bg-[#FBE000] text-black font-extrabold flex items-center justify-center shadow-xl transition-transform hover:scale-110 cursor-pointer z-40 border-2 border-white"
                       aria-label="Close"
                     >
-                      <X className="w-6 h-6 stroke-[3]" />
+                      <X className="w-5 h-5 sm:w-6 sm:h-6 stroke-[3]" />
                     </button>
 
-                    {/* Content Details (Shifted to clear the overlapping image) */}
-                    <div className="flex-1 flex flex-col justify-between overflow-hidden pt-1 pl-0 md:pl-28">
+                    {/* Content Details */}
+                    <div className="flex-1 flex flex-col min-h-0 pt-1 pl-0 md:pl-28 overflow-hidden">
                       {/* Header Info */}
-                      <div className="border-b border-gray-100 pb-3 mb-3">
-                        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#263238] tracking-tight leading-tight">
+                      <div className="border-b border-gray-100 pb-3 mb-3 text-center md:text-left shrink-0">
+                        <h2 className="text-xl sm:text-3xl font-extrabold text-[#263238] tracking-tight leading-tight">
                           {selectedMember.name}
                         </h2>
 
@@ -273,15 +291,15 @@ export default function Members() {
                         </p>
                       </div>
 
-                      {/* Scrollable Text Content */}
-                      <div className="overflow-y-auto flex-1 pr-2 space-y-4 text-gray-700 text-xs sm:text-sm leading-relaxed font-sans max-h-[50vh]">
+                      {/* Scrollable Text Content (With min-h-0 & touch-pan-y for 100% Mobile Touch Scroll Support) */}
+                      <div className="overflow-y-auto overscroll-contain touch-pan-y min-h-0 flex-1 pr-1.5 sm:pr-2.5 space-y-4 text-gray-700 text-xs sm:text-sm leading-relaxed font-sans">
                         <p className="font-normal text-gray-700">
                           {selectedMember.bio}
                         </p>
 
                         {/* Achievements List */}
                         <div className="space-y-2 pt-2">
-                          <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-red-600 flex items-center gap-1.5">
+                          <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-red-600 flex items-center gap-1.5 justify-center md:justify-start">
                             <ShieldCheck className="w-4 h-4" />
                             <span>Key Leadership Milestones</span>
                           </h4>
@@ -297,10 +315,10 @@ export default function Members() {
 
                         {/* Focus Areas */}
                         <div className="pt-2">
-                          <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-red-600 mb-2">
+                          <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-red-600 mb-2 text-center md:text-left">
                             Core Focus Areas
                           </h4>
-                          <div className="flex flex-wrap gap-1.5">
+                          <div className="flex flex-wrap gap-1.5 justify-center md:justify-start">
                             {selectedMember.focusAreas.map((area, i) => (
                               <span key={i} className="px-3 py-1 rounded-lg bg-amber-50 text-amber-900 border border-amber-200 text-xs font-bold">
                                 {area}
@@ -310,14 +328,14 @@ export default function Members() {
                         </div>
                       </div>
 
-                      {/* Action Footer */}
-                      <div className="pt-4 border-t border-gray-100 mt-3 flex justify-end">
+                      {/* Action Footer (Fixed at bottom) */}
+                      <div className="pt-3 border-t border-gray-100 mt-2 flex justify-end shrink-0">
                         <button
                           onClick={() => {
                             handleCloseMember();
                             navigate('/contact');
                           }}
-                          className="px-6 py-2.5 rounded-xl bg-[#263238] hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider shadow-md transition-all flex items-center gap-2 cursor-pointer"
+                          className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#263238] hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
                         >
                           <Mail className="w-4 h-4" />
                           <span>Connect With Leadership</span>
