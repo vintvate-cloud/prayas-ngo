@@ -248,13 +248,6 @@ export default function Navbar() {
                   <FaLinkedin size={14} />
                 </a>
               </div>
-              <button
-                onClick={() => setIsStripVisible(false)}
-                className="text-white/50 hover:text-white transition p-0.5 cursor-pointer"
-                aria-label="Close announcement"
-              >
-                <X size={16} />
-              </button>
             </div>
           </div>
         )}
@@ -285,11 +278,11 @@ export default function Navbar() {
                       onMouseLeave={handleMouseLeave}
                     >
                       <button
-                        className={`text-xs xl:text-sm font-medium transition-colors relative py-2 group flex items-center gap-1 whitespace-nowrap ${isActive ? 'text-red-600' : `${textColor} ${textColorHover}`
+                        className={`text-sm xl:text-base font-medium transition-colors relative py-2 group flex items-center gap-1 whitespace-nowrap ${isActive ? 'text-red-600' : `${textColor} ${textColorHover}`
                           }`}
                       >
                         {safeT(link.name)}
-                        <ChevronDown className={`w-3 h-3 transition-transform ${openDropdown === link.name ? 'rotate-180' : ''}`} />
+                        <ChevronDown className={`w-3.5 h-3.5 transition-transform ${openDropdown === link.name ? 'rotate-180' : ''}`} />
                         <span
                           className={`absolute -bottom-1 left-0 h-[2px] bg-red-600 transition-all ${isActive ? 'w-full' : 'w-0 group-hover:w-full'
                             }`}
@@ -308,7 +301,7 @@ export default function Navbar() {
                               <Link
                                 key={sub.path}
                                 to={sub.path}
-                                className={`block px-5 py-2.5 text-xs font-medium transition-colors ${location.pathname === sub.path
+                                className={`block px-5 py-2.5 text-sm font-medium transition-colors ${location.pathname === sub.path
                                   ? 'text-red-600 bg-red-50 font-semibold'
                                   : 'text-gray-800 hover:bg-red-50 hover:text-red-600'
                                   }`}
@@ -327,7 +320,7 @@ export default function Navbar() {
                   <Link
                     key={link.name}
                     to={link.path}
-                    className={`text-xs xl:text-sm font-medium transition-colors relative py-2 group whitespace-nowrap ${location.pathname === link.path
+                    className={`text-sm xl:text-base font-medium transition-colors relative py-2 group whitespace-nowrap ${location.pathname === link.path
                       ? 'text-red-600'
                       : `${textColor} ${textColorHover}`
                       }`}
@@ -350,7 +343,7 @@ export default function Navbar() {
                     e.stopPropagation();
                     setLangDropdownOpen(!langDropdownOpen);
                   }}
-                  className={`flex items-center gap-1 px-2.5 sm:px-3 py-1.5 text-xs font-medium rounded-full border transition-all hover:scale-105 cursor-pointer ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
+                  className={`flex items-center gap-1 px-2.5 sm:px-3 py-1.5 text-sm font-medium rounded-full border transition-all hover:scale-105 cursor-pointer ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
                 >
                   <Globe className="w-4 h-4" />
                   <span className="hidden md:inline">{currentLangLabel}</span>
@@ -368,7 +361,7 @@ export default function Navbar() {
                         <button
                           key={lang.code}
                           onClick={() => changeLanguage(lang.code)}
-                          className={`block w-full text-left px-5 py-2.5 text-xs font-medium transition-colors cursor-pointer ${i18n.language === lang.code
+                          className={`block w-full text-left px-5 py-2.5 text-sm font-medium transition-colors cursor-pointer ${i18n.language === lang.code
                             ? 'text-red-600 bg-red-50 font-semibold'
                             : 'text-gray-800 hover:bg-red-50 hover:text-red-600'
                             }`}
@@ -383,7 +376,7 @@ export default function Navbar() {
 
               <Link
                 to="/volunteer"
-                className={`hidden sm:inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 text-xs sm:text-sm font-medium rounded-full border transition-all hover:scale-105 cursor-pointer ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
+                className={`hidden sm:inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 text-sm font-medium rounded-full border transition-all hover:scale-105 cursor-pointer ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
               >
                 <UserPlus className="w-4 h-4" />
                 <span className="hidden md:inline">{volunteerText}</span>
@@ -392,7 +385,7 @@ export default function Navbar() {
               {showAuthLink && !loading && (
                 <Link
                   to={isAuthenticated ? "/profile" : "/auth"}
-                  className={`hidden sm:inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 text-xs sm:text-sm font-medium rounded-full border transition-all hover:scale-105 ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
+                  className={`hidden sm:inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 text-sm font-medium rounded-full border transition-all hover:scale-105 ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
                 >
                   <User className="w-4 h-4" />
                   <span className="hidden md:inline">
@@ -403,7 +396,7 @@ export default function Navbar() {
 
               <Link
                 to="/donate"
-                className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-bold rounded-full bg-[#FFF314] hover:bg-[#FBE000] text-[#263238] shadow-sm hover:shadow transition-all hover:scale-105 cursor-pointer border border-[#E6DB00] whitespace-nowrap"
+                className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 text-sm font-bold rounded-full bg-[#FFF314] hover:bg-[#FBE000] text-[#263238] shadow-sm hover:shadow transition-all hover:scale-105 cursor-pointer border border-[#E6DB00] whitespace-nowrap"
               >
                 <Heart className="w-4 h-4 text-red-600 fill-red-600" />
                 <span>{t('nav.donateNow', 'Donate Now')}</span>
