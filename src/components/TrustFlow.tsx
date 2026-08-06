@@ -154,15 +154,7 @@ export default function TrustFlow() {
                       </p>
                     </div>
 
-                    <div className="pt-2 flex items-center justify-between">
-                      <Link
-                        to={item.link}
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold bg-[#F5B800] hover:bg-[#E5AA00] text-[#263238] shadow-md hover:shadow-lg transition-all cursor-pointer border border-amber-400/40"
-                      >
-                        <span>Explore Initiative</span>
-                        <ArrowRight size={14} />
-                      </Link>
-                    </div>
+
                   </div>
 
                   {/* Right Side: Visual Photo (5 cols) */}

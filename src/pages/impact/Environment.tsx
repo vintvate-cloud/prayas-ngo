@@ -239,22 +239,7 @@ export default function Environment() {
                     {sub.longDescription}
                   </p>
 
-                  <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3">
-                    <Link
-                      to={`/environment/${sub.id}`}
-                      className="inline-flex items-center gap-2 bg-[#14532D] hover:bg-[#16A34A] text-white font-semibold px-7 py-3 rounded-full shadow-md transition-all text-sm group cursor-pointer"
-                    >
-                      <span>Learn More</span>
-                      <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                    </Link>
-                    <Link
-                      to={`/donate?cause=${sub.id}`}
-                      className="inline-flex items-center gap-2 bg-[#F0FDF4] hover:bg-[#16A34A] text-[#16A34A] hover:text-white font-semibold px-7 py-3 rounded-full border border-[#16A34A]/30 shadow-sm transition-all text-sm group cursor-pointer"
-                    >
-                      <span>Support Initiative</span>
-                      <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </Link>
-                  </div>
+
                 </div>
               </motion.div>
             );

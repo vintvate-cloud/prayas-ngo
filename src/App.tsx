@@ -20,6 +20,7 @@ const Contact = lazy(() => import('./pages/Contact'));
 const Auth = lazy(() => import('./pages/Auth'));
 const Profile = lazy(() => import('./pages/Profile'));
 const Volunteer = lazy(() => import('./pages/Volunteer'));
+const Partner = lazy(() => import('./pages/Partner'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
 const ImpactPage = lazy(() => import('./pages/ImpactPage'));
 const Members = lazy(() => import('./pages/Members'));
@@ -96,6 +97,7 @@ export default function App() {
               <Route path="/donate" element={<Donate />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/volunteer" element={<Volunteer />} />
+              <Route path="/partner" element={<Partner />} />
               <Route path="/admin/*" element={<AdminDashboard />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/impact/:slug" element={<ImpactPage />} />

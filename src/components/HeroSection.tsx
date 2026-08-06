@@ -24,7 +24,7 @@ export default function HeroSection() {
         ),
         image: '/P1039409.JPG',
         objectPosition: 'center 25%',
-        ctaText: '♥ Yes! I Want To Help!',
+        ctaText: '♥ Explore',
         route: '/donate',
       },
       {

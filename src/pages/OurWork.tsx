@@ -835,13 +835,7 @@ export default function OurWork() {
                         <ChevronRight className="w-4 h-4" />
                       </Link>
                     )}
-                    <Link
-                      to="/donate"
-                      className="px-6 py-3 rounded-2xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all flex items-center gap-2"
-                    >
-                      <Heart className="w-4 h-4 text-white fill-white" />
-                      <span>Support Initiative</span>
-                    </Link>
+
                   </div>
                 </div>
 

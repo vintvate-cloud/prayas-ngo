@@ -267,22 +267,7 @@ export default function Healthcare() {
                     {sub.longDescription}
                   </p>
 
-                  <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3">
-                    <Link
-                      to={`/healthcare/${sub.id}`}
-                      className="inline-flex items-center gap-2 bg-[#115E59] hover:bg-[#0D9488] text-white font-semibold px-7 py-3 rounded-full shadow-md transition-all text-sm group cursor-pointer"
-                    >
-                      <span>Learn More</span>
-                      <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                    </Link>
-                    <Link
-                      to={`/donate?cause=${sub.id}`}
-                      className="inline-flex items-center gap-2 bg-[#F0FDF4] hover:bg-[#0D9488] text-[#0D9488] hover:text-white font-semibold px-7 py-3 rounded-full border border-[#0D9488]/30 shadow-sm transition-all text-sm group cursor-pointer"
-                    >
-                      <span>Support Initiative</span>
-                      <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </Link>
-                  </div>
+
                 </div>
               </motion.div>
             );

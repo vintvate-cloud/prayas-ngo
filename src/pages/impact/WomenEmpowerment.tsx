@@ -257,22 +257,7 @@ export default function WomenEmpowerment() {
                     {sub.longDescription}
                   </p>
 
-                  <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3">
-                    <Link
-                      to={`/women-empowerment/${sub.id}`}
-                      className="inline-flex items-center gap-2 bg-[#881337] hover:bg-[#DC2626] text-white font-semibold px-7 py-3 rounded-full shadow-md transition-all text-sm group cursor-pointer"
-                    >
-                      <span>Learn More</span>
-                      <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                    </Link>
-                    <Link
-                      to={`/donate?cause=${sub.id}`}
-                      className="inline-flex items-center gap-2 bg-[#FFF1F2] hover:bg-[#DC2626] text-[#DC2626] hover:text-white font-semibold px-7 py-3 rounded-full border border-[#DC2626]/30 shadow-sm transition-all text-sm group cursor-pointer"
-                    >
-                      <span>Support Initiative</span>
-                      <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </Link>
-                  </div>
+
                 </div>
               </motion.div>
             );

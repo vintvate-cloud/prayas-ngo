@@ -112,8 +112,8 @@ export default function Donate() {
         
         {/* ─── Header ─── */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-600/10 mb-4">
-            <Heart className="w-8 h-8 text-red-600 fill-red-600" />
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-500/10 mb-4">
+            <Heart className="w-8 h-8 text-amber-500 fill-amber-500" />
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-[#263238]">
             {activeCause ? `${t('donate.header.donateFor', 'Donate for')} ${activeCause.title}` : t('donate.header.title', 'Make a Donation')}
@@ -150,8 +150,8 @@ export default function Donate() {
               onClick={() => handleCauseSelect('')}
               className={`py-2 px-3.5 rounded-full text-xs font-bold transition-all cursor-pointer border ${
                 !selectedCauseKey
-                  ? 'bg-red-600 text-white border-red-600 shadow-sm'
-                  : 'bg-gray-50 text-[#263238] border-gray-200 hover:border-red-200'
+                  ? 'bg-[#FFF314] text-[#263238] border-[#E6DB00] shadow-sm'
+                  : 'bg-gray-50 text-[#263238] border-gray-200 hover:border-[#FFF314]/50'
               }`}
             >
               General Welfare Fund
@@ -164,8 +164,8 @@ export default function Donate() {
                 onClick={() => handleCauseSelect(key)}
                 className={`py-2 px-3.5 rounded-full text-xs font-bold transition-all cursor-pointer border ${
                   selectedCauseKey === key
-                    ? 'bg-red-600 text-white border-red-600 shadow-sm'
-                    : 'bg-gray-50 text-[#263238] border-gray-200 hover:border-red-200'
+                    ? 'bg-[#FFF314] text-[#263238] border-[#E6DB00] shadow-sm'
+                    : 'bg-gray-50 text-[#263238] border-gray-200 hover:border-[#FFF314]/50'
                 }`}
               >
                 {item.title}
@@ -186,7 +186,7 @@ export default function Donate() {
             {/* Amount Selection */}
             <div>
               <label className="flex items-center gap-2 text-sm font-medium text-[#263238] mb-3">
-                <IndianRupee className="w-4 h-4 text-red-600" />
+                <IndianRupee className="w-4 h-4 text-amber-500" />
                 {t('donate.form.selectAmount', 'Select Amount')}
               </label>
               <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mb-3">
@@ -200,8 +200,8 @@ export default function Donate() {
                     }}
                     className={`py-2.5 px-3 rounded-lg text-sm font-medium transition-all cursor-pointer ${
                       selectedAmount === amt.value && !customAmount
-                        ? 'bg-red-600 text-white shadow-md'
-                        : 'bg-gray-100 text-[#263238] hover:bg-red-50'
+                        ? 'bg-[#FFF314] text-[#263238] shadow-md'
+                        : 'bg-gray-100 text-[#263238] hover:bg-[#FFF314]/10'
                     }`}
                   >
                     {amt.label}
@@ -218,7 +218,7 @@ export default function Donate() {
                     setCustomAmount(e.target.value)
                     setSelectedAmount(null)
                   }}
-                  className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-600/10 transition-all text-[#263238] placeholder:text-[#263238]/40"
+                  className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-lg focus:outline-none focus:border-[#FFF314] focus:ring-2 focus:ring-[#FFF314]/20 transition-all text-[#263238] placeholder:text-[#263238]/40"
                 />
               </div>
             </div>
@@ -226,7 +226,7 @@ export default function Donate() {
             {/* Payment Method */}
             <div>
               <label className="flex items-center gap-2 text-sm font-medium text-[#263238] mb-3">
-                <Smartphone className="w-4 h-4 text-red-600" />
+                <Smartphone className="w-4 h-4 text-amber-500" />
                 {t('donate.form.paymentMethod', 'Payment Method')}
               </label>
               <div className="grid grid-cols-3 gap-2">
@@ -242,10 +242,10 @@ export default function Donate() {
                     onClick={() => setPaymentMethod(method.id)}
                     className={`flex flex-col items-center gap-1.5 py-3 px-2 rounded-lg transition-all cursor-pointer ${
                       paymentMethod === method.id
-                        ? 'bg-red-600 text-white shadow-md'
+                        ? 'bg-[#FFF314] text-[#263238] shadow-md'
                         : method.disabled
                         ? 'bg-gray-100 text-gray-400 cursor-not-allowed opacity-60'
-                        : 'bg-gray-100 text-[#263238] hover:bg-red-50'
+                        : 'bg-gray-100 text-[#263238] hover:bg-[#FFF314]/10'
                     }`}
                   >
                     <method.icon className="w-5 h-5" />
@@ -257,8 +257,8 @@ export default function Donate() {
             </div>
 
             {/* Impact Message */}
-            <div className="bg-red-600/5 rounded-lg p-4 flex items-start gap-3 border border-red-600/10">
-              <Gift className="w-5 h-5 text-red-600 mt-0.5" />
+            <div className="bg-amber-500/5 rounded-lg p-4 flex items-start gap-3 border border-amber-500/20">
+              <Gift className="w-5 h-5 text-amber-500 mt-0.5" />
               <div>
                 <p className="text-sm font-medium text-[#263238]">{t('donate.impact.title', 'Your Impact')}</p>
                 <p className="text-xs text-[#263238]/70">
@@ -276,7 +276,7 @@ export default function Donate() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3.5 bg-red-600 hover:bg-red-700 text-white rounded-lg font-bold text-lg transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70"
+              className="w-full py-3.5 bg-[#FFF314] hover:bg-[#FBE000] text-[#263238] border border-[#E6DB00] rounded-lg font-bold text-lg transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70"
             >
               {loading ? (
                 <>
@@ -306,13 +306,13 @@ export default function Donate() {
         >
           <div className="relative z-10">
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-red-600/10 rounded-lg">
-                <QrCode className="w-6 h-6 text-red-600" />
+              <div className="p-2 bg-amber-500/10 rounded-lg">
+                <QrCode className="w-6 h-6 text-amber-500" />
               </div>
               <div>
                 <h2 className="text-lg font-bold text-[#263238] flex items-center gap-2">
                   {t('donate.bank.title', 'Direct Bank Transfer')}
-                  <span className="text-xs bg-red-600 text-white px-2 py-0.5 rounded-full font-medium">
+                  <span className="text-xs bg-[#FFF314] text-[#263238] border border-[#E6DB00] px-2 py-0.5 rounded-full font-medium">
                     QR Available
                   </span>
                 </h2>
@@ -326,11 +326,11 @@ export default function Donate() {
             <div className="mb-6 bg-gray-50 rounded-xl p-4 border border-gray-200 shadow-sm">
               <button
                 onClick={() => setShowQR(!showQR)}
-                className="w-full flex items-center justify-between gap-2 text-sm font-semibold text-[#263238] hover:text-red-600 transition-colors group cursor-pointer"
+                className="w-full flex items-center justify-between gap-2 text-sm font-semibold text-[#263238] hover:text-amber-600 transition-colors group cursor-pointer"
               >
                 <div className="flex items-center gap-2">
-                  <div className="p-1.5 bg-red-600/10 rounded-lg">
-                    <QrCode className="w-5 h-5 text-red-600" />
+                  <div className="p-1.5 bg-amber-500/10 rounded-lg">
+                    <QrCode className="w-5 h-5 text-amber-500" />
                   </div>
                   <span className="text-base">
                     {showQR ? 'Hide Bank QR Code' : '📱 Scan to Pay with Bank QR'}
@@ -338,9 +338,9 @@ export default function Donate() {
                 </div>
                 <div className="flex items-center gap-2">
                   {showQR ? (
-                    <ChevronUp className="w-5 h-5 text-[#263238]/60 group-hover:text-red-600 transition" />
+                    <ChevronUp className="w-5 h-5 text-[#263238]/60 group-hover:text-amber-600 transition" />
                   ) : (
-                    <ChevronDown className="w-5 h-5 text-[#263238]/60 group-hover:text-red-600 transition" />
+                    <ChevronDown className="w-5 h-5 text-[#263238]/60 group-hover:text-amber-600 transition" />
                   )}
                 </div>
               </button>
@@ -376,7 +376,7 @@ export default function Donate() {
                       </button>
                     </div>
                     <p className="text-xs font-bold text-[#263238] mt-3">
-                      UPI VPA: <span className="text-red-600 font-mono">8818882178.1@hdfc</span>
+                      UPI VPA: <span className="text-amber-600 font-mono">8818882178.1@hdfc</span>
                     </p>
                   </div>
                 </motion.div>
@@ -395,7 +395,7 @@ export default function Donate() {
                   <p className="font-semibold text-[#263238]">HDFC0003886</p>
                   <button
                     onClick={() => copyToClipboard('HDFC0003886')}
-                    className="text-red-600 hover:text-red-700 transition cursor-pointer"
+                    className="text-amber-600 hover:text-amber-700 transition cursor-pointer"
                   >
                     {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
                   </button>
@@ -407,7 +407,7 @@ export default function Donate() {
                   <p className="font-semibold text-[#263238]">50200118537529</p>
                   <button
                     onClick={() => copyToClipboard('50200118537529')}
-                    className="text-red-600 hover:text-red-700 transition cursor-pointer"
+                    className="text-amber-600 hover:text-amber-700 transition cursor-pointer"
                   >
                     {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
                   </button>

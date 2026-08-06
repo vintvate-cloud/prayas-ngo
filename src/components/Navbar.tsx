@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Menu, X, Heart, User, ChevronDown, Globe, UserPlus
+  Menu, X, Heart, User, ChevronDown, Globe, UserPlus, Handshake
 } from 'lucide-react';
 import { FaFacebook, FaTwitter, FaInstagram, FaYoutube, FaLinkedin } from 'react-icons/fa';
 import { supabase } from '@/lib/supabase';
@@ -198,7 +198,7 @@ export default function Navbar() {
                 to="/donate"
                 className="bg-[#FFF314] text-[#263238] px-3.5 py-1 rounded-full text-xs font-bold hover:bg-white transition shadow-md whitespace-nowrap"
               >
-                Yes! I Want To Help!
+                Explore
               </Link>
               {/* Social icons */}
               <div className="flex items-center gap-3 text-white/70">
@@ -353,6 +353,15 @@ export default function Navbar() {
               >
                 <UserPlus className="w-4 h-4 text-amber-700" />
                 <span className="hidden md:inline">{volunteerText}</span>
+              </Link>
+
+              {/* 3. PARTNER BUTTON */}
+              <Link
+                to="/partner"
+                className={`hidden sm:inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 text-sm font-medium rounded-full border transition-all hover:scale-105 cursor-pointer ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-blue-500 hover:text-blue-800`}
+              >
+                <Handshake className="w-4 h-4 text-blue-700" />
+                <span className="hidden md:inline">Partner</span>
               </Link>
 
               {/* 3. LANGUAGE SELECTOR (AT THE MOST RIGHT) */}
@@ -511,6 +520,13 @@ export default function Navbar() {
                 className="mt-2 w-full text-center rounded-full border border-[#263238]/30 px-6 py-3.5 font-semibold text-[#263238] hover:text-red-600 hover:border-red-600 flex items-center justify-center gap-2 active:scale-[0.98] transition-transform"
               >
                 {volunteerText} <UserPlus className="w-5 h-5" />
+              </Link>
+
+              <Link
+                to="/partner"
+                className="mt-2 w-full text-center rounded-full border border-[#263238]/30 px-6 py-3.5 font-semibold text-[#263238] hover:text-blue-600 hover:border-blue-600 flex items-center justify-center gap-2 active:scale-[0.98] transition-transform"
+              >
+                Partner With Us <Handshake className="w-5 h-5" />
               </Link>
 
               {showAuthLink && !loading && (
