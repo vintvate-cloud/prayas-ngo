@@ -59,8 +59,8 @@ export default function PrayasDeepIntro() {
   return (
     <section
       ref={heroRef}
-      className="relative w-full min-h-[calc(100vh-var(--navbar-height,68px))] bg-gradient-to-b from-gray-50 via-white to-gray-50 text-[#263238] flex flex-col justify-center py-10 sm:py-14 lg:py-16 px-4 sm:px-6 lg:px-12 select-none font-sans overflow-hidden border-b border-gray-200/80"
-      style={{ marginTop: 'var(--navbar-height, 0px)' }}
+      className="relative w-full min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50 text-[#263238] flex flex-col justify-center pt-0 pb-8 sm:pb-10 lg:pb-12 px-4 sm:px-6 lg:px-12 select-none font-sans overflow-hidden border-b border-gray-200/80"
+      style={{ paddingTop: 'calc(var(--navbar-height, 68px) + 1rem)' }}
     >
       {/* ─── Ambient Awwwards Glowing Light Spheres ─── */}
       <div className="absolute top-1/4 left-10 w-[500px] h-[500px] bg-gradient-to-tr from-amber-500/10 via-yellow-400/10 to-transparent rounded-full blur-[160px] pointer-events-none -z-10" />
@@ -76,7 +76,7 @@ export default function PrayasDeepIntro() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 items-center">
 
           {/* ─── LEFT COLUMN: Masterwork Editorial Content (6 cols) ─── */}
-          <div className="lg:col-span-6 space-y-5 sm:space-y-6 text-left z-10">
+          <div className="lg:col-span-6 space-y-4 lg:space-y-5 text-left z-10">
             
             {/* 1. Glassmorphism Pre-header Pill */}
             <div className="gsap-hero-pill">
@@ -87,7 +87,7 @@ export default function PrayasDeepIntro() {
             </div>
 
             {/* 2. Display Headline */}
-            <h1 className="gsap-hero-title text-3xl sm:text-5xl lg:text-5xl xl:text-6xl font-extrabold text-[#263238] tracking-tight leading-[1.12]">
+            <h1 className="gsap-hero-title text-3xl sm:text-4xl lg:text-4xl xl:text-5xl font-extrabold text-[#263238] tracking-tight leading-[1.12]">
               Empowering Communities,{' '}
               <span className="bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 bg-clip-text text-transparent relative inline-block underline decoration-amber-400/40 underline-offset-8">
                 Transforming Lives
@@ -96,35 +96,35 @@ export default function PrayasDeepIntro() {
             </h1>
 
             {/* 3. Narrative Copy */}
-            <div className="gsap-hero-desc space-y-3 text-sm sm:text-base lg:text-base text-gray-600 leading-relaxed font-sans font-normal">
+            <div className="gsap-hero-desc space-y-3 text-sm sm:text-base text-gray-600 leading-relaxed font-sans font-normal">
               <p>
                 Founded in 2001, <strong className="text-[#263238] font-bold">Prayas Samaj Sevi Sanstha</strong> is a premier multi-disciplinary social welfare organization. We operate 100% directly at the grassroots level across rural development, women empowerment, free healthcare, environmental conservation, and education.
               </p>
             </div>
 
             {/* 4. Glass Metrics Bar */}
-            <div className="pt-1 grid grid-cols-3 gap-3">
-              <div className="gsap-hero-metrics p-3 sm:p-3.5 rounded-2xl bg-white/90 backdrop-blur-md border border-gray-200/80 shadow-xs text-center">
+            <div className="grid grid-cols-3 gap-3">
+              <div className="gsap-hero-metrics p-3 rounded-2xl bg-white/90 backdrop-blur-md border border-gray-200/80 shadow-xs text-center">
                 <span className="block text-xl sm:text-2xl font-extrabold text-[#263238]">20+ Yrs</span>
                 <span className="text-[10px] sm:text-xs text-gray-500 font-mono font-bold uppercase">Legacy</span>
               </div>
 
-              <div className="gsap-hero-metrics p-3 sm:p-3.5 rounded-2xl bg-white/90 backdrop-blur-md border border-gray-200/80 shadow-xs text-center">
+              <div className="gsap-hero-metrics p-3 rounded-2xl bg-white/90 backdrop-blur-md border border-gray-200/80 shadow-xs text-center">
                 <span className="block text-xl sm:text-2xl font-extrabold text-amber-600">25,000+</span>
                 <span className="text-[10px] sm:text-xs text-gray-500 font-mono font-bold uppercase">Lives Touched</span>
               </div>
 
-              <div className="gsap-hero-metrics p-3 sm:p-3.5 rounded-2xl bg-white/90 backdrop-blur-md border border-gray-200/80 shadow-xs text-center">
+              <div className="gsap-hero-metrics p-3 rounded-2xl bg-white/90 backdrop-blur-md border border-gray-200/80 shadow-xs text-center">
                 <span className="block text-xl sm:text-2xl font-extrabold text-[#263238]">50+</span>
                 <span className="text-[10px] sm:text-xs text-gray-500 font-mono font-bold uppercase">Villages</span>
               </div>
             </div>
 
             {/* 5. CTA Action Buttons */}
-            <div className="gsap-hero-ctas pt-2 flex flex-wrap items-center gap-3.5">
+            <div className="gsap-hero-ctas flex flex-wrap items-center gap-3">
               <button
                 onClick={() => navigate('/donate')}
-                className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full text-xs sm:text-sm font-extrabold bg-[#F5B800] hover:bg-[#E5AA00] text-[#263238] shadow-lg shadow-amber-500/20 transition-all cursor-pointer border border-amber-400/40 hover:scale-105 active:scale-95"
+                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-xs sm:text-sm font-extrabold bg-[#F5B800] hover:bg-[#E5AA00] text-[#263238] shadow-lg shadow-amber-500/20 transition-all cursor-pointer border border-amber-400/40 hover:scale-105 active:scale-95"
               >
                 <Heart size={16} className="fill-current text-[#263238]" />
                 <span>Support Our Cause</span>
@@ -133,7 +133,7 @@ export default function PrayasDeepIntro() {
 
               <button
                 onClick={() => navigate('/about')}
-                className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full text-xs sm:text-sm font-extrabold bg-white/90 backdrop-blur-md text-[#263238] hover:bg-gray-50 border border-gray-200/90 hover:border-gray-300 shadow-xs hover:shadow-md transition-all cursor-pointer"
+                className="inline-flex items-center gap-2.5 px-5.5 py-3 rounded-full text-xs sm:text-sm font-extrabold bg-white/90 backdrop-blur-md text-[#263238] hover:bg-gray-50 border border-gray-200/90 hover:border-gray-300 shadow-xs hover:shadow-md transition-all cursor-pointer"
               >
                 <FileText size={16} />
                 <span>Read Organization Profile</span>
