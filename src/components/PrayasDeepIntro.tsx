@@ -59,7 +59,7 @@ export default function PrayasDeepIntro() {
   return (
     <section
       ref={heroRef}
-      className="relative w-full min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50 text-[#263238] flex flex-col justify-center pt-0 pb-8 sm:pb-10 lg:pb-12 px-4 sm:px-6 lg:px-12 select-none font-sans overflow-hidden border-b border-gray-200/80"
+      className="relative w-full min-h-screen bg-white text-[#263238] flex flex-col justify-center pt-0 pb-8 sm:pb-10 lg:pb-12 px-4 sm:px-6 lg:px-12 select-none font-sans overflow-hidden"
       style={{ paddingTop: 'calc(var(--navbar-height, 68px) + 1rem)' }}
     >
       {/* ─── Ambient Awwwards Glowing Light Spheres ─── */}
