@@ -1,8 +1,7 @@
-// src/pages/Donate.tsx
 import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { motion } from 'framer-motion'  // Fixed import
-import { Heart, CreditCard, Smartphone, Building2, IndianRupee, Gift, Loader2, Banknote, Copy, Check, QrCode, ChevronDown, ChevronUp } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { Heart, CreditCard, Smartphone, Building2, IndianRupee, Gift, Loader2, Copy, Check, QrCode, ChevronDown, ChevronUp, BookOpen, Stethoscope, Users, Trees, Utensils, Sparkles } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 const DONATION_AMOUNTS = [
@@ -13,56 +12,48 @@ const DONATION_AMOUNTS = [
   { value: 10000, label: '₹10,000' },
 ]
 
-// Mapping for cause display with demo images
+// Mapping for causes
 const CAUSE_MAP: Record<string, { title: string; description: string; image: string }> = {
-  food: { 
-    title: 'Food Security', 
-    description: 'Provide meals to families in need',
-    image: '/P1039322.JPG'
-  },
-  education: { 
-    title: 'Education', 
-    description: 'Support quality education for children',
+  education: {
+    title: 'Child Education & Sanskarshala',
+    description: 'Support quality education, books, uniforms, and computer labs for rural children',
     image: '/P1039409.JPG'
   },
-  health: { 
-    title: 'Healthcare', 
-    description: 'Fund medical care and health camps',
+  health: {
+    title: 'Free Healthcare & Medical Aid',
+    description: 'Fund rural medical checkups, free medicines, and disability support',
     image: '/healthcaret.jpg'
   },
-  environment: { 
-    title: 'Environment', 
-    description: 'Help protect our planet',
+  women: {
+    title: 'Women Empowerment (Sabji Wali Didi)',
+    description: 'Provide sewing machines, micro-business loans, and skill development',
+    image: '/WOMEN.jpeg'
+  },
+  environment: {
+    title: 'Kargil Vatika & Reforestation',
+    description: 'Plant native trees to build living memorial forests and clean air reserves',
     image: '/TREEGROW.jpg'
   },
-  shelter: { 
-    title: 'Shelter & Housing', 
-    description: 'Provide safe homes for the homeless',
-    image: '/InShot_20260721_094914841.png'
-  },
-  water: { 
-    title: 'Clean Water', 
-    description: 'Ensure access to safe drinking water',
-    image: '/education1.jpeg'
-  },
-  animals: { 
-    title: 'Animal Welfare', 
-    description: 'Care for stray and abandoned animals',
+  food: {
+    title: 'Child Nutrition & Daily Meals',
+    description: 'Provide nutritious daily lunches to eliminate child hunger in slums',
     image: '/CHILDRENGROUP.jpg'
   },
-  community: { 
-    title: 'Community Support', 
-    description: 'Empower local communities',
+  community: {
+    title: 'Community & Village Development',
+    description: 'Direct support for village drinking water wells and emergency relief',
     image: '/CSR.jpeg'
   },
 }
 
 export default function Donate() {
   const { t } = useTranslation()
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const causeParam = searchParams.get('cause') || ''
-  const cause = CAUSE_MAP[causeParam] || null
-
+  
+  const [selectedCauseKey, setSelectedCauseKey] = useState<string>(
+    CAUSE_MAP[causeParam] ? causeParam : ''
+  )
   const [selectedAmount, setSelectedAmount] = useState<number | null>(1000)
   const [customAmount, setCustomAmount] = useState('')
   const [paymentMethod, setPaymentMethod] = useState('upi')
@@ -71,7 +62,17 @@ export default function Donate() {
   const [qrCopied, setQrCopied] = useState(false)
   const [showQR, setShowQR] = useState(false)
 
+  const activeCause = selectedCauseKey ? CAUSE_MAP[selectedCauseKey] : null
   const amount = customAmount ? parseInt(customAmount) : selectedAmount
+
+  const handleCauseSelect = (key: string) => {
+    setSelectedCauseKey(key)
+    if (key) {
+      setSearchParams({ cause: key }, { replace: true })
+    } else {
+      setSearchParams({}, { replace: true })
+    }
+  }
 
   const handleDonate = (e: React.FormEvent) => {
     e.preventDefault()
@@ -83,10 +84,10 @@ export default function Donate() {
     }
 
     setLoading(true)
-    
-    // Updated UPI ID
-    const upiUrl = `upi://pay?pa=8818882178.1@hdfc&pn=Prayas%20Samaj%20Sevi%20Sanstha&am=${amount}&cu=INR&tn=Donation%20to%20Prayas%20NGO`
-    
+
+    const causeName = activeCause ? activeCause.title : 'General Welfare'
+    const upiUrl = `upi://pay?pa=8818882178.1@hdfc&pn=Prayas%20Samaj%20Sevi%20Sanstha&am=${amount}&cu=INR&tn=Donation%20for%20${encodeURIComponent(causeName)}`
+
     window.location.href = upiUrl
     setTimeout(() => setLoading(false), 5000)
   }
@@ -103,38 +104,77 @@ export default function Donate() {
     setTimeout(() => setQrCopied(false), 2000)
   }
 
-  const svgFallback = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"%3E%3Crect width="400" height="300" fill="%23263238"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="20" fill="%23FFF314" font-weight="bold"%3EPrayas NGO Cause%3C/text%3E%3C/svg%3E';
+  const svgFallback = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"%3E%3Crect width="400" height="300" fill="%23263238"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="20" fill="%23FFFFFF" font-weight="bold"%3EPrayas NGO Cause%3C/text%3E%3C/svg%3E'
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8" style={{ position: 'relative', zIndex: 1 }}>
+    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 pt-28 sm:pt-36" style={{ position: 'relative', zIndex: 1 }}>
       <div className="max-w-3xl mx-auto">
-        {/* Header */}
+        
+        {/* ─── Header ─── */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#FFF314]/10 mb-4">
-            <Heart className="w-8 h-8 text-[#FFF314] fill-[#FFF314]" />
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-600/10 mb-4">
+            <Heart className="w-8 h-8 text-red-600 fill-red-600" />
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-[#263238]">
-            {cause ? `${t('donate.header.donateFor', 'Donate for')} ${cause.title}` : t('donate.header.title', 'Make a Donation')}
+            {activeCause ? `${t('donate.header.donateFor', 'Donate for')} ${activeCause.title}` : t('donate.header.title', 'Make a Donation')}
           </h1>
-          {cause && (
+          
+          {activeCause ? (
             <>
-              <p className="text-[#263238]/70 text-sm mt-1">{cause.description}</p>
-              <div className="mt-3 max-w-xs mx-auto rounded-xl overflow-hidden shadow-md border border-[#FFF314]/20">
-                <img 
-                  src={cause.image} 
-                  alt={cause.title} 
+              <p className="text-[#263238]/70 text-sm mt-1">{activeCause.description}</p>
+              <div className="mt-3 max-w-xs mx-auto rounded-xl overflow-hidden shadow-md border border-gray-200">
+                <img
+                  src={activeCause.image}
+                  alt={activeCause.title}
                   className="w-full h-48 object-cover"
                   onError={(e) => (e.currentTarget.src = svgFallback)}
                 />
               </div>
             </>
+          ) : (
+            <p className="text-[#263238]/60 mt-2 max-w-md mx-auto">
+              {t('donate.header.subtitle', 'Your support empowers children, families, and communities to build a brighter future.')}
+            </p>
           )}
-          <p className="text-[#263238]/60 mt-2 max-w-md mx-auto">
-            {t('donate.header.subtitle', 'Your support empowers children, families, and communities to build a brighter future.')}
-          </p>
         </div>
 
-        {/* Donation Form */}
+        {/* ─── SELECT CAUSE SECTION ─── */}
+        <div className="mb-6 bg-white rounded-2xl p-5 shadow-sm border border-gray-200/90 space-y-3">
+          <label className="text-xs font-mono font-bold uppercase tracking-wider text-gray-500 block text-center">
+            Select A Specific Cause To Direct Your Donation:
+          </label>
+
+          <div className="flex flex-wrap justify-center gap-2">
+            <button
+              type="button"
+              onClick={() => handleCauseSelect('')}
+              className={`py-2 px-3.5 rounded-full text-xs font-bold transition-all cursor-pointer border ${
+                !selectedCauseKey
+                  ? 'bg-red-600 text-white border-red-600 shadow-sm'
+                  : 'bg-gray-50 text-[#263238] border-gray-200 hover:border-red-200'
+              }`}
+            >
+              General Welfare Fund
+            </button>
+
+            {Object.entries(CAUSE_MAP).map(([key, item]) => (
+              <button
+                key={key}
+                type="button"
+                onClick={() => handleCauseSelect(key)}
+                className={`py-2 px-3.5 rounded-full text-xs font-bold transition-all cursor-pointer border ${
+                  selectedCauseKey === key
+                    ? 'bg-red-600 text-white border-red-600 shadow-sm'
+                    : 'bg-gray-50 text-[#263238] border-gray-200 hover:border-red-200'
+                }`}
+              >
+                {item.title}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* ─── ORIGINAL DONATION FORM FIELDS & FLOW PRESERVED ─── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -142,10 +182,11 @@ export default function Donate() {
           className="bg-white rounded-2xl shadow-lg p-6 sm:p-8"
         >
           <form onSubmit={handleDonate} className="space-y-6">
+            
             {/* Amount Selection */}
             <div>
               <label className="flex items-center gap-2 text-sm font-medium text-[#263238] mb-3">
-                <IndianRupee className="w-4 h-4 text-[#FFF314]" />
+                <IndianRupee className="w-4 h-4 text-red-600" />
                 {t('donate.form.selectAmount', 'Select Amount')}
               </label>
               <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mb-3">
@@ -159,8 +200,8 @@ export default function Donate() {
                     }}
                     className={`py-2.5 px-3 rounded-lg text-sm font-medium transition-all cursor-pointer ${
                       selectedAmount === amt.value && !customAmount
-                        ? 'bg-[#FFF314] text-[#263238] shadow-lg shadow-[#FFF314]/20'
-                        : 'bg-gray-100 text-[#263238] hover:bg-[#FFF314]/10'
+                        ? 'bg-red-600 text-white shadow-md'
+                        : 'bg-gray-100 text-[#263238] hover:bg-red-50'
                     }`}
                   >
                     {amt.label}
@@ -177,7 +218,7 @@ export default function Donate() {
                     setCustomAmount(e.target.value)
                     setSelectedAmount(null)
                   }}
-                  className="w-full pl-10 pr-4 py-2.5 bg-white border border-[#FFF314]/20 rounded-lg focus:outline-none focus:border-[#FFF314] focus:ring-2 focus:ring-[#FFF314]/10 transition-all text-[#263238] placeholder:text-[#263238]/40"
+                  className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-600/10 transition-all text-[#263238] placeholder:text-[#263238]/40"
                 />
               </div>
             </div>
@@ -185,7 +226,7 @@ export default function Donate() {
             {/* Payment Method */}
             <div>
               <label className="flex items-center gap-2 text-sm font-medium text-[#263238] mb-3">
-                <Smartphone className="w-4 h-4 text-[#FFF314]" />
+                <Smartphone className="w-4 h-4 text-red-600" />
                 {t('donate.form.paymentMethod', 'Payment Method')}
               </label>
               <div className="grid grid-cols-3 gap-2">
@@ -201,10 +242,10 @@ export default function Donate() {
                     onClick={() => setPaymentMethod(method.id)}
                     className={`flex flex-col items-center gap-1.5 py-3 px-2 rounded-lg transition-all cursor-pointer ${
                       paymentMethod === method.id
-                        ? 'bg-[#FFF314] text-[#263238] shadow-lg shadow-[#FFF314]/20'
+                        ? 'bg-red-600 text-white shadow-md'
                         : method.disabled
                         ? 'bg-gray-100 text-gray-400 cursor-not-allowed opacity-60'
-                        : 'bg-gray-100 text-[#263238] hover:bg-[#FFF314]/10'
+                        : 'bg-gray-100 text-[#263238] hover:bg-red-50'
                     }`}
                   >
                     <method.icon className="w-5 h-5" />
@@ -216,17 +257,17 @@ export default function Donate() {
             </div>
 
             {/* Impact Message */}
-            <div className="bg-[#FFF314]/5 rounded-lg p-4 flex items-start gap-3 border border-[#FFF314]/10">
-              <Gift className="w-5 h-5 text-[#FFF314] mt-0.5" />
+            <div className="bg-red-600/5 rounded-lg p-4 flex items-start gap-3 border border-red-600/10">
+              <Gift className="w-5 h-5 text-red-600 mt-0.5" />
               <div>
                 <p className="text-sm font-medium text-[#263238]">{t('donate.impact.title', 'Your Impact')}</p>
-                <p className="text-xs text-[#263238]/60">
+                <p className="text-xs text-[#263238]/70">
                   {amount && amount >= 5000
                     ? t('donate.impact.high', 'Your donation can educate 5 children for a month')
                     : amount && amount >= 1000
                     ? t('donate.impact.mid', 'Your donation can provide meals to 50 people')
                     : t('donate.impact.low', 'Every contribution makes a difference')}
-                  {cause && ` ${t('donate.impact.for', 'for')} ${cause.title}`}
+                  {activeCause && ` ${t('donate.impact.for', 'for')} ${activeCause.title}`}
                 </p>
               </div>
             </div>
@@ -235,7 +276,7 @@ export default function Donate() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3.5 bg-[#FFF314] text-[#263238] rounded-lg font-bold text-lg hover:bg-[#FFF314]/90 transition-all shadow-lg shadow-[#FFF314]/20 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70"
+              className="w-full py-3.5 bg-red-600 hover:bg-red-700 text-white rounded-lg font-bold text-lg transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70"
             >
               {loading ? (
                 <>
@@ -250,35 +291,28 @@ export default function Donate() {
               )}
             </button>
 
-            <p className="text-center text-xs text-[#263238]/40">
+            <p className="text-center text-xs text-[#263238]/60">
               {t('donate.form.upiNote', 'You will be redirected to your UPI app to complete the payment.')}
             </p>
           </form>
         </motion.div>
 
-        {/* Bank Transfer Details with HIGHLIGHTED QR Code */}
+        {/* ─── ORIGINAL BANK TRANSFER DETAILS WITH HIGHLIGHTED QR CODE ─── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
-          className="mt-8 bg-white rounded-2xl shadow-lg p-6 sm:p-8 border-2 border-[#FFF314]/30 relative overflow-hidden"
+          className="mt-8 bg-white rounded-2xl shadow-lg p-6 sm:p-8 border border-gray-200 relative overflow-hidden"
         >
-          {/* Highlighted Banner */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#FFF314] via-[#FFD700] to-[#FFF314]"></div>
-          
-          {/* Glowing Effect */}
-          <div className="absolute -top-20 -right-20 w-40 h-40 bg-[#FFF314]/5 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-[#FFF314]/5 rounded-full blur-3xl"></div>
-
           <div className="relative z-10">
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-[#FFF314]/10 rounded-lg">
-                <QrCode className="w-6 h-6 text-[#263238]" />
+              <div className="p-2 bg-red-600/10 rounded-lg">
+                <QrCode className="w-6 h-6 text-red-600" />
               </div>
               <div>
                 <h2 className="text-lg font-bold text-[#263238] flex items-center gap-2">
                   {t('donate.bank.title', 'Direct Bank Transfer')}
-                  <span className="text-xs bg-[#FFF314] text-[#263238] px-2 py-0.5 rounded-full font-medium animate-pulse">
+                  <span className="text-xs bg-red-600 text-white px-2 py-0.5 rounded-full font-medium">
                     QR Available
                   </span>
                 </h2>
@@ -287,46 +321,43 @@ export default function Donate() {
                 </p>
               </div>
             </div>
-            
-            {/* Highlighted QR Code Section */}
-            <div className="mb-6 bg-gradient-to-r from-[#FFF314]/5 to-[#FFF314]/10 rounded-xl p-4 border-2 border-[#FFF314]/30 shadow-lg shadow-[#FFF314]/10">
+
+            {/* QR Code Section */}
+            <div className="mb-6 bg-gray-50 rounded-xl p-4 border border-gray-200 shadow-sm">
               <button
                 onClick={() => setShowQR(!showQR)}
-                className="w-full flex items-center justify-between gap-2 text-sm font-semibold text-[#263238] hover:text-[#263238]/80 transition-colors group"
+                className="w-full flex items-center justify-between gap-2 text-sm font-semibold text-[#263238] hover:text-red-600 transition-colors group cursor-pointer"
               >
                 <div className="flex items-center gap-2">
-                  <div className="p-1.5 bg-[#FFF314] rounded-lg">
-                    <QrCode className="w-5 h-5 text-[#263238]" />
+                  <div className="p-1.5 bg-red-600/10 rounded-lg">
+                    <QrCode className="w-5 h-5 text-red-600" />
                   </div>
                   <span className="text-base">
                     {showQR ? 'Hide Bank QR Code' : '📱 Scan to Pay with Bank QR'}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs bg-[#FFF314] text-[#263238] px-2 py-1 rounded-full font-medium animate-bounce">
-                    NEW
-                  </span>
                   {showQR ? (
-                    <ChevronUp className="w-5 h-5 text-[#263238]/60 group-hover:text-[#263238] transition" />
+                    <ChevronUp className="w-5 h-5 text-[#263238]/60 group-hover:text-red-600 transition" />
                   ) : (
-                    <ChevronDown className="w-5 h-5 text-[#263238]/60 group-hover:text-[#263238] transition" />
+                    <ChevronDown className="w-5 h-5 text-[#263238]/60 group-hover:text-red-600 transition" />
                   )}
                 </div>
               </button>
-              
+
               {showQR && (
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="mt-4 pt-4 border-t border-[#FFF314]/20"
+                  className="mt-4 pt-4 border-t border-gray-200"
                 >
                   <div className="flex flex-col items-center">
-                    <div className="relative group bg-white p-4 rounded-xl shadow-lg">
-                      <img 
-                        src="/BANKQR.jpeg" 
-                        alt="Bank QR Code for UPI Payment" 
+                    <div className="relative group bg-white p-4 rounded-xl shadow-lg border border-gray-200">
+                      <img
+                        src="/BANKQR.jpeg"
+                        alt="Bank QR Code for UPI Payment"
                         className="w-56 h-56 object-contain rounded-lg"
                         onError={(e) => {
                           e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"%3E%3Crect width="200" height="200" fill="%23f3f4f6"/%3E%3Ctext x="50" y="100" font-family="Arial" font-size="16" fill="%236b7280"%3EQR Code%3C/text%3E%3Ctext x="30" y="130" font-family="Arial" font-size="14" fill="%236b7280"%3ENot Available%3C/text%3E%3C/svg%3E';
@@ -334,24 +365,18 @@ export default function Donate() {
                       />
                       <button
                         onClick={copyQRToClipboard}
-                        className="absolute top-2 right-2 bg-white/90 p-2 rounded-full shadow-lg hover:bg-white transition-colors hover:scale-110 transform"
+                        className="absolute top-2 right-2 bg-white/90 p-2 rounded-full shadow-lg hover:bg-white transition-colors cursor-pointer"
                         title="Copy QR URL"
                       >
                         {qrCopied ? (
-                          <Check className="w-4 h-4 text-green-600" />
+                          <Check className="w-4 h-4 text-emerald-600" />
                         ) : (
                           <Copy className="w-4 h-4 text-[#263238]" />
                         )}
                       </button>
                     </div>
-                    <div className="mt-3 flex items-center gap-2">
-                      <div className="flex items-center gap-1 text-xs text-[#263238]/60">
-                        <span className="inline-block w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                        Scan with any UPI app
-                      </div>
-                    </div>
-                    <p className="text-xs text-[#263238]/40 mt-1">
-                      UPI ID: 8818882178.1@hdfc
+                    <p className="text-xs font-bold text-[#263238] mt-3">
+                      UPI VPA: <span className="text-red-600 font-mono">8818882178.1@hdfc</span>
                     </p>
                   </div>
                 </motion.div>
@@ -360,51 +385,53 @@ export default function Donate() {
 
             {/* Bank Account Details */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-              <div className="bg-gray-50 p-3 rounded-lg">
+              <div className="bg-gray-50 p-3 rounded-lg border border-gray-200/80">
                 <span className="text-[#263238]/50 text-xs">Bank Name</span>
                 <p className="font-semibold text-[#263238]">HDFC Bank</p>
               </div>
-              <div className="bg-gray-50 p-3 rounded-lg">
+              <div className="bg-gray-50 p-3 rounded-lg border border-gray-200/80">
                 <span className="text-[#263238]/50 text-xs">IFSC Code</span>
                 <div className="flex items-center justify-between">
                   <p className="font-semibold text-[#263238]">HDFC0003886</p>
-                  <button 
+                  <button
                     onClick={() => copyToClipboard('HDFC0003886')}
-                    className="text-[#263238]/40 hover:text-[#263238] transition"
+                    className="text-red-600 hover:text-red-700 transition cursor-pointer"
                   >
-                    {copied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
+                    {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
                   </button>
                 </div>
               </div>
-              <div className="bg-gray-50 p-3 rounded-lg md:col-span-2">
+              <div className="bg-gray-50 p-3 rounded-lg border border-gray-200/80 md:col-span-2">
                 <span className="text-[#263238]/50 text-xs">Account Number</span>
                 <div className="flex items-center justify-between">
                   <p className="font-semibold text-[#263238]">50200118537529</p>
-                  <button 
+                  <button
                     onClick={() => copyToClipboard('50200118537529')}
-                    className="text-[#263238]/40 hover:text-[#263238] transition"
+                    className="text-red-600 hover:text-red-700 transition cursor-pointer"
                   >
-                    {copied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
+                    {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
                   </button>
                 </div>
               </div>
-              <div className="bg-gray-50 p-3 rounded-lg md:col-span-2">
+              <div className="bg-gray-50 p-3 rounded-lg border border-gray-200/80 md:col-span-2">
                 <span className="text-[#263238]/50 text-xs">Branch Address</span>
                 <p className="font-semibold text-[#263238] text-sm">
                   SAHAJ RESIDENCY, SCHEME NO.103, KESARBAGH, Indore- 452009, Madhya Pradesh, India
                 </p>
               </div>
             </div>
-            <div className="mt-4 text-xs text-[#263238]/40 bg-[#FFF314]/5 p-3 rounded-lg border border-[#FFF314]/10">
-              <p>💡 After transferring, please email us at <strong className="text-[#263238]">prayas1samajiksevisanstha@gmail.com</strong> with your transaction details and name so we can acknowledge your contribution.</p>
+
+            <div className="mt-4 text-xs text-[#263238]/70 bg-gray-50 p-3 rounded-lg border border-gray-200">
+              <p>💡 After transferring, please email us at <strong className="text-[#263238]">prayas1samajiksevisanstha@gmail.com</strong> with your transaction details and name so we can send an official 80G receipt.</p>
             </div>
           </div>
         </motion.div>
 
-        <div className="mt-8 text-center text-sm text-[#263238]/40">
+        <div className="mt-8 text-center text-sm text-[#263238]/60">
           <p>100% {t('donate.footer.p1', 'of your donation goes directly to our programs.')}</p>
           <p className="mt-1">{t('donate.footer.p2', 'Prayas Samaj Sevi Sanstha is a registered NGO.')}</p>
         </div>
+
       </div>
     </div>
   )

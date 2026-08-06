@@ -335,17 +335,36 @@ export default function Navbar() {
               })}
             </nav>
 
-            {/* Right side actions */}
-            <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0 ml-auto lg:ml-0">
+            {/* Right side actions - Sequence: 1. Donate Now (Yellow BG), 2. Volunteer, 3. Language (most right) */}
+            <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0 ml-auto lg:ml-0">
+              {/* 1. DONATE NOW BUTTON (LIGHT YELLOW BG) */}
+              <Link
+                to="/donate"
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 text-sm font-extrabold rounded-full bg-[#FFF314] hover:bg-[#FBE000] text-[#263238] shadow-sm hover:shadow-md transition-all hover:scale-105 cursor-pointer border border-[#E6DB00] whitespace-nowrap"
+              >
+                <Heart className="w-4 h-4 text-[#263238] fill-current" />
+                <span>{t('nav.donateNow', 'Donate Now')}</span>
+              </Link>
+
+              {/* 2. VOLUNTEER BUTTON */}
+              <Link
+                to="/volunteer"
+                className={`hidden sm:inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 text-sm font-medium rounded-full border transition-all hover:scale-105 cursor-pointer ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-amber-500 hover:text-amber-800`}
+              >
+                <UserPlus className="w-4 h-4 text-amber-700" />
+                <span className="hidden md:inline">{volunteerText}</span>
+              </Link>
+
+              {/* 3. LANGUAGE SELECTOR (AT THE MOST RIGHT) */}
               <div className="relative z-20">
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     setLangDropdownOpen(!langDropdownOpen);
                   }}
-                  className={`flex items-center gap-1 px-2.5 sm:px-3 py-1.5 text-sm font-medium rounded-full border transition-all hover:scale-105 cursor-pointer ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
+                  className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 text-sm font-medium rounded-full border transition-all hover:scale-105 cursor-pointer ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-amber-500 hover:text-amber-800`}
                 >
-                  <Globe className="w-4 h-4" />
+                  <Globe className="w-4 h-4 text-amber-700" />
                   <span className="hidden md:inline">{currentLangLabel}</span>
                 </button>
                 <AnimatePresence>
@@ -362,8 +381,8 @@ export default function Navbar() {
                           key={lang.code}
                           onClick={() => changeLanguage(lang.code)}
                           className={`block w-full text-left px-5 py-2.5 text-sm font-medium transition-colors cursor-pointer ${i18n.language === lang.code
-                            ? 'text-red-600 bg-red-50 font-semibold'
-                            : 'text-gray-800 hover:bg-red-50 hover:text-red-600'
+                            ? 'text-amber-800 bg-amber-500/10 font-semibold'
+                            : 'text-gray-800 hover:bg-amber-50 hover:text-amber-800'
                             }`}
                         >
                           {lang.label}
@@ -373,34 +392,6 @@ export default function Navbar() {
                   )}
                 </AnimatePresence>
               </div>
-
-              <Link
-                to="/volunteer"
-                className={`hidden sm:inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 text-sm font-medium rounded-full border transition-all hover:scale-105 cursor-pointer ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
-              >
-                <UserPlus className="w-4 h-4" />
-                <span className="hidden md:inline">{volunteerText}</span>
-              </Link>
-
-              {showAuthLink && !loading && (
-                <Link
-                  to={isAuthenticated ? "/profile" : "/auth"}
-                  className={`hidden sm:inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 text-sm font-medium rounded-full border transition-all hover:scale-105 ${borderColor} ${textColor} hover:bg-[#263238]/5 hover:border-red-600 hover:text-red-600`}
-                >
-                  <User className="w-4 h-4" />
-                  <span className="hidden md:inline">
-                    {isAuthenticated ? safeT('nav.profile') : safeT('nav.signin')}
-                  </span>
-                </Link>
-              )}
-
-              <Link
-                to="/donate"
-                className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 text-sm font-bold rounded-full bg-[#FFF314] hover:bg-[#FBE000] text-[#263238] shadow-sm hover:shadow transition-all hover:scale-105 cursor-pointer border border-[#E6DB00] whitespace-nowrap"
-              >
-                <Heart className="w-4 h-4 text-red-600 fill-red-600" />
-                <span>{t('nav.donateNow', 'Donate Now')}</span>
-              </Link>
 
               <button
                 className={`lg:hidden p-2.5 -m-1 rounded-full transition-colors ${textColor} ${textColorHover} ${bgButton}`}

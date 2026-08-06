@@ -1,62 +1,40 @@
-// src/pages/Home.tsx
-import { useTranslation } from 'react-i18next'
-import HeroSection from '../components/HeroSection'
-import AboutUsSection from '../components/AboutUsSection'
-import HelpChildrenSection from '../components/HelpChildrenSection'
-import FocusAreas from '../components/FocusAreas'
-import OurWorkSection from '../components/OurWorkSection'
-import ImpactCategories from '../components/ImpactCategories'
-import ImpactCounter from '../components/ImpactCounter'
-import TrustFlow from '../components/TrustFlow'
-import FeaturedProjects from '../components/FeaturedProjects'
-import TeamPreview from '../components/TeamPreview'
-import GalleryPreview from '../components/GalleryPreview'
-import CTASections from '../components/CTASections'
-import ImageCarousel from '../components/ImageCarousel'
-import CollaboratorsSection from '../components/CollaboratorsSection'
+import PrayasDeepIntro from '../components/PrayasDeepIntro';
+import HeroSection from '../components/HeroSection';
+import ImpactCounter from '../components/ImpactCounter';
+import FocusAreas from '../components/FocusAreas';
+import TrustFlow from '../components/TrustFlow';
+import FeaturedProjects from '../components/FeaturedProjects';
+import GalleryPreview from '../components/GalleryPreview';
+import CollaboratorsSection from '../components/CollaboratorsSection';
 
 export default function Home() {
-  const { t } = useTranslation()
-
   return (
-    <div className="w-full">
+    <div className="w-full bg-[#FAF9F6] text-[#263238] overflow-x-hidden font-sans">
+      
+      {/* ─── SECTION 1: Master Combined Hero Intro & What Is Prayas Showcase ─── */}
+      <PrayasDeepIntro />
+
+      {/* ─── SECTION 2: Interactive Showcase Slider (Photo Spray Frame) ─── */}
       <HeroSection />
 
-      {/* About Us section - preview of first card from About Us page */}
-      <AboutUsSection />
-
-      {/* How would you like to create change section */}
-      <HelpChildrenSection />
-
-      {/* Focus Areas – 5 segments (preview of "What We Do") */}
-      <FocusAreas />
-
-      {/* Impact Categories – donation carousel */}
-      <ImpactCategories />
-
-      {/* Impact Numbers */}
+      {/* ─── SECTION 3: Ground Impact Numbers & Real Metrics ─── */}
       <ImpactCounter />
 
-      {/* Trust Flow – approach with GSAP animations */}
+      {/* ─── SECTION 4: 5 Pillar Bento Showcase (What We Do) ─── */}
+      <FocusAreas />
+
+      {/* ─── SECTION 5: Systemic Methodology (GSAP Pinned Horizontal Scroll) ─── */}
       <TrustFlow />
 
-      {/* Featured Projects & Events */}
+      {/* ─── SECTION 6: Featured Projects Deck ─── */}
       <FeaturedProjects />
 
-      {/* Team Preview */}
-      <TeamPreview />
-
-      {/* Gallery Preview */}
+      {/* ─── SECTION 7: Community Gallery Moments ─── */}
       <GalleryPreview />
 
-      {/* Donate / Volunteer / Contact combined section */}
-      <CTASections />
-
-      {/* Image Carousel – Accreditations */}
-      <ImageCarousel />
-
-      {/* Our Collaborators Section – Auto-moving right partners (just before footer) */}
+      {/* ─── SECTION 8: Collaborators & Partners Marquee ─── */}
       <CollaboratorsSection />
+
     </div>
-  )
+  );
 }

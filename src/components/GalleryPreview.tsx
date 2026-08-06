@@ -102,7 +102,7 @@ export default function GalleryPreview() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <span className="text-red-600 font-mono text-xs font-bold uppercase tracking-widest bg-red-50 px-3 py-1 rounded-full border border-red-100">
+          <span className="text-amber-800 font-mono text-xs font-bold uppercase tracking-widest bg-amber-500/10 px-3.5 py-1.5 rounded-full border border-amber-500/20">
             Visual Memories & Impact
           </span>
           <h2
@@ -111,7 +111,7 @@ export default function GalleryPreview() {
           >
             {t('gallery.title', 'Our Impact Gallery')}
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-red-600 to-red-400 mx-auto mt-4 rounded-full shadow-xs" />
+          <div className="w-20 h-1 bg-gradient-to-r from-amber-500 to-yellow-400 mx-auto mt-4 rounded-full shadow-xs" />
         </motion.div>
 
         {/* Integrated React Bits GSAP Masonry Component */}
@@ -132,7 +132,7 @@ export default function GalleryPreview() {
         <div className="text-center mt-12">
           <Link
             to="/gallery"
-            className="inline-flex items-center gap-2 bg-[#263238] text-white hover:bg-red-600 font-bold px-8 py-3.5 rounded-full shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105"
+            className="inline-flex items-center gap-2 bg-[#263238] text-white hover:bg-[#F5B800] hover:text-[#263238] font-bold px-8 py-3.5 rounded-full shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 border border-gray-200"
           >
             <span>View Complete Photo Gallery</span>
             <ArrowRight className="w-4 h-4" />

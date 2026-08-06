@@ -166,7 +166,7 @@ export default function FocusAreas() {
                   </div>
 
                   <div className="pt-3 border-t border-white/20">
-                    <div className="w-full py-2.5 px-4 bg-white text-[#263238] font-bold rounded-xl shadow-lg hover:bg-yellow-300 transition-all duration-300 flex items-center justify-center gap-2 text-xs uppercase tracking-wider group/btn">
+                    <div className="w-full py-2.5 px-4 bg-white text-[#263238] font-bold rounded-xl shadow-lg hover:bg-red-600 hover:text-white transition-all duration-300 flex items-center justify-center gap-2 text-xs uppercase tracking-wider group/btn">
                       <span>Learn More</span>
                       <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
                     </div>
@@ -177,10 +177,10 @@ export default function FocusAreas() {
           ))}
         </div>
 
-        {/* ─── MOBILE RESPONSIVE CAROUSEL CARD (Matching Screenshot) ─── */}
+        {/* ─── MOBILE RESPONSIVE CAROUSEL CARD ─── */}
         <div className="block md:hidden px-1 py-2">
-          {/* Main Yellow Card Container */}
-          <div className="relative w-full rounded-3xl overflow-hidden bg-[#FFF314] shadow-2xl p-4 sm:p-6 pt-6">
+          {/* Main Card Container */}
+          <div className="relative w-full rounded-3xl overflow-hidden bg-white border border-gray-200 shadow-2xl p-4 sm:p-6 pt-6">
 
             {/* Top Children Header Illustration / Banner Image */}
             <div className="absolute top-0 left-0 right-0 h-36 overflow-hidden">
@@ -189,7 +189,7 @@ export default function FocusAreas() {
                 alt="Prayas Children Header"
                 className="w-full h-full object-cover object-top opacity-90"
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#FFF314]/50 to-[#FFF314]" />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/50 to-white" />
             </div>
 
             {/* Middle Card Slider Area with Arrow Buttons */}

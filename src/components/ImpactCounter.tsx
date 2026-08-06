@@ -52,24 +52,24 @@ function CounterCard({ end, suffix = '+', label, description, icon: Icon }: Coun
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
       className="gsap-impact-card bg-white rounded-3xl p-8 border border-gray-200/90 shadow-xl hover:shadow-2xl transition-all duration-300 relative overflow-hidden group flex flex-col justify-between h-full"
     >
-      {/* Top Gold & Crimson Accent Stripe */}
-      <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#D4AF37] to-[#DC2626]" />
+      {/* Top Gold Accent Stripe */}
+      <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500" />
 
       <div className="space-y-4">
         {/* Icon & Badge */}
         <div className="flex items-center justify-between">
-          <div className="w-12 h-12 rounded-2xl bg-[#DC2626]/10 border border-[#DC2626]/20 text-[#DC2626] flex items-center justify-center group-hover:bg-[#DC2626] group-hover:text-white transition-colors shadow-sm">
+          <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-800 flex items-center justify-center group-hover:bg-[#F5B800] group-hover:text-[#263238] transition-colors shadow-sm">
             <Icon className="w-6 h-6" />
           </div>
-          <span className="text-[11px] font-mono font-extrabold uppercase tracking-widest text-[#DC2626] bg-[#DC2626]/10 px-3 py-1 rounded-full">
+          <span className="text-[11px] font-mono font-extrabold uppercase tracking-widest text-amber-800 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
             REAL IMPACT
           </span>
         </div>
 
         {/* Counter Number */}
-        <div className="text-4xl sm:text-5xl font-extrabold font-mono text-[#263238] tracking-tight group-hover:text-[#DC2626] transition-colors">
+        <div className="text-4xl sm:text-5xl font-extrabold font-mono text-[#263238] tracking-tight group-hover:text-amber-800 transition-colors">
           {count.toLocaleString()}
-          <span className="text-[#DC2626]">{suffix}</span>
+          <span className="text-amber-700">{suffix}</span>
         </div>
 
         {/* Label */}
@@ -183,7 +183,7 @@ export default function ImpactCounter() {
       className="py-16 sm:py-24 bg-white text-[#263238] relative overflow-hidden select-none"
     >
       {/* ─── Ambient Glow Backdrop ─── */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-500/5 rounded-full blur-[150px] pointer-events-none -z-10" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-[150px] pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -192,7 +192,7 @@ export default function ImpactCounter() {
           <h2 className="text-3xl sm:text-5xl font-extrabold text-[#263238] tracking-tight leading-tight font-sans">
             {t('impact.header.title', 'Making a Difference Together')}
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-red-600 to-red-400 mx-auto rounded-full shadow-xs" />
+          <div className="w-20 h-1 bg-gradient-to-r from-amber-500 to-yellow-400 mx-auto rounded-full shadow-xs" />
 
 
         </div>
