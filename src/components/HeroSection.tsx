@@ -156,6 +156,7 @@ export default function HeroSection() {
   return (
     <section
       className="relative w-full lg:min-h-[calc(100vh-var(--navbar-height,68px))] bg-white text-[#263238] overflow-hidden select-none flex flex-col justify-center"
+      style={{ marginTop: 'var(--navbar-height, 0px)' }}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >

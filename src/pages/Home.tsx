@@ -11,11 +11,11 @@ export default function Home() {
   return (
     <div className="w-full bg-[#FAF9F6] text-[#263238] overflow-x-hidden font-sans">
       
-      {/* ─── SECTION 1: Master Combined Hero Intro & What Is Prayas Showcase ─── */}
-      <PrayasDeepIntro />
-
-      {/* ─── SECTION 2: Interactive Showcase Slider (Photo Spray Frame) ─── */}
+      {/* ─── SECTION 1: Interactive Showcase Slider (Photo Spray Frame) ─── */}
       <HeroSection />
+
+      {/* ─── SECTION 2: Master Combined Hero Intro & What Is Prayas Showcase ─── */}
+      <PrayasDeepIntro />
 
       {/* ─── SECTION 3: Ground Impact Numbers & Real Metrics ─── */}
       <ImpactCounter />
