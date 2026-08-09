@@ -31,8 +31,8 @@ function CounterCard({ end, suffix = '+', label, description, icon: Icon }: Coun
             { val: 0 },
             {
               val: end,
-              duration: 2,
-              ease: 'power2.out',
+              duration: 2.4,
+              ease: 'power3.out',
               onUpdate: function () {
                 setCount(Math.floor(this.targets()[0].val));
               },
@@ -50,35 +50,35 @@ function CounterCard({ end, suffix = '+', label, description, icon: Icon }: Coun
       ref={cardRef}
       whileHover={{ y: -8, scale: 1.02 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-      className="gsap-impact-card bg-white rounded-3xl p-8 border border-gray-200/90 shadow-xl hover:shadow-2xl transition-all duration-300 relative overflow-hidden group flex flex-col justify-between h-full"
+      className="gsap-impact-card bg-white rounded-3xl p-8 border border-gray-200/90 shadow-xl hover:shadow-2xl hover:border-amber-400/50 transition-all duration-300 relative overflow-hidden group flex flex-col justify-between h-full"
     >
-      {/* Top Gold Accent Stripe */}
-      <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500" />
+      {/* Top Gold Gradient Accent Stripe */}
+      <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-400" />
 
       <div className="space-y-4">
         {/* Icon & Badge */}
         <div className="flex items-center justify-between">
-          <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-800 flex items-center justify-center group-hover:bg-[#F5B800] group-hover:text-[#263238] transition-colors shadow-sm">
+          <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-800 flex items-center justify-center group-hover:bg-[#F5B800] group-hover:text-[#263238] transition-all shadow-sm">
             <Icon className="w-6 h-6" />
           </div>
-          <span className="text-[11px] font-mono font-extrabold uppercase tracking-widest text-amber-800 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
+          <span className="text-[10px] font-mono font-extrabold uppercase tracking-widest text-amber-800 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
             REAL IMPACT
           </span>
         </div>
 
-        {/* Counter Number */}
-        <div className="text-4xl sm:text-5xl font-extrabold font-mono text-[#263238] tracking-tight group-hover:text-amber-800 transition-colors">
+        {/* Premium Monospace Counter Number */}
+        <div className="text-4xl sm:text-5xl lg:text-5xl font-black font-mono tracking-tighter bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 bg-clip-text text-transparent group-hover:scale-[1.02] transition-transform origin-left">
           {count.toLocaleString()}
-          <span className="text-amber-700">{suffix}</span>
+          <span className="text-amber-500">{suffix}</span>
         </div>
 
         {/* Label */}
-        <h3 className="text-sm font-bold font-sans text-[#263238] uppercase tracking-wider">
+        <h3 className="text-sm font-extrabold font-sans text-[#263238] uppercase tracking-wider">
           {label}
         </h3>
 
         {/* Description */}
-        <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-sans">
+        <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-sans font-normal">
           {description}
         </p>
       </div>
