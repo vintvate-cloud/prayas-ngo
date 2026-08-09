@@ -235,11 +235,15 @@ export default function Environment() {
                     {sub.description}
                   </p>
 
-                  <p className="text-gray-600 text-sm sm:text-base leading-relaxed font-light">
-                    {sub.longDescription}
-                  </p>
-
-
+                  <div className="pt-2">
+                    <Link
+                      to={`/environment/learn-more/${sub.id}`}
+                      className="inline-flex items-center gap-2 bg-[#16A34A] hover:bg-[#14532D] text-white font-bold px-7 py-3 rounded-full shadow-md hover:shadow-lg transition-all text-sm cursor-pointer"
+                    >
+                      <span>Explore {sub.title} Gallery & Story</span>
+                      <ArrowUpRight className="w-4 h-4" />
+                    </Link>
+                  </div>
                 </div>
               </motion.div>
             );

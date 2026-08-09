@@ -7,6 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   ArrowLeft,
   ChevronRight,
+  ChevronLeft,
   Sparkles,
   HeartHandshake,
   Users,
@@ -50,6 +51,7 @@ export default function LearnMoreDetail() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [galleryIndex, setGalleryIndex] = useState(0);
+  const isDraggingRef = useRef(false);
 
   // GSAP animation refs
   const heroRef = useRef<HTMLDivElement>(null);
@@ -541,31 +543,27 @@ export default function LearnMoreDetail() {
           )}
         </motion.div>
 
-        {/* SECTION 4: PHOTO GALLERY */}
+        {/* SECTION 4: PHOTO GALLERY WITH SMOOTH SLIDER */}
         <motion.div
           id="gallery-section"
           initial={{ opacity: 0, x: 100 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="scroll-mt-32"
+          className="scroll-mt-32 space-y-6"
         >
-          <div className="flex items-center gap-2 mb-6">
-            <Maximize2 className="w-6 h-6" style={{ color: primaryColor }} />
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#263238]" style={{ fontFamily: 'var(--font-heading)' }}>Photo Gallery</h2>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Maximize2 className="w-6 h-6" style={{ color: primaryColor }} />
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#263238]" style={{ fontFamily: 'var(--font-heading)' }}>
+                Photo Gallery
+              </h2>
+            </div>
           </div>
-          <motion.div 
-            className="relative w-full h-[300px] sm:h-[450px] md:h-[500px] flex items-center justify-center overflow-hidden py-10 select-none touch-pan-y"
-            onPanEnd={(e, info) => {
-              const swipeThreshold = 50;
-              if (info.offset.x < -swipeThreshold) {
-                setGalleryIndex(prev => prev + 1);
-              } else if (info.offset.x > swipeThreshold) {
-                setGalleryIndex(prev => prev - 1);
-              }
-            }}
-          >
-            <AnimatePresence>
+
+          {/* Ultra-Smooth Hardware Accelerated Gallery Slider */}
+          <div className="relative w-full overflow-hidden rounded-3xl py-2 select-none">
+            <div className="relative w-full h-[340px] sm:h-[480px] md:h-[520px] flex items-center justify-center overflow-hidden">
               {[-2, -1, 0, 1, 2].map((offset) => {
                 const absoluteIndex = galleryIndex + offset;
                 const length = initiative.gallery.length;
@@ -575,44 +573,57 @@ export default function LearnMoreDetail() {
                 const imgSrc = initiative.gallery[actualIdx];
 
                 const absOffset = Math.abs(offset);
-                const translateX = offset * 60; 
-                const scale = 1 - absOffset * 0.15; 
-                const opacity = 1 - absOffset * 0.2; 
+                const translateX = offset * 56; 
+                const scale = 1 - absOffset * 0.12; 
+                const opacity = 1; 
                 const zIndex = 50 - absOffset;
+                const isCenter = offset === 0;
 
                 return (
                   <motion.div
                     key={absoluteIndex}
+                    drag={isCenter ? "x" : false}
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragElastic={0.15}
+                    onDragStart={() => {
+                      isDraggingRef.current = true;
+                    }}
+                    onDragEnd={(e, { offset: dragOffset, velocity }) => {
+                      const swipeThreshold = 25;
+                      if (dragOffset.x < -swipeThreshold || velocity.x < -120) {
+                        setGalleryIndex((prev) => prev + 1);
+                      } else if (dragOffset.x > swipeThreshold || velocity.x > 120) {
+                        setGalleryIndex((prev) => prev - 1);
+                      }
+                      setTimeout(() => {
+                        isDraggingRef.current = false;
+                      }, 120);
+                    }}
                     onClick={() => {
-                      if (offset === 0) setSelectedImage(imgSrc);
+                      if (isDraggingRef.current) return;
+                      if (isCenter) setSelectedImage(imgSrc);
                       else setGalleryIndex(absoluteIndex);
                     }}
-                    className="absolute w-[75%] sm:w-[50%] md:w-[45%] h-full rounded-2xl overflow-hidden shadow-2xl cursor-pointer"
-                    initial={{
-                      opacity: 0,
-                      x: `${offset > 0 ? (offset + 1) * 60 : (offset - 1) * 60}%`,
-                      scale: 1 - (absOffset + 1) * 0.15,
-                      zIndex: 0
-                    }}
+                    className={`absolute w-[84%] sm:w-[58%] md:w-[52%] h-full rounded-3xl overflow-hidden shadow-2xl ${
+                      isCenter
+                        ? 'cursor-grab active:cursor-grabbing border border-amber-400/50 shadow-2xl shadow-amber-500/10'
+                        : 'cursor-pointer hover:brightness-110'
+                    }`}
+                    initial={false}
                     animate={{
                       scale,
                       opacity,
                       x: `${translateX}%`,
-                      zIndex
+                      zIndex,
                     }}
-                    exit={{
-                      opacity: 0,
-                      x: `${offset > 0 ? (offset + 1) * 60 : (offset - 1) * 60}%`,
-                      scale: 1 - (absOffset + 1) * 0.15,
-                      zIndex: 0
+                    transition={{
+                      type: 'spring',
+                      stiffness: 350,
+                      damping: 30,
+                      mass: 0.8,
                     }}
-                    transition={{ duration: 1.2, ease: [0.25, 1, 0.5, 1] }} // Smooth, slow glide
-                    style={{ transformOrigin: 'center center' }}
+                    style={{ transformOrigin: 'center center', willChange: 'transform' }}
                   >
-                    {/* Subtle dark overlay on inactive images to make the active one pop more */}
-                    {absOffset > 0 && (
-                      <div className="absolute inset-0 bg-black/30 z-10 transition-opacity" />
-                    )}
                     {imgSrc.endsWith('.mp4') ? (
                       <video
                         src={imgSrc}
@@ -625,7 +636,7 @@ export default function LearnMoreDetail() {
                     ) : (
                       <img
                         src={imgSrc}
-                        alt={`Gallery ${actualIdx + 1}`}
+                        alt={`Gallery photo ${actualIdx + 1}`}
                         className="w-full h-full object-cover select-none pointer-events-none"
                         draggable={false}
                       />
@@ -633,10 +644,44 @@ export default function LearnMoreDetail() {
                   </motion.div>
                 );
               })}
-            </AnimatePresence>
-          </motion.div>
-          
+            </div>
 
+            {/* Bottom Controls Bar */}
+            <div className="flex items-center justify-between mt-4 px-2 sm:px-6">
+              <button
+                onClick={() => setGalleryIndex((prev) => prev - 1)}
+                className="p-3.5 rounded-full bg-slate-100 hover:bg-[#F5B800] hover:text-[#263238] text-slate-700 font-bold transition-all shadow-sm hover:scale-110 active:scale-95 cursor-pointer border border-slate-200"
+                aria-label="Previous photo"
+              >
+                <ChevronLeft size={20} />
+              </button>
+
+              {/* Indicator Dots */}
+              <div className="flex items-center gap-2">
+                {initiative.gallery.map((_, idx) => {
+                  const activeIdx = ((galleryIndex % initiative.gallery.length) + initiative.gallery.length) % initiative.gallery.length;
+                  return (
+                    <button
+                      key={idx}
+                      onClick={() => setGalleryIndex(idx)}
+                      className={`h-2.5 rounded-full transition-all cursor-pointer ${
+                        idx === activeIdx ? 'w-8 bg-[#F5B800]' : 'w-2.5 bg-slate-300 hover:bg-slate-400'
+                      }`}
+                      aria-label={`Go to photo ${idx + 1}`}
+                    />
+                  );
+                })}
+              </div>
+
+              <button
+                onClick={() => setGalleryIndex((prev) => prev + 1)}
+                className="p-3.5 rounded-full bg-slate-100 hover:bg-[#F5B800] hover:text-[#263238] text-slate-700 font-bold transition-all shadow-sm hover:scale-110 active:scale-95 cursor-pointer border border-slate-200"
+                aria-label="Next photo"
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
+          </div>
         </motion.div>
 
         {/* SECTION 5: FAQS */}

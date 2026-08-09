@@ -1095,8 +1095,12 @@ export const learnMoreData: Record<string, InitiativeDetail> = {
       role: "Kargil Vijay Diwas Initiative",
     },
     gallery: [
-      'https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=800&h=500&fit=crop',
       '/TREEGROW.jpg',
+      '/Tree.png',
+      '/P1039409.JPG',
+      '/CHILDRENGROUP.jpg',
+      'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1200&fit=crop',
+      'https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=1200&fit=crop',
     ],
     faqs: [
       { question: 'How many trees were planted in memory of each Kargil martyr?', answer: '10 trees were dedicated to each of the 527 brave martyrs, totaling 5,270 trees.' },
