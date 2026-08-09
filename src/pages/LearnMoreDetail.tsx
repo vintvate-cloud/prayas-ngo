@@ -613,12 +613,23 @@ export default function LearnMoreDetail() {
                     {absOffset > 0 && (
                       <div className="absolute inset-0 bg-black/30 z-10 transition-opacity" />
                     )}
-                    <img
-                      src={imgSrc}
-                      alt={`Gallery ${actualIdx + 1}`}
-                      className="w-full h-full object-cover select-none pointer-events-none"
-                      draggable={false}
-                    />
+                    {imgSrc.endsWith('.mp4') ? (
+                      <video
+                        src={imgSrc}
+                        className="w-full h-full object-cover select-none pointer-events-none"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                      />
+                    ) : (
+                      <img
+                        src={imgSrc}
+                        alt={`Gallery ${actualIdx + 1}`}
+                        className="w-full h-full object-cover select-none pointer-events-none"
+                        draggable={false}
+                      />
+                    )}
                   </motion.div>
                 );
               })}
@@ -792,12 +803,22 @@ export default function LearnMoreDetail() {
             >
               <X className="w-6 h-6" />
             </button>
-            <img
-              src={selectedImage}
-              alt="Enlarged preview"
-              className="max-w-[85vw] md:max-w-4xl max-h-[70vh] rounded-2xl object-contain shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
-            />
+            {selectedImage?.endsWith('.mp4') ? (
+              <video
+                src={selectedImage}
+                className="max-w-[85vw] md:max-w-4xl max-h-[70vh] rounded-2xl object-contain shadow-2xl"
+                autoPlay
+                controls
+                onClick={(e) => e.stopPropagation()}
+              />
+            ) : (
+              <img
+                src={selectedImage}
+                alt="Enlarged preview"
+                className="max-w-[85vw] md:max-w-4xl max-h-[70vh] rounded-2xl object-contain shadow-2xl"
+                onClick={(e) => e.stopPropagation()}
+              />
+            )}
           </motion.div>
         )}
       </AnimatePresence>
