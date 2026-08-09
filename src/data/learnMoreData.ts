@@ -1505,7 +1505,7 @@ export const learnMoreData: Record<string, InitiativeDetail> = {
     categoryName: 'Women Empowerment',
     title: 'Rural Potato Chips Manufacturing Unit',
     subtitle: 'Agro-processing, micro-entrepreneurship & sustainable livelihoods',
-    heroImage: '/WOMEN.jpeg',
+    heroImage: '/chips_hero_section_video.mp4',
     accentColor: '#EAB308',
     secondaryColor: '#FEFCE8',
     gradientBg: 'from-[#713F12] via-[#EAB308] to-[#FDE047]',

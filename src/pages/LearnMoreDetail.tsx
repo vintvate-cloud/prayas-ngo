@@ -53,7 +53,7 @@ export default function LearnMoreDetail() {
 
   // GSAP animation refs
   const heroRef = useRef<HTMLDivElement>(null);
-  const heroImageRef = useRef<HTMLImageElement>(null);
+  const heroMediaRef = useRef<any>(null);
   const statsRef = useRef<HTMLDivElement>(null);
 
   // Retrieve current initiative data or construct fallback
@@ -78,9 +78,9 @@ export default function LearnMoreDetail() {
   // GSAP Animations setup
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Parallax zoom effect on Hero Image
-      if (heroImageRef.current && heroRef.current) {
-        gsap.to(heroImageRef.current, {
+      // Parallax zoom effect on Hero Image/Video
+      if (heroMediaRef.current && heroRef.current) {
+        gsap.to(heroMediaRef.current, {
           scale: 1.12,
           y: 30,
           ease: 'none',
@@ -194,16 +194,28 @@ export default function LearnMoreDetail() {
           {/* Banner Container */}
           <div className="relative h-[55vh] sm:h-[65vh] w-full rounded-3xl overflow-hidden shadow-2xl border border-slate-200/80 group">
             
-            {/* Background Parallax Image */}
-            <img
-              ref={heroImageRef}
-              src={initiative.heroImage}
-              alt={initiative.title}
-              className="absolute inset-0 w-full h-full object-cover object-center brightness-95"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = '/ruraldevelopment.jpeg';
-              }}
-            />
+            {/* Background Parallax Media */}
+            {initiative.heroImage.toLowerCase().includes('.mp4') ? (
+              <video
+                ref={heroMediaRef}
+                src={initiative.heroImage}
+                className="absolute inset-0 w-full h-full object-cover object-center brightness-95"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+            ) : (
+              <img
+                ref={heroMediaRef}
+                src={initiative.heroImage}
+                alt={initiative.title}
+                className="absolute inset-0 w-full h-full object-cover object-center brightness-95"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = '/ruraldevelopment.jpeg';
+                }}
+              />
+            )}
 
             {/* Gradient Overlay for Text Readability */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/10" />
