@@ -1537,6 +1537,7 @@ export const learnMoreData: Record<string, InitiativeDetail> = {
       role: "Micro-Unit Supervisor",
     },
     gallery: [
+      '/chips_video.mp4',
       '/WOMEN.jpeg',
       '/IMG-24.jpeg',
       '/Sindoda/IMG_20191022_121001 (1).jpg',

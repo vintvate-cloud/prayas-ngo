@@ -45,10 +45,11 @@ export default function LearnMoreDetail() {
   }>();
 
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<'overview' | 'video' | 'roadmap' | 'impact' | 'gallery' | 'faqs'>('overview');
+  
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const [galleryIndex, setGalleryIndex] = useState(0);
 
   // GSAP animation refs
   const heroRef = useRef<HTMLDivElement>(null);
@@ -63,8 +64,16 @@ export default function LearnMoreDetail() {
   // Scroll to top on route change
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    setActiveTab('overview');
   }, [categorySlug, itemSlug]);
+
+  // Auto-play gallery every 8 seconds
+  useEffect(() => {
+    if (!initiative.gallery || initiative.gallery.length <= 1) return;
+    const interval = setInterval(() => {
+      setGalleryIndex((prev) => prev + 1);
+    }, 8000);
+    return () => clearInterval(interval);
+  }, [initiative.gallery.length]);
 
   // GSAP Animations setup
   useEffect(() => {
@@ -252,8 +261,7 @@ export default function LearnMoreDetail() {
                 {videoEmbedUrl && (
                   <button
                     onClick={() => {
-                      setActiveTab('video');
-                      const el = document.getElementById('details-hub');
+                      const el = document.getElementById('video-section');
                       if (el) el.scrollIntoView({ behavior: 'smooth' });
                     }}
                     className="px-6 py-3 rounded-full bg-[#15803D] text-white font-bold text-xs sm:text-sm shadow-xl hover:bg-emerald-700 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2 border border-emerald-400/40"
@@ -302,473 +310,386 @@ export default function LearnMoreDetail() {
       </section>
 
       {/* ─── INTERACTIVE TABS & CONTENT HUB ─── */}
-      <section id="details-hub" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      {/* ─── INTERACTIVE CONTENT HUB (SCROLLING LAYOUT) ─── */}
+      <section id="details-hub" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
         
-        {/* Tab Controls */}
-        <div className="flex overflow-x-auto gap-2 p-2 rounded-2xl bg-slate-100/80 border border-slate-200 mb-12 no-scrollbar">
+        {/* Sticky Navigation Bar */}
+        <div className="sticky top-20 sm:top-24 z-40 bg-white/80 backdrop-blur-md py-4 border-b border-slate-200/50 mb-12 flex overflow-x-auto gap-2 no-scrollbar">
           {[
-            { id: 'overview', label: 'Overview & Mission', icon: Compass },
-            ...(videoEmbedUrl ? [{ id: 'video', label: 'Watch Video', icon: Play }] : []),
-            { id: 'roadmap', label: 'How It Works', icon: Layers },
-            { id: 'impact', label: 'Impact Story', icon: Award },
-            { id: 'gallery', label: 'Photo Gallery', icon: Maximize2 },
-            { id: 'faqs', label: 'FAQs & Support', icon: HelpCircle },
+            { id: 'overview-section', label: 'Overview & Mission', icon: Compass },
+            ...(videoEmbedUrl ? [{ id: 'video-section', label: 'Watch Video', icon: Play }] : []),
+            { id: 'impact-section', label: 'Impact Story', icon: Award },
+            { id: 'gallery-section', label: 'Photo Gallery', icon: Maximize2 },
+            { id: 'faqs-section', label: 'FAQs & Support', icon: HelpCircle },
           ].map((tab) => {
             const Icon = tab.icon;
-            const isActive = activeTab === tab.id;
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
-                className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all duration-300 ${
-                  isActive
-                    ? 'bg-white text-[#263238] shadow-md border border-slate-200/80 scale-[1.02]'
-                    : 'text-slate-500 hover:text-[#263238] hover:bg-white/60'
-                }`}
+                onClick={() => {
+                  const el = document.getElementById(tab.id);
+                  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+                className="flex items-center gap-2 px-5 py-3 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all duration-300 bg-slate-50 text-slate-600 hover:text-[#263238] hover:bg-white border border-slate-200/80 shadow-sm hover:shadow-md"
               >
-                <Icon className="w-4 h-4" style={{ color: isActive ? primaryColor : undefined }} />
+                <Icon className="w-4 h-4" />
                 <span>{tab.label}</span>
               </button>
             );
           })}
         </div>
 
-        {/* Tab Content Area */}
-        <div className="min-h-[400px]">
-          <AnimatePresence mode="wait">
-            
-            {/* TAB 1: OVERVIEW & OBJECTIVES */}
-            {activeTab === 'overview' && (
-              <motion.div
-                key="overview"
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.35 }}
-                className="space-y-12"
-              >
-                {/* Deep Narrative Box */}
-                <div className="p-6 sm:p-10 rounded-3xl bg-slate-50 border border-slate-200/80 shadow-sm">
-                  <h2
-                    className="text-2xl sm:text-3xl font-bold text-[#263238] mb-4 flex items-center gap-3"
-                    style={{ fontFamily: 'var(--font-heading)' }}
+        {/* SECTION 1: OVERVIEW & OBJECTIVES */}
+        <motion.div
+          id="overview-section"
+          initial={{ opacity: 0, x: 100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+          className="space-y-12 scroll-mt-32"
+        >
+          {/* Deep Narrative Box */}
+          <div className="p-6 sm:p-10 rounded-3xl bg-slate-50 border border-slate-200/80 shadow-sm">
+            <h2
+              className="text-2xl sm:text-3xl font-bold text-[#263238] mb-4 flex items-center gap-3"
+              style={{ fontFamily: 'var(--font-heading)' }}
+            >
+              <BookOpen className="w-7 h-7" style={{ color: primaryColor }} />
+              <span>Initiative Overview</span>
+            </h2>
+            <p className="text-slate-700 text-base sm:text-lg leading-relaxed mb-6 font-normal">
+              {initiative.longDescription}
+            </p>
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+              {initiative.shortDescription}
+            </p>
+          </div>
+
+          {/* Key Objectives Grid */}
+          <div>
+            <h3
+              className="text-xl sm:text-2xl font-bold text-[#263238] mb-6 flex items-center gap-2"
+              style={{ fontFamily: 'var(--font-heading)' }}
+            >
+              <Sparkles className="w-6 h-6" style={{ color: primaryColor }} />
+              <span>Core Objectives & Key Pillars</span>
+            </h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {initiative.objectives.map((obj, idx) => (
+                <motion.div
+                  key={idx}
+                  whileHover={{ y: -4 }}
+                  className="p-6 rounded-2xl bg-white border border-slate-200/80 hover:shadow-lg hover:border-slate-300 transition-all duration-300 group"
+                >
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-colors"
+                    style={{ backgroundColor: `${primaryColor}1A`, color: primaryColor }}
                   >
-                    <BookOpen className="w-7 h-7" style={{ color: primaryColor }} />
-                    <span>Initiative Overview</span>
-                  </h2>
-                  <p className="text-slate-700 text-base sm:text-lg leading-relaxed mb-6 font-normal">
-                    {initiative.longDescription}
+                    <CheckCircle2 className="w-5 h-5" />
+                  </div>
+                  <h4 className="text-lg font-bold text-[#263238] mb-2 group-hover:text-amber-700 transition-colors">
+                    {obj.title}
+                  </h4>
+                  <p className="text-slate-600 text-sm leading-relaxed">
+                    {obj.desc}
                   </p>
-                  <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                    {initiative.shortDescription}
-                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* SECTION: VIDEO DOCUMENTARY */}
+        {videoEmbedUrl && (
+          <motion.div
+            id="video-section"
+            initial={{ opacity: 0, x: 100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+            className="bg-white rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl border border-gray-200/90 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative overflow-hidden scroll-mt-32"
+          >
+            {/* Top Decorative Color Accent Bar */}
+            <div
+              className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r"
+              style={{
+                backgroundImage: `linear-gradient(to right, #FFF314, ${primaryColor}, #15803D)`
+              }}
+            />
+
+            {/* Left Column: Styled YouTube Video Showcase (6 cols) */}
+            <div className="lg:col-span-6 relative group">
+              <div className="relative p-2.5 sm:p-3 bg-white rounded-3xl border border-gray-200 shadow-2xl">
+                <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-gray-950 shadow-inner group">
+                  <iframe
+                    className="w-full h-full object-cover"
+                    src={videoEmbedUrl}
+                    title={initiative.videoTitle || initiative.title}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
                 </div>
+              </div>
+              {/* Subtle Badge Overlay */}
+              <div className="mt-3 flex items-center justify-between px-2 text-xs font-mono font-bold text-gray-500">
+                <span className="flex items-center gap-1.5 text-emerald-700">
+                  <Play className="w-3.5 h-3.5 fill-current" /> Official Impact Video
+                </span>
+                <span className="flex items-center gap-1 text-emerald-600">
+                  <ShieldCheck className="w-3.5 h-3.5" /> Verified Ground Work
+                </span>
+              </div>
+            </div>
 
-                {/* ─── MAIN STORY CARD WITH YOUTUBE VIDEO (Matching 2nd Section of Landing Page) ─── */}
-                {videoEmbedUrl && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.7 }}
-                    className="bg-white rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl border border-gray-200/90 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative overflow-hidden"
-                  >
-                    {/* Top Decorative Color Accent Bar */}
-                    <div
-                      className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r"
-                      style={{
-                        backgroundImage: `linear-gradient(to right, #FFF314, ${primaryColor}, #15803D)`
-                      }}
-                    />
+            {/* Right Column: Text Overview & Key Impact Pillars (6 cols) */}
+            <div className="lg:col-span-6 space-y-6">
+              <div className="space-y-3">
+                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100/80 text-[#15803D] text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5 text-[#15803D]" />
+                  <span>Featured Video Documentary</span>
+                </span>
 
-                    {/* Left Column: Styled YouTube Video Showcase (6 cols) */}
-                    <div className="lg:col-span-6 relative group">
-                      <div className="relative p-2.5 sm:p-3 bg-white rounded-3xl border border-gray-200 shadow-2xl">
-                        <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-gray-950 shadow-inner group">
-                          <iframe
-                            className="w-full h-full object-cover"
-                            src={videoEmbedUrl}
-                            title={initiative.videoTitle || initiative.title}
-                            frameBorder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowFullScreen
-                          />
-                        </div>
-                      </div>
-                      {/* Subtle Badge Overlay */}
-                      <div className="mt-3 flex items-center justify-between px-2 text-xs font-mono font-bold text-gray-500">
-                        <span className="flex items-center gap-1.5 text-emerald-700">
-                          <Play className="w-3.5 h-3.5 fill-current" /> Official Impact Video
-                        </span>
-                        <span className="flex items-center gap-1 text-emerald-600">
-                          <ShieldCheck className="w-3.5 h-3.5" /> Verified Ground Work
-                        </span>
-                      </div>
-                    </div>
+                <h3
+                  className="text-2xl sm:text-3xl font-extrabold text-[#263238] tracking-tight leading-tight"
+                  style={{ fontFamily: 'var(--font-heading)' }}
+                >
+                  {initiative.videoTitle || `A Green Tribute to the Heroes on Kargil Vijay Diwas 🇮🇳🌱`}
+                </h3>
 
-                    {/* Right Column: Text Overview & Key Impact Pillars (6 cols) */}
-                    <div className="lg:col-span-6 space-y-6">
-                      <div className="space-y-3">
-                        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100/80 text-[#15803D] text-xs font-bold uppercase tracking-wider">
-                          <Sparkles className="w-3.5 h-3.5 text-[#15803D]" />
-                          <span>Featured Video Documentary</span>
-                        </span>
+                <p className="text-gray-700 text-sm sm:text-base leading-relaxed font-sans font-medium">
+                  On the solemn occasion of Kargil Vijay Diwas, Prayas Samaj Sevi Sanstha, in collaboration with the Indore Municipal Corporation, organized a meaningful tree plantation drive at Chhota Bilawali Talab, Indore, as a tribute to the brave soldiers who made the supreme sacrifice for our nation.
+                </p>
 
-                        <h3
-                          className="text-2xl sm:text-3xl font-extrabold text-[#263238] tracking-tight leading-tight"
-                          style={{ fontFamily: 'var(--font-heading)' }}
-                        >
-                          {initiative.videoTitle || `A Green Tribute to the Heroes on Kargil Vijay Diwas 🇮🇳🌱`}
-                        </h3>
+                <p className="text-emerald-800 text-xs sm:text-sm font-semibold bg-emerald-50 p-3 rounded-xl border border-emerald-200/80">
+                  As part of this initiative, 5,270 trees were planted in memory of 527 brave martyrs — 10 trees dedicated to each martyr. 🌳🇮🇳
+                </p>
+              </div>
 
-                        <p className="text-gray-700 text-sm sm:text-base leading-relaxed font-sans font-medium">
-                          On the solemn occasion of Kargil Vijay Diwas, Prayas Samaj Sevi Sanstha, in collaboration with the Indore Municipal Corporation, organized a meaningful tree plantation drive at Chhota Bilawali Talab, Indore, as a tribute to the brave soldiers who made the supreme sacrifice for our nation.
-                        </p>
-
-                        <p className="text-emerald-800 text-xs sm:text-sm font-semibold bg-emerald-50 p-3 rounded-xl border border-emerald-200/80">
-                          As part of this initiative, 5,270 trees were planted in memory of 527 brave martyrs — 10 trees dedicated to each martyr. 🌳🇮🇳
-                        </p>
-                      </div>
-
-                      {/* 2 Key Stats / Highlight Badges */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
-                        <div className="p-4 rounded-2xl bg-gray-50 border border-gray-200/80 shadow-xs flex items-start gap-3 hover:bg-white hover:shadow-md transition-all">
-                          <div className="p-2.5 rounded-xl bg-emerald-600/10 text-emerald-700 shrink-0 mt-0.5">
-                            <History size={20} />
-                          </div>
-                          <div>
-                            <h4 className="text-sm font-bold text-[#263238]">5,270 Trees Planted</h4>
-                            <p className="text-xs text-gray-500 mt-0.5">10 trees dedicated to each martyr</p>
-                          </div>
-                        </div>
-
-                        <div className="p-4 rounded-2xl bg-gray-50 border border-gray-200/80 shadow-xs flex items-start gap-3 hover:bg-white hover:shadow-md transition-all">
-                          <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-700 shrink-0 mt-0.5">
-                            <HeartHandshake size={20} />
-                          </div>
-                          <div>
-                            <h4 className="text-sm font-bold text-[#263238]">527 Brave Martyrs</h4>
-                            <p className="text-xs text-gray-500 mt-0.5">Honoured at Chhota Bilawali Talab</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-
-                {/* Key Objectives Grid */}
-                <div>
-                  <h3
-                    className="text-xl sm:text-2xl font-bold text-[#263238] mb-6 flex items-center gap-2"
-                    style={{ fontFamily: 'var(--font-heading)' }}
-                  >
-                    <Sparkles className="w-6 h-6" style={{ color: primaryColor }} />
-                    <span>Core Objectives & Key Pillars</span>
-                  </h3>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {initiative.objectives.map((obj, idx) => (
-                      <motion.div
-                        key={idx}
-                        whileHover={{ y: -4 }}
-                        className="p-6 rounded-2xl bg-white border border-slate-200/80 hover:shadow-lg hover:border-slate-300 transition-all duration-300 group"
-                      >
-                        <div
-                          className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-colors"
-                          style={{ backgroundColor: `${primaryColor}1A`, color: primaryColor }}
-                        >
-                          <CheckCircle2 className="w-5 h-5" />
-                        </div>
-                        <h4 className="text-lg font-bold text-[#263238] mb-2 group-hover:text-amber-700 transition-colors">
-                          {obj.title}
-                        </h4>
-                        <p className="text-slate-600 text-sm leading-relaxed">
-                          {obj.desc}
-                        </p>
-                      </motion.div>
-                    ))}
+              {/* 2 Key Stats / Highlight Badges */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                <div className="p-4 rounded-2xl bg-gray-50 border border-gray-200/80 shadow-xs flex items-start gap-3 hover:bg-white hover:shadow-md transition-all">
+                  <div className="p-2.5 rounded-xl bg-emerald-600/10 text-emerald-700 shrink-0 mt-0.5">
+                    <History size={20} />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-[#263238]">5,270 Trees Planted</h4>
+                    <p className="text-xs text-gray-500 mt-0.5">10 trees dedicated to each martyr</p>
                   </div>
                 </div>
-              </motion.div>
-            )}
 
-            {/* TAB: VIDEO DOCUMENTARY */}
-            {activeTab === 'video' && videoEmbedUrl && (
-              <motion.div
-                key="video"
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.35 }}
-                className="bg-white rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl border border-gray-200/90 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative overflow-hidden"
-              >
-                {/* Top Decorative Color Accent Bar */}
+                <div className="p-4 rounded-2xl bg-gray-50 border border-gray-200/80 shadow-xs flex items-start gap-3 hover:bg-white hover:shadow-md transition-all">
+                  <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-700 shrink-0 mt-0.5">
+                    <HeartHandshake size={20} />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-[#263238]">527 Brave Martyrs</h4>
+                    <p className="text-xs text-gray-500 mt-0.5">Honoured at Chhota Bilawali Talab</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* SECTION 3: IMPACT STORY */}
+        <motion.div
+          id="impact-section"
+          initial={{ opacity: 0, x: 100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+          className="space-y-8 scroll-mt-32"
+        >
+          <div className="flex items-center gap-2 mb-6">
+            <Award className="w-6 h-6" style={{ color: primaryColor }} />
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#263238]" style={{ fontFamily: 'var(--font-heading)' }}>Impact Story</h2>
+          </div>
+          {initiative.impactStory ? (
+            <div className="relative p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-amber-500/10 via-slate-50 to-white border border-amber-200 shadow-lg overflow-hidden">
+              <div className="text-7xl text-amber-500/15 font-serif font-black absolute top-2 left-6 select-none">
+                “
+              </div>
+
+              <blockquote className="relative z-10 text-lg sm:text-2xl text-slate-800 font-serif italic leading-relaxed mb-8">
+                "{initiative.impactStory.quote}"
+              </blockquote>
+
+              <div className="flex items-center gap-4 border-t border-slate-200 pt-6">
                 <div
-                  className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r"
-                  style={{
-                    backgroundImage: `linear-gradient(to right, #FFF314, ${primaryColor}, #15803D)`
-                  }}
-                />
-
-                {/* Left Column: Styled YouTube Video Showcase (6 cols) */}
-                <div className="lg:col-span-6 relative group">
-                  <div className="relative p-2.5 sm:p-3 bg-white rounded-3xl border border-gray-200 shadow-2xl">
-                    <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-gray-950 shadow-inner group">
-                      <iframe
-                        className="w-full h-full object-cover"
-                        src={videoEmbedUrl}
-                        title={initiative.videoTitle || initiative.title}
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowFullScreen
-                      />
-                    </div>
+                  className="w-12 h-12 rounded-full font-bold flex items-center justify-center text-lg uppercase shadow-md text-white"
+                  style={{ backgroundColor: primaryColor }}
+                >
+                  {initiative.impactStory.author.charAt(0)}
+                </div>
+                <div>
+                  <div className="text-base sm:text-lg font-bold text-[#263238]">
+                    {initiative.impactStory.author}
                   </div>
-                  {/* Subtle Badge Overlay */}
-                  <div className="mt-3 flex items-center justify-between px-2 text-xs font-mono font-bold text-gray-500">
-                    <span className="flex items-center gap-1.5 text-emerald-700">
-                      <Play className="w-3.5 h-3.5 fill-current" /> Official Impact Video
-                    </span>
-                    <span className="flex items-center gap-1 text-emerald-600">
-                      <ShieldCheck className="w-3.5 h-3.5" /> Verified Ground Work
-                    </span>
+                  <div className="text-xs sm:text-sm text-slate-500">
+                    {initiative.impactStory.role} • {initiative.impactStory.location}
                   </div>
                 </div>
+              </div>
+            </div>
+          ) : (
+            <div className="p-8 text-center text-slate-500 bg-slate-50 rounded-2xl border border-slate-200">
+              Impact stories for this section are currently being updated.
+            </div>
+          )}
+        </motion.div>
 
-                {/* Right Column: Text Overview & Key Impact Pillars (6 cols) */}
-                <div className="lg:col-span-6 space-y-6">
-                  <div className="space-y-3">
-                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100/80 text-[#15803D] text-xs font-bold uppercase tracking-wider">
-                      <Sparkles className="w-3.5 h-3.5 text-[#15803D]" />
-                      <span>Featured Video Documentary</span>
-                    </span>
+        {/* SECTION 4: PHOTO GALLERY */}
+        <motion.div
+          id="gallery-section"
+          initial={{ opacity: 0, x: 100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+          className="scroll-mt-32"
+        >
+          <div className="flex items-center gap-2 mb-6">
+            <Maximize2 className="w-6 h-6" style={{ color: primaryColor }} />
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#263238]" style={{ fontFamily: 'var(--font-heading)' }}>Photo Gallery</h2>
+          </div>
+          <motion.div 
+            className="relative w-full h-[300px] sm:h-[450px] md:h-[500px] flex items-center justify-center overflow-hidden py-10 select-none touch-pan-y"
+            onPanEnd={(e, info) => {
+              const swipeThreshold = 50;
+              if (info.offset.x < -swipeThreshold) {
+                setGalleryIndex(prev => prev + 1);
+              } else if (info.offset.x > swipeThreshold) {
+                setGalleryIndex(prev => prev - 1);
+              }
+            }}
+          >
+            <AnimatePresence>
+              {[-2, -1, 0, 1, 2].map((offset) => {
+                const absoluteIndex = galleryIndex + offset;
+                const length = initiative.gallery.length;
+                if (length === 0) return null;
+                
+                const actualIdx = ((absoluteIndex % length) + length) % length;
+                const imgSrc = initiative.gallery[actualIdx];
 
-                    <h3
-                      className="text-2xl sm:text-3xl font-extrabold text-[#263238] tracking-tight leading-tight"
-                      style={{ fontFamily: 'var(--font-heading)' }}
-                    >
-                      {initiative.videoTitle || `A Green Tribute to the Heroes on Kargil Vijay Diwas 🇮🇳🌱`}
-                    </h3>
+                const absOffset = Math.abs(offset);
+                const translateX = offset * 60; 
+                const scale = 1 - absOffset * 0.15; 
+                const opacity = 1 - absOffset * 0.2; 
+                const zIndex = 50 - absOffset;
 
-                    <p className="text-gray-700 text-sm sm:text-base leading-relaxed font-sans font-medium">
-                      On the solemn occasion of Kargil Vijay Diwas, Prayas Samaj Sevi Sanstha, in collaboration with the Indore Municipal Corporation, organized a meaningful tree plantation drive at Chhota Bilawali Talab, Indore, as a tribute to the brave soldiers who made the supreme sacrifice for our nation.
-                    </p>
-
-                    <p className="text-emerald-800 text-xs sm:text-sm font-semibold bg-emerald-50 p-3 rounded-xl border border-emerald-200/80">
-                      As part of this initiative, 5,270 trees were planted in memory of 527 brave martyrs — 10 trees dedicated to each martyr. 🌳🇮🇳
-                    </p>
-                  </div>
-
-                  {/* 2 Key Stats / Highlight Badges */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
-                    <div className="p-4 rounded-2xl bg-gray-50 border border-gray-200/80 shadow-xs flex items-start gap-3 hover:bg-white hover:shadow-md transition-all">
-                      <div className="p-2.5 rounded-xl bg-emerald-600/10 text-emerald-700 shrink-0 mt-0.5">
-                        <History size={20} />
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-bold text-[#263238]">5,270 Trees Planted</h4>
-                        <p className="text-xs text-gray-500 mt-0.5">10 trees dedicated to each martyr</p>
-                      </div>
-                    </div>
-
-                    <div className="p-4 rounded-2xl bg-gray-50 border border-gray-200/80 shadow-xs flex items-start gap-3 hover:bg-white hover:shadow-md transition-all">
-                      <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-700 shrink-0 mt-0.5">
-                        <HeartHandshake size={20} />
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-bold text-[#263238]">527 Brave Martyrs</h4>
-                        <p className="text-xs text-gray-500 mt-0.5">Honoured at Chhota Bilawali Talab</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-
-            {/* TAB 2: EXECUTION ROADMAP */}
-            {activeTab === 'roadmap' && (
-              <motion.div
-                key="roadmap"
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.35 }}
-                className="p-6 sm:p-10 rounded-3xl bg-slate-50 border border-slate-200/80 shadow-sm"
-              >
-                <div className="text-center max-w-2xl mx-auto mb-12">
-                  <h2
-                    className="text-2xl sm:text-3xl font-bold text-[#263238] mb-3"
-                    style={{ fontFamily: 'var(--font-heading)' }}
+                return (
+                  <motion.div
+                    key={absoluteIndex}
+                    onClick={() => {
+                      if (offset === 0) setSelectedImage(imgSrc);
+                      else setGalleryIndex(absoluteIndex);
+                    }}
+                    className="absolute w-[75%] sm:w-[50%] md:w-[45%] h-full rounded-2xl overflow-hidden shadow-2xl cursor-pointer"
+                    initial={{
+                      opacity: 0,
+                      x: `${offset > 0 ? (offset + 1) * 60 : (offset - 1) * 60}%`,
+                      scale: 1 - (absOffset + 1) * 0.15,
+                      zIndex: 0
+                    }}
+                    animate={{
+                      scale,
+                      opacity,
+                      x: `${translateX}%`,
+                      zIndex
+                    }}
+                    exit={{
+                      opacity: 0,
+                      x: `${offset > 0 ? (offset + 1) * 60 : (offset - 1) * 60}%`,
+                      scale: 1 - (absOffset + 1) * 0.15,
+                      zIndex: 0
+                    }}
+                    transition={{ duration: 1.2, ease: [0.25, 1, 0.5, 1] }} // Smooth, slow glide
+                    style={{ transformOrigin: 'center center' }}
                   >
-                    How We Execute & Deliver Impact
-                  </h2>
-                  <p className="text-slate-600 text-sm sm:text-base">
-                    A structured 4-step framework ensuring transparent, community-led execution.
-                  </p>
-                </div>
-
-                <div className="relative border-l-2 ml-4 sm:ml-8 space-y-10 pl-6 sm:pl-10" style={{ borderColor: `${primaryColor}40` }}>
-                  {initiative.methodology.map((step, idx) => (
-                    <motion.div
-                      key={idx}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.4, delay: idx * 0.1 }}
-                      viewport={{ once: true }}
-                      className="relative group"
-                    >
-                      {/* Step Badge */}
-                      <span
-                        className="absolute -left-[35px] sm:-left-[51px] top-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white border-2 font-bold text-xs sm:text-sm flex items-center justify-center shadow-md group-hover:scale-110 transition-transform"
-                        style={{ borderColor: primaryColor, color: primaryColor }}
-                      >
-                        {step.step}
-                      </span>
-
-                      <div className="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:shadow-md transition-all duration-300">
-                        <h3 className="text-lg sm:text-xl font-bold text-[#263238] mb-2">
-                          {step.title}
-                        </h3>
-                        <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                          {step.desc}
-                        </p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            )}
-
-            {/* TAB 3: IMPACT STORY */}
-            {activeTab === 'impact' && (
-              <motion.div
-                key="impact"
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.35 }}
-                className="space-y-8"
-              >
-                {initiative.impactStory ? (
-                  <div className="relative p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-amber-500/10 via-slate-50 to-white border border-amber-200 shadow-lg overflow-hidden">
-                    <div className="text-7xl text-amber-500/15 font-serif font-black absolute top-2 left-6 select-none">
-                      “
-                    </div>
-
-                    <blockquote className="relative z-10 text-lg sm:text-2xl text-slate-800 font-serif italic leading-relaxed mb-8">
-                      "{initiative.impactStory.quote}"
-                    </blockquote>
-
-                    <div className="flex items-center gap-4 border-t border-slate-200 pt-6">
-                      <div
-                        className="w-12 h-12 rounded-full font-bold flex items-center justify-center text-lg uppercase shadow-md text-white"
-                        style={{ backgroundColor: primaryColor }}
-                      >
-                        {initiative.impactStory.author.charAt(0)}
-                      </div>
-                      <div>
-                        <div className="text-base sm:text-lg font-bold text-[#263238]">
-                          {initiative.impactStory.author}
-                        </div>
-                        <div className="text-xs sm:text-sm text-slate-500">
-                          {initiative.impactStory.role} • {initiative.impactStory.location}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="p-8 text-center text-slate-500 bg-slate-50 rounded-2xl border border-slate-200">
-                    Impact stories for this section are currently being updated.
-                  </div>
-                )}
-              </motion.div>
-            )}
-
-            {/* TAB 4: PHOTO GALLERY */}
-            {activeTab === 'gallery' && (
-              <motion.div
-                key="gallery"
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.35 }}
-              >
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
-                  {initiative.gallery.map((imgSrc, idx) => (
-                    <motion.div
-                      key={idx}
-                      whileHover={{ scale: 1.02 }}
-                      className="relative h-64 sm:h-72 rounded-2xl overflow-hidden cursor-pointer group shadow-md border border-slate-200 bg-slate-100"
-                      onClick={() => setSelectedImage(imgSrc)}
-                    >
+                    {/* Subtle dark overlay on inactive images to make the active one pop more */}
+                    {absOffset > 0 && (
+                      <div className="absolute inset-0 bg-black/30 z-10 transition-opacity" />
+                    )}
+                    {imgSrc.endsWith('.mp4') ? (
+                      <video
+                        src={imgSrc}
+                        className="w-full h-full object-cover select-none pointer-events-none"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                      />
+                    ) : (
                       <img
                         src={imgSrc}
-                        alt={`Gallery ${idx + 1}`}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        alt={`Gallery ${actualIdx + 1}`}
+                        className="w-full h-full object-cover select-none pointer-events-none"
+                        draggable={false}
                       />
-                      <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-xs">
-                        <div className="p-3 rounded-full bg-white/90 text-[#263238] shadow-lg">
-                          <Maximize2 className="w-5 h-5" />
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            )}
+                    )}
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
+          </motion.div>
+          
 
-            {/* TAB 5: FAQS */}
-            {activeTab === 'faqs' && (
-              <motion.div
-                key="faqs"
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.35 }}
-                className="space-y-4 max-w-4xl mx-auto"
+        </motion.div>
+
+        {/* SECTION 5: FAQS */}
+        <motion.div
+          id="faqs-section"
+          initial={{ opacity: 0, x: 100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+          className="space-y-4 max-w-4xl mx-auto scroll-mt-32"
+        >
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <HelpCircle className="w-6 h-6" style={{ color: primaryColor }} />
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#263238]" style={{ fontFamily: 'var(--font-heading)' }}>FAQs & Support</h2>
+          </div>
+          {initiative.faqs.map((faq, idx) => {
+            const isOpen = activeFaq === idx;
+            return (
+              <div
+                key={idx}
+                className="rounded-2xl bg-white border border-slate-200/90 shadow-xs overflow-hidden transition-all duration-300"
               >
-                {initiative.faqs.map((faq, idx) => {
-                  const isOpen = activeFaq === idx;
-                  return (
-                    <div
-                      key={idx}
-                      className="rounded-2xl bg-white border border-slate-200/90 shadow-xs overflow-hidden transition-all duration-300"
+                <button
+                  onClick={() => setActiveFaq(isOpen ? null : idx)}
+                  className="w-full p-5 text-left font-bold text-base sm:text-lg text-[#263238] flex justify-between items-center gap-4 hover:bg-slate-50 transition-colors"
+                >
+                  <span>{faq.question}</span>
+                  <ChevronRight
+                    className={`w-5 h-5 transition-transform duration-300 ${
+                      isOpen ? 'rotate-90 text-amber-600' : 'text-slate-400'
+                    }`}
+                  />
+                </button>
+
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.25 }}
+                      className="px-5 pb-5 text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-3 font-normal"
                     >
-                      <button
-                        onClick={() => setActiveFaq(isOpen ? null : idx)}
-                        className="w-full p-5 text-left font-bold text-base sm:text-lg text-[#263238] flex justify-between items-center gap-4 hover:bg-slate-50 transition-colors"
-                      >
-                        <span>{faq.question}</span>
-                        <ChevronRight
-                          className={`w-5 h-5 transition-transform duration-300 ${
-                            isOpen ? 'rotate-90 text-amber-600' : 'text-slate-400'
-                          }`}
-                        />
-                      </button>
-
-                      <AnimatePresence>
-                        {isOpen && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.25 }}
-                            className="px-5 pb-5 text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-3 font-normal"
-                          >
-                            {faq.answer}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  );
-                })}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+                      {faq.answer}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
+        </motion.div>
       </section>
-
-      {/* ─── CALL TO ACTION BANNER ─── */}
+{/* ─── CALL TO ACTION BANNER ─── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
         <div
           className="relative rounded-3xl overflow-hidden p-8 sm:p-12 md:p-16 text-white shadow-2xl"
@@ -882,12 +803,22 @@ export default function LearnMoreDetail() {
             >
               <X className="w-6 h-6" />
             </button>
-            <img
-              src={selectedImage}
-              alt="Enlarged preview"
-              className="max-w-full max-h-[85vh] rounded-2xl object-contain shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
-            />
+            {selectedImage?.endsWith('.mp4') ? (
+              <video
+                src={selectedImage}
+                className="max-w-[85vw] md:max-w-4xl max-h-[70vh] rounded-2xl object-contain shadow-2xl"
+                autoPlay
+                controls
+                onClick={(e) => e.stopPropagation()}
+              />
+            ) : (
+              <img
+                src={selectedImage}
+                alt="Enlarged preview"
+                className="max-w-[85vw] md:max-w-4xl max-h-[70vh] rounded-2xl object-contain shadow-2xl"
+                onClick={(e) => e.stopPropagation()}
+              />
+            )}
           </motion.div>
         )}
       </AnimatePresence>
