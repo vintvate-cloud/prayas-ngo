@@ -1165,7 +1165,7 @@ export const learnMoreData: Record<string, InitiativeDetail> = {
     categoryName: 'Project Sindoda',
     title: 'Plastic Mukti - Plastic Free Sindoda Movement',
     subtitle: 'Transforming Sindoda into a zero single-use plastic model village',
-    heroImage: '/Sindoda/IMG_20191022_121001 (1).jpg',
+    heroImage: '/plastic-mukti-hero.jpg',
     accentColor: '#15803D',
     secondaryColor: '#DCFCE7',
     gradientBg: 'from-[#14532D] via-[#15803D] to-[#4ADE80]',
