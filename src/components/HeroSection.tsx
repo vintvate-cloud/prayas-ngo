@@ -22,7 +22,7 @@ export default function HeroSection() {
           'hero.slides.education.desc',
           'Providing quality education, Sanskarshala centers, and nutrition to underprivileged children so every child gets to learn and thrive with dignity.'
         ),
-        image: '/P1039409.JPG',
+        image: '/empowering_section_image.png',
         objectPosition: 'center 25%',
         ctaText: '♥ Explore',
         route: '/donate',
