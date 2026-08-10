@@ -340,9 +340,9 @@ export default function Navbar() {
               {/* 1. DONATE NOW BUTTON (LIGHT YELLOW BG) */}
               <Link
                 to="/donate"
-                className="inline-flex items-center gap-1.5 px-4 py-1.5 text-sm font-extrabold rounded-full bg-[#FFF314] hover:bg-[#FBE000] text-[#263238] shadow-sm hover:shadow-md transition-all hover:scale-105 cursor-pointer border border-[#E6DB00] whitespace-nowrap"
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 text-sm font-extrabold rounded-full bg-[#FFF314] hover:bg-[#FBE000] text-red-600 shadow-sm hover:shadow-md transition-all hover:scale-105 cursor-pointer border border-[#E6DB00] whitespace-nowrap"
               >
-                <Heart className="w-4 h-4 text-[#263238] fill-current" />
+                <Heart className="w-4 h-4 text-red-600 fill-red-600" />
                 <span>{t('nav.donateNow', 'Donate Now')}</span>
               </Link>
 
@@ -510,7 +510,7 @@ export default function Navbar() {
 
               <Link
                 to="/donate"
-                className="mt-3 w-full text-center rounded-full bg-[#FFF314] hover:bg-[#FBE000] px-6 py-3.5 font-bold text-[#263238] border border-[#E6DB00] shadow-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-transform"
+                className="mt-3 w-full text-center rounded-full bg-[#FFF314] hover:bg-[#FBE000] px-6 py-3.5 font-bold text-red-600 border border-[#E6DB00] shadow-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-transform"
               >
                 {t('nav.donateNow', 'Donate Now')} <Heart className="w-5 h-5 text-red-600 fill-red-600" />
               </Link>
