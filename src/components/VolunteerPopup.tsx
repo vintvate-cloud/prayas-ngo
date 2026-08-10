@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Heart, ArrowRight, Users } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 
 interface VolunteerPopupProps {
   isOpen: boolean
@@ -12,6 +13,7 @@ interface VolunteerPopupProps {
 
 export default function VolunteerPopup({ isOpen, onClose }: VolunteerPopupProps) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isOpen) {
@@ -30,10 +32,7 @@ export default function VolunteerPopup({ isOpen, onClose }: VolunteerPopupProps)
 
   const handleVolunteerClick = () => {
     onClose()
-    // Redirect to external volunteer page after a small delay to allow close
-    setTimeout(() => {
-      window.location.href = 'https://prayassamajsevisanstha.org/volunteer'
-    }, 100)
+    navigate('/volunteer')
   }
 
   // Only render if open, but portal allows us to render conditionally inside portal
