@@ -85,7 +85,7 @@ export default function WomenEmpowerment() {
       <section ref={heroRef} className="relative min-h-[58vh] sm:min-h-[68vh] lg:min-h-[75vh] w-full flex items-center justify-center overflow-hidden bg-[#881337]">
         <div className="absolute inset-0 z-0">
           <img
-            src="/WOMEN.jpeg"
+            src="/women-empowerment-hero.jpg"
             alt="Women Empowerment"
             className="w-full h-full object-cover object-center sm:object-[center_25%] transition-transform duration-1000"
           />
