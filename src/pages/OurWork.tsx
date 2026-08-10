@@ -62,7 +62,7 @@ export const ALL_NGO_PROJECTS: ProjectItem[] = [
     categorySlug: 'rural-development',
     description: 'Transforming Sindoda into a completely plastic‑free model village through community action, waste segregation drives, and sustainable rural alternatives.',
     longDescription: 'In model village Sindoda, Prayas spearheaded a holistic plastic elimination drive. We established community composting units, replaced plastic carry bags with hand-stitched cloth bags made by local women, organized village cleanup drives, and created a self-reliant waste collection system managed by local Gram Panchayats.',
-    image: '/Sindoda/IMG_20191022_121001 (1).jpg',
+    image: '/plastic-mukti-hero-rotated.jpg',
     badge: 'Flagship Rural Model',
     isFeatured: true,
     route: '/project-sindoda/plastic-mukti',
@@ -635,14 +635,7 @@ export default function OurWork() {
                         {proj.id < 10 ? `0${proj.id}` : proj.id}
                       </span>
 
-                      {/* Category Badge */}
-                      <span
-                        className="absolute bottom-4 left-4 text-xs font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow-md text-white backdrop-blur-md flex items-center gap-1.5"
-                        style={{ backgroundColor: `${proj.accentColor}E6` }}
-                      >
-                        {proj.isFeatured && <Sparkles className="w-3 h-3 text-amber-300 animate-pulse" />}
-                        {proj.badge}
-                      </span>
+                      {/* Category Badge removed */}
                     </div>
 
                     {/* Body Info */}
@@ -755,12 +748,6 @@ export default function OurWork() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
                 <div className="absolute bottom-4 left-4 right-4 text-white">
-                  <span
-                    className="inline-block text-xs font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-2 shadow-sm"
-                    style={{ backgroundColor: activeModalProject.accentColor }}
-                  >
-                    {activeModalProject.badge}
-                  </span>
                   <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight drop-shadow">
                     {activeModalProject.title}
                   </h2>
