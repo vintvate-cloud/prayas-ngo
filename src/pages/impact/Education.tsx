@@ -89,11 +89,12 @@ export default function Education() {
             loop
             muted
             playsInline
-            className="w-full h-full object-cover object-center"
+            className="w-full h-full object-cover object-center opacity-90"
           >
+            <source src="/assets/education/mentorship-video.mp4" type="video/mp4" />
             <source src="/education-video-child2.mp4" type="video/mp4" />
           </video>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/25 to-black/10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/20" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[calc(var(--navbar-height,70px)+1.75rem)] sm:pt-[calc(var(--navbar-height,70px)+2.5rem)] pb-12 sm:pb-16 text-center text-white">

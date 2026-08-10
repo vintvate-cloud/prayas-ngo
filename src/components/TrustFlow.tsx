@@ -109,14 +109,15 @@ export default function TrustFlow() {
           loop
           muted
           playsInline
-          className="w-full h-full object-cover opacity-85 filter brightness-105 contrast-[105%]"
+          className="w-full h-full object-cover opacity-90 filter brightness-110 contrast-[105%]"
         >
-          <source src="/education-video-child.mp4" type="video/mp4" />
-          <source src="/education-video-child2.mp4" type="video/mp4" />
+          <source src="/assets/women-empowerment/chips-unit-video.mp4" type="video/mp4" />
+          <source src="/assets/education/classroom-video.mp4" type="video/mp4" />
+          <source src="/chips_hero_section_video.mp4" type="video/mp4" />
         </video>
         {/* Subtle Dark Scrim to ensure video is 100% visible while text & cards pop */}
-        <div className="absolute inset-0 bg-gradient-to-r from-gray-950/80 via-gray-950/40 to-gray-950/70" />
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-950/90 via-transparent to-gray-950/90" />
+        <div className="absolute inset-0 bg-gradient-to-r from-gray-950/75 via-gray-950/30 to-gray-950/65" />
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-950/80 via-transparent to-gray-950/80" />
       </div>
 
       {/* ─── Ambient Gold Glowing Light Spheres ─── */}

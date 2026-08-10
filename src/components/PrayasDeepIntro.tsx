@@ -124,8 +124,8 @@ export default function PrayasDeepIntro() {
           playsInline
           className="w-full h-full object-cover opacity-100 filter brightness-[95%] contrast-[105%]"
         >
+          <source src="/assets/education/classroom-video.mp4" type="video/mp4" />
           <source src="/education-video-child.mp4" type="video/mp4" />
-          <source src="/education-video-child2.mp4" type="video/mp4" />
         </video>
         {/* Subtle Scrim Gradient to ensure 100% video visibility + high contrast text */}
         <div className="absolute inset-0 bg-gradient-to-r from-gray-950/85 via-gray-950/50 to-gray-950/20" />

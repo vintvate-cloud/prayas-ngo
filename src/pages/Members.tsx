@@ -151,13 +151,13 @@ export default function Members() {
 
   return (
     <section className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50 text-[#263238] pt-24 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden font-sans">
-      
+
       {/* ─── Ambient Subtle Glow Accents ─── */}
       <div className="absolute top-20 right-10 w-72 sm:w-96 h-72 sm:h-96 bg-red-500/5 rounded-full blur-[140px] pointer-events-none -z-10" />
       <div className="absolute bottom-20 left-10 w-72 sm:w-96 h-72 sm:h-96 bg-amber-500/5 rounded-full blur-[140px] pointer-events-none -z-10" />
 
       <div className="max-w-6xl mx-auto">
-        
+
         {/* ─── Page Header ─── */}
         <motion.div
           initial={{ opacity: 0, y: 25 }}
@@ -202,7 +202,7 @@ export default function Members() {
                       'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300"%3E%3Crect width="300" height="300" fill="%23F1F5F9"/%3E%3Ccircle cx="150" cy="120" r="55" fill="%23CBD5E1"/%3E%3Cpath d="M50 280c0-50 35-80 100-80s100 30 100 80" fill="%23CBD5E1"/%3E%3C/svg%3E';
                   }}
                 />
-                
+
                 {/* Subtle Hover Cue Overlay */}
                 <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white text-[11px] font-bold uppercase tracking-wider">
                   <span>View Details</span>
@@ -278,7 +278,7 @@ export default function Members() {
 
       <div className="fixed inset-0 z-[999999] flex items-center justify-center md:justify-end p-3 sm:p-6 lg:p-8 pt-20 sm:pt-24 pb-6 overflow-hidden pointer-events-none">
         <div className="relative w-full max-w-lg md:max-w-3xl flex flex-col md:flex-row items-center md:items-stretch pointer-events-none md:mr-6 my-auto z-10">
-          
+
           {/* Step 1: Circular Image Icon Expands FIRST To Display Position */}
           <AnimatePresence>
             {selectedMember && (

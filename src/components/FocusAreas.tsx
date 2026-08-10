@@ -33,7 +33,7 @@ const areas = [
     slug: 'education',
     color: '#5b8266',
     bottomColor: '#e91e63',
-    image: '/P1039409.JPG',
+    image: '/assets/education/digital-literacy-lab.jpg',
   },
   {
     icon: HeartPulse,

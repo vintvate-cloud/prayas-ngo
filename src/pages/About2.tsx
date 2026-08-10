@@ -92,7 +92,7 @@ export default function About2() {
         {/* ─── 2. MAIN STORY SECTION WITH YOUTUBE VIDEO ─── */}
         <div className="bg-white rounded-3xl p-6 sm:p-12 shadow-2xl border border-gray-200/90 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           
-          {/* Left Column: Styled YouTube Video Showcase (6 cols) */}
+          {/* Left Column: High-Impact Ground Photo Showcase (6 cols) */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -100,16 +100,17 @@ export default function About2() {
             transition={{ duration: 0.6 }}
             className="lg:col-span-6 relative"
           >
-            <div className="relative p-2.5 sm:p-3 bg-white rounded-3xl border border-gray-200 shadow-2xl">
-              <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-gray-950 shadow-inner group">
-                <iframe
-                  className="w-full h-full object-cover"
-                  src="https://www.youtube.com/embed/8fA5MBs4mr0?rel=0"
-                  title="Prayas NGO Official Video"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
+            <div className="relative p-2.5 sm:p-3 bg-white rounded-3xl border border-gray-200 shadow-2xl overflow-hidden group">
+              <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden bg-gray-950 shadow-inner">
+                <img
+                  src="/CHILDRENGROUP.jpg"
+                  alt="Prayas Ground Impact"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-[98%]"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 text-white text-xs font-mono font-bold bg-black/60 backdrop-blur-md px-3.5 py-2 rounded-xl border border-white/20">
+                  Prayas Grassroots Community Initiative
+                </div>
               </div>
             </div>
           </motion.div>

@@ -22,8 +22,8 @@ export default function HeroSection() {
           'hero.slides.education.desc',
           'Providing quality education, Sanskarshala centers, and nutrition to underprivileged children so every child gets to learn and thrive with dignity.'
         ),
-        image: '/empowering_section_image.png',
-        objectPosition: 'center 25%',
+        image: '/assets/education/digital-literacy-lab.jpg',
+        objectPosition: 'right 25%',
         ctaText: '♥ Explore',
         route: '/donate',
       },
@@ -64,8 +64,8 @@ export default function HeroSection() {
           'hero.slides.rural.desc',
           'Holistic village adoption programs installing clean drinking water facilities, sanitation infrastructure, and self-reliant grassroots growth.'
         ),
-        image: '/EDUCATION.JPG',
-        objectPosition: '85% 25%',
+        image: '/assets/women-empowerment/shg-collective.jpg',
+        objectPosition: 'center center',
         ctaText: '♥ Adopt A Village!',
         route: '/donate',
       },
