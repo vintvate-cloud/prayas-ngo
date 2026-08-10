@@ -263,23 +263,25 @@ export default function Members() {
       {/* ─── FULLY RESPONSIVE MODAL & SIDEBAR DRAWER WITH BACKGROUND SCROLL LOCK ─── */}
       <AnimatePresence>
         {selectedMember && (
-          <div className="fixed inset-0 z-[999999] flex items-center justify-center md:justify-end p-3 sm:p-6 lg:p-8 pt-20 sm:pt-24 pb-6 overflow-hidden">
-            
-            {/* Backdrop Blur Overlay */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              onClick={handleCloseMember}
-              onTouchMove={(e) => e.preventDefault()}
-              className="fixed inset-0 bg-black/75 backdrop-blur-md cursor-pointer z-0"
-            />
+          <motion.div
+            key="modal-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            onClick={handleCloseMember}
+            onTouchMove={(e) => e.preventDefault()}
+            className="fixed inset-0 bg-black/75 backdrop-blur-md cursor-pointer z-[999998]"
+          />
+        )}
+      </AnimatePresence>
 
-            {/* Modal Flex Container */}
-            <div className="relative w-full max-w-lg md:max-w-3xl flex flex-col md:flex-row items-center md:items-stretch pointer-events-none md:mr-6 my-auto z-10">
-              
-              {/* Step 1: Circular Image Icon Expands FIRST To Display Position */}
+      <div className="fixed inset-0 z-[999999] flex items-center justify-center md:justify-end p-3 sm:p-6 lg:p-8 pt-20 sm:pt-24 pb-6 overflow-hidden pointer-events-none">
+        <div className="relative w-full max-w-lg md:max-w-3xl flex flex-col md:flex-row items-center md:items-stretch pointer-events-none md:mr-6 my-auto z-10">
+          
+          {/* Step 1: Circular Image Icon Expands FIRST To Display Position */}
+          <AnimatePresence>
+            {selectedMember && (
               <motion.div
                 layoutId={`member-avatar-${selectedMember.id}`}
                 transition={{
@@ -288,7 +290,7 @@ export default function Members() {
                   stiffness: 220,
                   mass: 0.75,
                 }}
-                className="w-36 h-36 sm:w-48 sm:h-48 md:w-76 md:h-76 rounded-full overflow-hidden shadow-2xl shrink-0 border-4 border-[#FFF314] relative bg-gray-100 mx-auto md:mx-0 -mb-16 md:mb-0 md:-ml-36 self-center z-30 pointer-events-auto"
+                className="w-36 h-36 sm:w-48 sm:h-48 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden shadow-2xl shrink-0 border-4 border-[#FFF314] relative bg-gray-100 mx-auto md:mx-0 -mb-16 md:mb-0 md:-ml-36 self-center z-30 pointer-events-auto"
               >
                 <img
                   src={selectedMember.photo}
@@ -300,101 +302,101 @@ export default function Members() {
                   }}
                 />
               </motion.div>
+            )}
+          </AnimatePresence>
 
-              {/* Step 2: Sidebar Panel Slides Out AFTER Icon Has Expanded */}
-              <AnimatePresence>
-                {isSidebarOpen && (
-                  <motion.div
-                    initial={{ x: '100%', opacity: 0, scale: 0.95 }}
-                    animate={{ x: 0, opacity: 1, scale: 1 }}
-                    exit={{ x: '100%', opacity: 0, scale: 0.95 }}
-                    transition={{
-                      duration: 0.35,
-                      ease: [0.16, 1, 0.3, 1],
-                    }}
-                    className="relative w-full bg-white rounded-3xl shadow-2xl p-5 sm:p-8 z-20 text-[#263238] flex flex-col max-h-[82vh] md:max-h-[78vh] mt-0 md:-ml-24 pt-16 md:pt-8 pointer-events-auto overflow-hidden"
-                  >
-                    {/* Yellow Circular Close Button */}
-                    <button
-                      onClick={handleCloseMember}
-                      className="absolute top-3 right-3 sm:top-5 sm:right-5 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#FFF314] hover:bg-[#FBE000] text-black font-extrabold flex items-center justify-center shadow-xl transition-transform hover:scale-110 cursor-pointer z-40 border-2 border-white"
-                      aria-label="Close"
-                    >
-                      <X className="w-5 h-5 sm:w-6 sm:h-6 stroke-[3]" />
-                    </button>
+          {/* Step 2: Sidebar Panel Slides Out AFTER Icon Has Expanded */}
+          <AnimatePresence>
+            {isSidebarOpen && selectedMember && (
+              <motion.div
+                initial={{ x: '100%', opacity: 0, scale: 0.95 }}
+                animate={{ x: 0, opacity: 1, scale: 1 }}
+                exit={{ x: '100%', opacity: 0, scale: 0.95 }}
+                transition={{
+                  duration: 0.35,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="relative w-full bg-white rounded-3xl shadow-2xl p-5 sm:p-8 z-20 text-[#263238] flex flex-col max-h-[82vh] md:max-h-[78vh] mt-0 md:-ml-24 pt-16 md:pt-8 pointer-events-auto overflow-hidden"
+              >
+                {/* Yellow Circular Close Button */}
+                <button
+                  onClick={handleCloseMember}
+                  className="absolute top-3 right-3 sm:top-5 sm:right-5 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#FFF314] hover:bg-[#FBE000] text-black font-extrabold flex items-center justify-center shadow-xl transition-transform hover:scale-110 cursor-pointer z-40 border-2 border-white"
+                  aria-label="Close"
+                >
+                  <X className="w-5 h-5 sm:w-6 sm:h-6 stroke-[3]" />
+                </button>
 
-                    {/* Content Details */}
-                    <div className="flex-1 flex flex-col min-h-0 pt-1 pl-0 md:pl-28 overflow-hidden">
-                      {/* Header Info */}
-                      <div className="border-b border-gray-100 pb-3 mb-3 text-center md:text-left shrink-0">
-                        <h2 className="text-xl sm:text-3xl font-extrabold text-[#263238] tracking-tight leading-tight">
-                          {selectedMember.name}
-                        </h2>
+                {/* Content Details */}
+                <div className="flex-1 flex flex-col min-h-0 pt-1 pl-0 md:pl-28 overflow-hidden">
+                  {/* Header Info */}
+                  <div className="border-b border-gray-100 pb-3 mb-3 text-center md:text-left shrink-0">
+                    <h2 className="text-xl sm:text-3xl font-extrabold text-[#263238] tracking-tight leading-tight">
+                      {selectedMember.name}
+                    </h2>
 
-                        <p className="text-xs sm:text-sm font-extrabold text-amber-500 font-sans tracking-widest uppercase mt-1">
-                          {selectedMember.role}
-                        </p>
-                      </div>
+                    <p className="text-xs sm:text-sm font-extrabold text-amber-500 font-sans tracking-widest uppercase mt-1">
+                      {selectedMember.role}
+                    </p>
+                  </div>
 
-                      {/* Scrollable Text Content (With min-h-0 & touch-pan-y for 100% Mobile Touch Scroll Support) */}
-                      <div className="overflow-y-auto overscroll-contain touch-pan-y min-h-0 flex-1 pr-1.5 sm:pr-2.5 space-y-4 text-gray-700 text-xs sm:text-sm leading-relaxed font-sans">
-                        <p className="font-normal text-gray-700">
-                          {selectedMember.bio}
-                        </p>
+                  {/* Scrollable Text Content (With min-h-0 & touch-pan-y for 100% Mobile Touch Scroll Support) */}
+                  <div className="overflow-y-auto overscroll-contain touch-pan-y min-h-0 flex-1 pr-1.5 sm:pr-2.5 space-y-4 text-gray-700 text-xs sm:text-sm leading-relaxed font-sans">
+                    <p className="font-normal text-gray-700">
+                      {selectedMember.bio}
+                    </p>
 
-                        {/* Achievements List */}
-                        <div className="space-y-2 pt-2">
-                          <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-red-600 flex items-center gap-1.5 justify-center md:justify-start">
-                            <ShieldCheck className="w-4 h-4" />
-                            <span>Key Leadership Milestones</span>
-                          </h4>
-                          <div className="space-y-2">
-                            {selectedMember.achievements.map((item, i) => (
-                              <div key={i} className="flex items-start gap-2.5 p-2.5 rounded-xl bg-gray-50 border border-gray-100 text-xs text-gray-800 font-medium">
-                                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                                <span>{item}</span>
-                              </div>
-                            ))}
+                    {/* Achievements List */}
+                    <div className="space-y-2 pt-2">
+                      <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-red-600 flex items-center gap-1.5 justify-center md:justify-start">
+                        <ShieldCheck className="w-4 h-4" />
+                        <span>Key Leadership Milestones</span>
+                      </h4>
+                      <div className="space-y-2">
+                        {selectedMember.achievements.map((item, i) => (
+                          <div key={i} className="flex items-start gap-2.5 p-2.5 rounded-xl bg-gray-50 border border-gray-100 text-xs text-gray-800 font-medium">
+                            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                            <span>{item}</span>
                           </div>
-                        </div>
-
-                        {/* Focus Areas */}
-                        <div className="pt-2">
-                          <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-red-600 mb-2 text-center md:text-left">
-                            Core Focus Areas
-                          </h4>
-                          <div className="flex flex-wrap gap-1.5 justify-center md:justify-start">
-                            {selectedMember.focusAreas.map((area, i) => (
-                              <span key={i} className="px-3 py-1 rounded-lg bg-amber-50 text-amber-900 border border-amber-200 text-xs font-bold">
-                                {area}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Action Footer (Fixed at bottom) */}
-                      <div className="pt-3 border-t border-gray-100 mt-2 flex justify-end shrink-0">
-                        <button
-                          onClick={() => {
-                            handleCloseMember();
-                            navigate('/contact');
-                          }}
-                          className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#263238] hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
-                        >
-                          <Mail className="w-4 h-4" />
-                          <span>Connect With Leadership</span>
-                        </button>
+                        ))}
                       </div>
                     </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
 
-            </div>
-          </div>
-        )}
-      </AnimatePresence>
+                    {/* Focus Areas */}
+                    <div className="pt-2">
+                      <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-red-600 mb-2 text-center md:text-left">
+                        Core Focus Areas
+                      </h4>
+                      <div className="flex flex-wrap gap-1.5 justify-center md:justify-start">
+                        {selectedMember.focusAreas.map((area, i) => (
+                          <span key={i} className="px-3 py-1 rounded-lg bg-amber-50 text-amber-900 border border-amber-200 text-xs font-bold">
+                            {area}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Action Footer (Fixed at bottom) */}
+                  <div className="pt-3 border-t border-gray-100 mt-2 flex justify-end shrink-0">
+                    <button
+                      onClick={() => {
+                        handleCloseMember();
+                        navigate('/contact');
+                      }}
+                      className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#263238] hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      <Mail className="w-4 h-4" />
+                      <span>Connect With Leadership</span>
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+        </div>
+      </div>
     </section>
   );
 }
