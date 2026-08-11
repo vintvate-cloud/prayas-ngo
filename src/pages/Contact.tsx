@@ -4,8 +4,8 @@ import { MapPin, Phone, Mail, Clock, Send, CheckCircle, AlertCircle } from 'luci
 import { supabase } from '@/lib/supabase'
 import { useTranslation } from 'react-i18next'
 
-interface FormData { name: string; email: string; phone: string; subject: string; }
-const initialForm: FormData = { name: '', email: '', phone: '', subject: '' }
+interface FormData { name: string; email: string; phone: string; subject: string; message: string; }
+const initialForm: FormData = { name: '', email: '', phone: '', subject: '', message: '' }
 
 export default function Contact() {
   const { t } = useTranslation()
@@ -34,7 +34,7 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); setLoading(true); setStatus('idle'); setErrorMsg('')
     try {
-      const { error } = await supabase.from('contact_messages').insert([{ name: form.name.trim(), email: form.email.trim(), phone: form.phone.trim() || null, subject: form.subject.trim(), message: '', status: 'unread' }])
+      const { error } = await supabase.from('contact_messages').insert([{ name: form.name.trim(), email: form.email.trim(), phone: form.phone.trim() || null, subject: form.subject.trim(), message: form.message.trim(), status: 'unread' }])
       if (error) throw error
       setStatus('success'); setForm(initialForm)
     } catch (err: any) {
@@ -119,8 +119,8 @@ export default function Contact() {
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div>
-                      <label htmlFor="phone" className={labelClass}>{t('contact.form.phone', 'Phone Number')} <span className="text-[#263238]/40 font-normal">({t('contact.form.optional', 'optional')})</span></label>
-                      <input id="phone" name="phone" type="tel" placeholder="+91 98765 43210" value={form.phone} onChange={handleChange} className={inputClass} />
+                      <label htmlFor="phone" className={labelClass}>{t('contact.form.phone', 'Phone Number')} <span className="text-red-500">*</span></label>
+                      <input id="phone" name="phone" type="tel" required placeholder="+91 98765 43210" value={form.phone} onChange={handleChange} className={inputClass} />
                     </div>
                     <div>
                       <label htmlFor="subject" className={labelClass}>{t('contact.form.subject', 'Subject')} <span className="text-red-500">*</span></label>
@@ -133,6 +133,12 @@ export default function Contact() {
                         <option value="Media & Press">{t('contact.form.subjects.media', 'Media & Press')}</option>
                         <option value="Other">{t('contact.form.subjects.other', 'Other')}</option>
                       </select>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 gap-3 sm:gap-4">
+                    <div>
+                      <label htmlFor="message" className={labelClass}>{t('contact.form.message', 'Message')} <span className="text-[#263238]/40 font-normal">({t('contact.form.optional', 'optional')})</span></label>
+                      <textarea id="message" name="message" rows={4} placeholder="How can we help you?" value={form.message} onChange={handleChange} className={`${inputClass} resize-none`} />
                     </div>
                   </div>
 

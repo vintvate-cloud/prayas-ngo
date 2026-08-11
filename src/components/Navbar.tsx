@@ -42,7 +42,6 @@ const navLinks = [
     name: 'Media',
     path: '/media',
     submenu: [
-      { name: 'nav.stories', path: '/stories' },
       { name: 'nav.gallery', path: '/gallery' },
     ]
   },
@@ -189,17 +188,16 @@ export default function Navbar() {
         {/* ---------- TOP STRIP ---------- */}
         {isStripVisible && (
           <div className="hidden sm:flex bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460] text-white py-2 px-4 sm:px-8 items-center justify-between w-full shadow-md text-xs z-50">
-            <div className="flex items-center gap-2">
-              <span className="font-semibold text-[#FFF314]">Prayas NGO:</span>
-              <span className="text-white/80">Empowering lives across India with education, health & sustainability.</span>
+            <div className="flex items-center gap-4">
+              <span className="font-semibold text-[#FFF314] hidden md:inline">Prayas NGO:</span>
+              <img 
+                src="/assets/brand/certifications-banner.png" 
+                alt="Certifications - 80G, 12A Registered" 
+                className="h-5 md:h-7 object-contain rounded-sm"
+                style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))' }}
+              />
             </div>
             <div className="flex items-center gap-4 shrink-0">
-              <Link
-                to="/donate"
-                className="bg-[#FFF314] text-[#263238] px-3.5 py-1 rounded-full text-xs font-bold hover:bg-white transition shadow-md whitespace-nowrap"
-              >
-                Explore
-              </Link>
               {/* Social icons */}
               <div className="flex items-center gap-3 text-white/70">
                 <a
