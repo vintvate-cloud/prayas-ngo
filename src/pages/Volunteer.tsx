@@ -90,11 +90,11 @@ export default function Volunteer() {
   }
 
   return (
-    <div className="h-screen overflow-hidden flex flex-col lg:flex-row bg-white">
+    <div className="min-h-screen flex flex-col lg:flex-row bg-white">
       <LeftSidebar />
 
       {/* Right side form */}
-      <div className="w-full lg:w-[55%] flex items-center justify-center px-6 sm:px-12 h-screen">
+      <div className="w-full lg:w-[55%] flex items-center justify-center px-6 sm:px-12 py-24 lg:py-12 min-h-screen">
         <motion.div 
           initial={{ opacity: 0, x: 20 }} 
           animate={{ opacity: 1, x: 0 }} 

@@ -14,14 +14,6 @@ export default function Contact() {
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [errorMsg, setErrorMsg] = useState('')
 
-  // Disable body scroll while on this page
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, []);
-
   const contactInfo = useMemo(() => [
     { icon: MapPin, title: t('contact.info.address.title', 'Our Address'), details: [t('contact.info.address.line1', 'SAHAJ RESIDENCY, SCHEME NO.103, KESARBAGH,'), t('contact.info.address.line2', 'Indore- 452009, Madhya Pradesh, India')] },
     { icon: Phone, title: t('contact.info.phone.title', 'Call Us'), details: ['+91 98765 43210', '+91 11 2345 6789'] },
@@ -46,11 +38,11 @@ export default function Contact() {
   const labelClass = 'block text-xs sm:text-sm font-semibold text-[#263238] mb-1'
 
   return (
-    <div className="h-[100dvh] w-full flex flex-col bg-white overflow-hidden pt-20" style={{ paddingTop: 'var(--navbar-height, 80px)' }}>
-      <div className="flex-1 w-full h-full flex flex-col lg:flex-row overflow-hidden">
+    <div className="min-h-screen w-full flex flex-col bg-white pt-20" style={{ paddingTop: 'var(--navbar-height, 80px)' }}>
+      <div className="flex-1 w-full flex flex-col lg:flex-row">
         
         {/* Left Panel - Dark / Info */}
-        <div className="lg:w-5/12 bg-[#263238] relative flex flex-col justify-center px-6 py-6 sm:px-10 lg:px-14 overflow-y-auto lg:overflow-hidden hide-scrollbar">
+        <div className="lg:w-5/12 bg-[#263238] relative flex flex-col justify-center px-6 py-12 sm:px-10 lg:px-14 min-h-[50vh] lg:min-h-[calc(100vh-var(--navbar-height,80px))]">
           <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, #FFF314 0%, transparent 50%), radial-gradient(circle at 80% 50%, #FFF314 0%, transparent 50%)' }} />
           
           <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} className="relative z-10 flex-1 flex flex-col justify-center">
@@ -87,7 +79,7 @@ export default function Contact() {
         </div>
 
         {/* Right Panel - Form */}
-        <div className="lg:w-7/12 bg-white flex items-center justify-center p-4 sm:p-8 lg:p-12 overflow-y-auto lg:overflow-hidden hide-scrollbar">
+        <div className="lg:w-7/12 bg-white flex items-center justify-center p-4 sm:p-8 lg:p-12 py-12">
           <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="w-full max-w-xl bg-white lg:bg-transparent rounded-3xl lg:border-none p-2 sm:p-4 lg:p-0">
             
             <div className="mb-4 lg:mb-6">

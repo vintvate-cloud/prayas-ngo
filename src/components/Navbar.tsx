@@ -337,10 +337,11 @@ export default function Navbar() {
               {/* 1. DONATE NOW BUTTON (LIGHT YELLOW BG) */}
               <Link
                 to="/donate"
-                className="inline-flex items-center gap-1.5 px-4 py-1.5 text-sm font-extrabold rounded-full bg-[#FFF314] hover:bg-[#FBE000] text-red-600 shadow-sm hover:shadow-md transition-all hover:scale-105 cursor-pointer border border-[#E6DB00] whitespace-nowrap"
+                className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-extrabold rounded-full bg-[#FFF314] hover:bg-[#FBE000] text-red-600 shadow-sm hover:shadow-md transition-all hover:scale-105 cursor-pointer border border-[#E6DB00] whitespace-nowrap"
               >
-                <Heart className="w-4 h-4 text-red-600 fill-red-600" />
-                <span>{t('nav.donateNow', 'Donate Now')}</span>
+                <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-red-600 fill-red-600" />
+                <span className="hidden sm:inline">{t('nav.donateNow', 'Donate Now')}</span>
+                <span className="sm:hidden">Donate</span>
               </Link>
 
               {/* 2. VOLUNTEER BUTTON */}
