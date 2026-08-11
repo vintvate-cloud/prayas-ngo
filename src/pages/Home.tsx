@@ -17,14 +17,14 @@ export default function Home() {
       {/* ─── SECTION 2: Interactive Showcase Slider (Photo Spray Frame) ─── */}
       <HeroSection />
 
-      {/* ─── SECTION 3: Ground Impact Numbers & Real Metrics ─── */}
-      <ImpactCounter />
+      {/* ─── SECTION 3: Ground Impact Numbers & Real Metrics (Hidden per request) ─── */}
+      {/* <ImpactCounter /> */}
 
       {/* ─── SECTION 4: 5 Pillar Bento Showcase (What We Do) ─── */}
       <FocusAreas />
 
-      {/* ─── SECTION 5: Systemic Methodology (GSAP Pinned Horizontal Scroll) ─── */}
-      <TrustFlow />
+      {/* ─── SECTION 5: Systemic Methodology (Hidden per request) ─── */}
+      {/* <TrustFlow /> */}
 
       {/* ─── SECTION 6: Featured Projects Deck ─── */}
       <FeaturedProjects />

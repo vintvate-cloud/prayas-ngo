@@ -212,11 +212,11 @@ export default function PrayasDeepIntro() {
 
           </div>
 
-          {/* ─── RIGHT COLUMN: Floating Bento Collage Showcase (6 cols) ─── */}
+          {/* ─── RIGHT COLUMN: Floating Bento Collage Showcase (Hidden per request) ─── */}
+          {/* 
           <div className="lg:col-span-6 relative">
             <div className="gsap-hero-collage grid grid-cols-2 gap-3.5 sm:gap-4">
               
-              {/* Tile 1: Primary Feature Card */}
               <div className="col-span-2 aspect-[16/9] rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-900 border border-white/20 shadow-2xl group hover:border-[#FFF314] transition-all">
                 <img
                   src="/assets/environment/kargil-vatika-forest.jpg"
@@ -225,7 +225,6 @@ export default function PrayasDeepIntro() {
                 />
               </div>
 
-              {/* Tile 2: Women Livelihood */}
               <div className="aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden bg-slate-900 border border-white/20 shadow-xl group hover:border-[#FFF314] transition-all">
                 <img
                   src="/assets/women-empowerment/sewing-training.jpeg"
@@ -234,7 +233,6 @@ export default function PrayasDeepIntro() {
                 />
               </div>
 
-              {/* Tile 3: Free Healthcare Camps */}
               <div className="aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden bg-slate-900 border border-white/20 shadow-xl group hover:border-[#FFF314] transition-all">
                 <img
                   src="/assets/healthcare/health-camp.jpeg"
@@ -245,6 +243,7 @@ export default function PrayasDeepIntro() {
 
             </div>
           </div>
+          */}
 
         </div>
 
