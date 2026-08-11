@@ -56,6 +56,31 @@ export interface ProjectItem {
 
 export const ALL_NGO_PROJECTS: ProjectItem[] = [
   {
+    id: 19,
+    title: 'Ongoing Community Initiatives',
+    category: 'Rural Development',
+    categorySlug: 'rural-development',
+    description: 'Our active, ongoing initiatives focusing on holistic community development, immediate relief, and sustainable solutions across various rural districts.',
+    longDescription: 'Currently, Prayas is running multiple grassroots campaigns simultaneously to address urgent community needs. From ongoing health check-up camps and continuous education support in slums to active rural livelihood training programs, our volunteers are on the ground every single day making a tangible difference.',
+    image: '/CHILDRENGROUP.jpg',
+    badge: 'Running Project',
+    isFeatured: true,
+    route: '/rural-development',
+    icon: Activity,
+    accentColor: '#EAB308',
+    bgLight: '#FEFCE8',
+    stats: [
+      { label: 'Active Sites', value: '12+' },
+      { label: 'Daily Beneficiaries', value: '500+' },
+      { label: 'Volunteers Active', value: '150+' },
+    ],
+    highlights: [
+      'Continuous daily operations across multiple rural and urban slum centers',
+      'Adaptive and immediate response to community needs as they arise',
+      'Integration of health, education, and livelihood support in real-time',
+    ]
+  },
+  {
     id: 1,
     title: 'Project Sindoda (Plastic Mukti)',
     category: 'Rural Development',
@@ -632,10 +657,15 @@ export default function OurWork() {
 
                       {/* Index Badge */}
                       <span className="absolute top-4 right-4 bg-black/40 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-mono font-bold border border-white/20">
-                        {proj.id < 10 ? `0${proj.id}` : proj.id}
+                        {idx + 1 < 10 ? `0${idx + 1}` : idx + 1}
                       </span>
 
-                      {/* Category Badge removed */}
+                      {/* Optional Status Badge */}
+                      {proj.badge && (
+                        <span className="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-md shadow-red-600/30">
+                          {proj.badge}
+                        </span>
+                      )}
                     </div>
 
                     {/* Body Info */}

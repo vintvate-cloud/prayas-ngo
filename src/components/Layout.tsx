@@ -48,7 +48,7 @@ export default function Layout() {
       >
         <Outlet />
       </motion.main>
-      <Footer />
+      {pathname !== '/contact' && <Footer />}
       
       {/* Floating elements */}
       <FloatingDonateButton />
