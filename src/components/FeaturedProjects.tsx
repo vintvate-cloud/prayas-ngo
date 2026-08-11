@@ -1,11 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Calendar, Sparkles } from 'lucide-react';
+import { ArrowRight, Calendar, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
   {
@@ -48,159 +44,165 @@ const projects = [
 
 export default function FeaturedProjects() {
   const { t } = useTranslation();
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<HTMLDivElement[]>([]);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scrollLeft = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      if (scrollLeft <= 10) {
+        scrollRef.current.scrollTo({ left: scrollWidth, behavior: 'smooth' });
+      } else {
+        scrollRef.current.scrollBy({ left: -clientWidth, behavior: 'smooth' });
+      }
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      if (scrollLeft + clientWidth >= scrollWidth - 10) {
+        scrollRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        scrollRef.current.scrollBy({ left: clientWidth, behavior: 'smooth' });
+      }
+    }
+  };
 
   useEffect(() => {
-    if (!sectionRef.current) return;
-
-    const ctx = gsap.context(() => {
-      const cards = cardsRef.current;
-      if (!cards || cards.length === 0) return;
-
-      // Create GSAP ScrollTrigger timeline for stacked card pinning & bottom-to-top deck stacking
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          pin: true,
-          scrub: 1,
-          start: 'top top+=80px',
-          end: () => `+=${cards.length * 600}`,
-          invalidateOnRefresh: true,
-        },
-      });
-
-      cards.forEach((card, i) => {
-        if (i === 0) return; // First card is base
-
-        tl.fromTo(
-          card,
-          { yPercent: 100, opacity: 0.8 },
-          { yPercent: 0, opacity: 1, ease: 'none' },
-          i * 1.2
-        );
-
-        // Slightly scale down previous card to create realistic deck stack depth
-        if (i > 0) {
-          tl.to(
-            cards[i - 1],
-            { scale: 0.95 - (cards.length - i) * 0.02, opacity: 0.9, ease: 'none' },
-            i * 1.2
-          );
-        }
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
+    const timer = setInterval(() => {
+      scrollRight();
+    }, 4500); // Wait for a few seconds on each section
+    return () => clearInterval(timer);
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative w-full min-h-screen bg-white text-[#263238] px-4 sm:px-6 lg:px-8 select-none font-sans flex flex-col justify-center py-12 overflow-hidden border-b border-gray-200/80"
-    >
-      <div className="max-w-6xl mx-auto w-full my-auto space-y-8">
+    <section className="relative w-full bg-white text-[#263238] py-16 sm:py-20 lg:py-24 overflow-hidden border-b border-gray-200/80">
+      
+      {/* ─── Section Header ─── */}
+      <div className="text-center space-y-3 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 sm:mb-10">
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#263238] tracking-tight leading-tight">
+          {t('featured.title', 'Featured Projects & Events')}
+        </h2>
+        <div className="w-20 h-1 bg-gradient-to-r from-amber-500 to-yellow-400 mx-auto rounded-full shadow-xs" />
+        <p className="text-xs sm:text-sm text-gray-500 font-mono uppercase tracking-wider pt-1">
+          Swipe or use arrows to explore our initiatives
+        </p>
+      </div>
+
+      {/* ─── Horizontal Scrollable Card Slider ─── */}
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* ─── Section Header ─── */}
-        <div className="text-center space-y-3 max-w-3xl mx-auto shrink-0">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#263238] tracking-tight leading-tight">
-            {t('featured.title', 'Featured Projects & Events')}
-          </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-amber-500 to-yellow-400 mx-auto rounded-full shadow-xs" />
-          <p className="text-xs sm:text-sm text-gray-500 font-mono uppercase tracking-wider pt-1">
-            Scroll down to stack project cards
-          </p>
-        </div>
+        {/* Navigation Buttons */}
+        <button 
+          onClick={scrollLeft}
+          className="absolute left-2 sm:left-0 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white text-[#263238] shadow-xl border border-gray-200 flex items-center justify-center hover:bg-gray-50 hover:scale-105 active:scale-95 transition-all"
+          aria-label="Previous Slide"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+        <button 
+          onClick={scrollRight}
+          className="absolute right-2 sm:right-0 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white text-[#263238] shadow-xl border border-gray-200 flex items-center justify-center hover:bg-gray-50 hover:scale-105 active:scale-95 transition-all"
+          aria-label="Next Slide"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
 
-        {/* ─── GSAP Pinned Card Stack Deck Showcase ─── */}
-        <div className="relative w-full h-[460px] sm:h-[500px] lg:h-[520px]">
-          {projects.map((project, idx) => (
-            <div
-              key={project.id}
-              ref={(el) => {
-                if (el) cardsRef.current[idx] = el;
-              }}
-              className="absolute inset-0 w-full h-full bg-white rounded-3xl p-6 sm:p-8 lg:p-10 border border-gray-200/90 shadow-2xl overflow-hidden flex flex-col justify-between"
-              style={{
-                zIndex: idx + 10,
-              }}
-            >
-              {/* Top Accent Stripe */}
-              <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-amber-400 via-yellow-500 to-amber-600" />
+        {/* Scroll Container */}
+        <div 
+          ref={scrollRef}
+          className="w-full overflow-x-auto hide-scrollbar pb-6 snap-x snap-mandatory rounded-3xl"
+        >
+          <div className="flex w-max">
+            {projects.map((project, idx) => (
+              <div
+                key={project.id}
+                className="w-[calc(100vw-2rem)] sm:w-[calc(100vw-3rem)] lg:w-[calc(72rem-4rem)] max-w-full shrink-0 snap-center relative px-1 sm:px-2"
+              >
+                <div className="bg-white rounded-3xl p-5 sm:p-6 lg:p-8 border border-gray-200/90 shadow-xl overflow-hidden flex flex-col lg:flex-row gap-6 items-center">
+                  {/* Top Accent Stripe (Horizontal Layout now) */}
+                  <div className="absolute top-0 left-2 right-2 h-1.5 bg-gradient-to-r from-amber-400 via-yellow-500 to-amber-600 rounded-t-3xl" />
 
-              {/* Card Index Counter */}
-              <div className="absolute top-5 right-5 sm:top-6 sm:right-6 px-3.5 py-1 rounded-full bg-gray-100 border border-gray-200 text-[#263238] text-xs font-mono font-extrabold tracking-widest z-20">
-                0{idx + 1} / 0{projects.length}
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center h-full">
-                
-                {/* Photo Column */}
-                <div className="lg:col-span-7 relative aspect-[16/10] sm:aspect-[16/9] lg:aspect-[16/10] rounded-2xl overflow-hidden shadow-lg border border-gray-100 group min-h-[220px] sm:min-h-[300px]">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-                  
-                  {/* Category Badge */}
-                  <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full text-xs font-mono font-bold text-amber-800 shadow-sm border border-gray-100">
-                    {project.badge}
-                  </div>
-
-                  {/* Date Badge */}
-                  <div className="absolute bottom-4 left-4 text-white text-xs font-mono font-semibold flex items-center gap-2 bg-black/50 backdrop-blur-md px-3 py-1 rounded-lg border border-white/20">
-                    <Calendar size={14} className="text-amber-400" />
-                    <span>{project.date}</span>
-                  </div>
-                </div>
-
-                {/* Content Column */}
-                <div className="lg:col-span-5 space-y-4 flex flex-col justify-between py-1">
-                  <div className="space-y-3">
-                    <div className="inline-flex items-center gap-1.5 text-xs font-mono font-extrabold text-amber-800 uppercase tracking-widest">
-                      <Sparkles size={14} />
-                      <span>FEATURED INITIATIVE</span>
+                  {/* Photo Column */}
+                  <div className="relative w-full lg:w-1/2 aspect-[16/9] sm:aspect-[21/9] lg:aspect-[16/10] rounded-2xl overflow-hidden shadow-sm border border-gray-100 group shrink-0">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                    
+                    {/* Category Badge */}
+                    <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full text-xs font-mono font-bold text-amber-800 shadow-sm border border-gray-100">
+                      {project.badge}
                     </div>
 
-                    <h3 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-[#263238] tracking-tight leading-tight">
+                    {/* Date Badge */}
+                    <div className="absolute bottom-4 left-4 text-white text-xs font-mono font-semibold flex items-center gap-2 bg-black/50 backdrop-blur-md px-3 py-1 rounded-lg border border-white/20">
+                      <Calendar size={14} className="text-amber-400" />
+                      <span>{project.date}</span>
+                    </div>
+                  </div>
+
+                  {/* Content Column */}
+                  <div className="w-full lg:w-1/2 space-y-4 flex flex-col justify-center">
+                    <div className="flex justify-between items-start">
+                      <div className="inline-flex items-center gap-1.5 text-xs font-mono font-extrabold text-amber-800 uppercase tracking-widest">
+                        <Sparkles size={14} />
+                        <span>FEATURED INITIATIVE</span>
+                      </div>
+                      {/* Card Index Counter */}
+                      <div className="px-3 py-1 rounded-full bg-gray-100 border border-gray-200 text-[#263238] text-xs font-mono font-extrabold tracking-widest">
+                        0{idx + 1} / 0{projects.length}
+                      </div>
+                    </div>
+
+                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#263238] tracking-tight leading-tight">
                       {project.title}
                     </h3>
 
-                    <p className="text-gray-600 text-xs sm:text-sm leading-relaxed font-sans font-normal line-clamp-4">
+                    <p className="text-gray-600 text-sm sm:text-base leading-relaxed font-sans font-normal">
                       {project.description}
                     </p>
-                  </div>
 
-                  <div className="pt-2">
-                    <Link
-                      to={project.link}
-                      className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-xs sm:text-sm font-bold bg-[#F5B800] hover:bg-[#E5AA00] text-[#263238] shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer border border-amber-400/40"
-                    >
-                      <span>Explore Initiative</span>
-                      <ArrowRight size={16} />
-                    </Link>
+                    <div className="pt-2">
+                      <Link
+                        to={project.link}
+                        className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-sm font-bold bg-[#F5B800] hover:bg-[#E5AA00] text-[#263238] shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer border border-amber-400/40 w-max"
+                      >
+                        <span>Explore Initiative</span>
+                        <ArrowRight size={16} />
+                      </Link>
+                    </div>
                   </div>
                 </div>
-
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-
-        {/* ─── Bottom Action Button ─── */}
-        <div className="text-center pt-4 shrink-0">
-          <Link
-            to="/our-work"
-            className="inline-flex items-center gap-2 bg-[#263238] hover:bg-[#F5B800] text-white hover:text-[#263238] font-extrabold px-8 py-3.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 text-xs sm:text-sm border border-gray-200"
-          >
-            <span>View All 16 NGO Projects & Initiatives</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-
       </div>
+
+      {/* ─── Bottom Action Button ─── */}
+      <div className="text-center pt-2 pb-4">
+        <Link
+          to="/our-work"
+          className="inline-flex items-center gap-2 bg-[#263238] hover:bg-[#F5B800] text-white hover:text-[#263238] font-extrabold px-8 py-3.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 text-sm border border-gray-200"
+        >
+          <span>View All NGO Projects</span>
+          <ArrowRight className="w-4 h-4" />
+        </Link>
+      </div>
+      
+      {/* Hide scrollbar styles for this component */}
+      <style>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </section>
   );
 }
