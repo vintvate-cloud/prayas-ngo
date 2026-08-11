@@ -15,73 +15,73 @@ export default function HeroSection() {
     () => [
       {
         id: 1,
-        mainPrefix: "Let’s empower",
-        highlight: "every child",
-        mainSuffix: "to dream, learn, and grow.",
+        mainPrefix: '',
+        highlight: 'Rural Development',
+        mainSuffix: '',
         description: t(
-          'hero.slides.education.desc',
-          'Providing quality education, Sanskarshala centers, and nutrition to underprivileged children so every child gets to learn and thrive with dignity.'
+          'hero.slides.rural.desc',
+          'Transforming villages with infrastructure, clean water, sanitation, and holistic community empowerment.'
         ),
-        image: '/assets/education/digital-literacy-lab.jpg',
-        objectPosition: 'right 25%',
-        ctaText: '♥ Explore',
-        route: '/donate',
+        image: '/ruraldevelopment.jpeg',
+        objectPosition: 'center center',
+        ctaText: 'Learn More',
+        route: '/rural-development',
       },
       {
         id: 2,
-        mainPrefix: 'Empowering',
-        highlight: 'strong women',
-        mainSuffix: 'for a resilient nation',
+        mainPrefix: '',
+        highlight: 'Women Empowerment',
+        mainSuffix: '',
         description: t(
           'hero.slides.women.desc',
-          'Fostering female leadership through vocational sewing centers, Sabji Wali Didi micro-entrepreneurship, and self-help group financial freedom.'
+          'Vocational skill development, tailoring centres, financial independence, and SHGs for women.'
         ),
-        image: '/P1039322.JPG',
-        objectPosition: 'center 30%',
-        ctaText: '♥ Empower A Woman!',
-        route: '/donate',
+        image: '/WOMEN.jpeg',
+        objectPosition: 'center center',
+        ctaText: 'Learn More',
+        route: '/women-empowerment',
       },
       {
         id: 3,
-        mainPrefix: 'Bringing',
-        highlight: 'lifesaving care',
-        mainSuffix: 'to remote villages',
+        mainPrefix: '',
+        highlight: 'Education & Skills',
+        mainSuffix: '',
         description: t(
-          'hero.slides.health.desc',
-          'Organizing free health camps, organ donation drives, disability support, and elderly care to ensure no one is left behind.'
+          'hero.slides.education.desc',
+          'Sanskarshala value education, digital literacy labs, career counselling, and youth leadership.'
         ),
-        image: '/PRAYASHEALTHCAMP.jpeg',
-        objectPosition: 'center 20%',
-        ctaText: '♥ Support Health Camps!',
-        route: '/donate',
+        image: '/assets/education/digital-literacy-lab.jpg',
+        objectPosition: 'center 25%',
+        ctaText: 'Learn More',
+        route: '/education',
       },
       {
         id: 4,
-        mainPrefix: 'Building',
-        highlight: 'thriving villages',
-        mainSuffix: 'with clean water & hope',
+        mainPrefix: '',
+        highlight: 'Health & Welfare',
+        mainSuffix: '',
         description: t(
-          'hero.slides.rural.desc',
-          'Holistic village adoption programs installing clean drinking water facilities, sanitation infrastructure, and self-reliant grassroots growth.'
+          'hero.slides.health.desc',
+          'Free rural health camps, organ donation drives, elderly support, and child welfare initiatives.'
         ),
-        image: '/assets/women-empowerment/shg-collective.jpg',
+        image: '/healthcaret.jpg',
         objectPosition: 'center center',
-        ctaText: '♥ Adopt A Village!',
-        route: '/donate',
+        ctaText: 'Learn More',
+        route: '/healthcare',
       },
       {
         id: 5,
-        mainPrefix: 'Planting',
-        highlight: 'green forests',
-        mainSuffix: 'for a sustainable future',
+        mainPrefix: '',
+        highlight: 'Environment',
+        mainSuffix: '',
         description: t(
           'hero.slides.environment.desc',
-          'Dedicated to tree plantation drives, Kargil Vatika memorial forests, and rainwater harvesting to restore ecological balance.'
+          'Massive tree plantation drives, Kargil Vatika tribute forest, and rainwater harvesting projects.'
         ),
         image: '/TREEGROW.jpg',
         objectPosition: 'center center',
-        ctaText: '♥ Plant A Tree Today!',
-        route: '/donate',
+        ctaText: 'Learn More',
+        route: '/environment',
       },
     ],
     [t]

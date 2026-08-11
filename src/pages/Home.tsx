@@ -20,8 +20,8 @@ export default function Home() {
       {/* ─── SECTION 3: Ground Impact Numbers & Real Metrics (Hidden per request) ─── */}
       {/* <ImpactCounter /> */}
 
-      {/* ─── SECTION 4: 5 Pillar Bento Showcase (What We Do) ─── */}
-      <FocusAreas />
+      {/* ─── SECTION 4: 5 Pillar Bento Showcase (What We Do) (Removed per request) ─── */}
+      {/* <FocusAreas /> */}
 
       {/* ─── SECTION 5: Systemic Methodology (Hidden per request) ─── */}
       {/* <TrustFlow /> */}
