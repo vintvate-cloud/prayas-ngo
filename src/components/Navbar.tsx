@@ -37,7 +37,6 @@ const navLinks = [
       { name: 'Environment & Sustainability', path: '/environment' },
     ]
   },
-  { name: 'Impact', path: '/programs' },
   {
     name: 'Media',
     path: '/media',
